@@ -1,0 +1,98 @@
+mercado_pago:
+    resource: "@MercadoPagoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+api:
+    resource: "@ApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+geo:
+    resource: "@GeoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+tips:
+    resource: "@TipsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+blog:
+    resource: "@BlogBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+tiendas:
+    resource: "@TiendasBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+somos:
+    resource: "@SomosBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pagos_payu:
+    resource: "@PagosPayuBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user_iridian:
+    resource: "@UserIridianBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+blogiridian:
+    resource: "@BlogiridianBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+carroiridian:
+    resource: "@CarroiridianBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+ajaxordersku:
+    path: /ajaxordersku
+    defaults: { _controller: CarroiridianBundle:Carroiridian:mercadoPago }
+    methods: [POST]
+
+contacto:
+    resource: "@ContactoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+home:
+    resource: "@HomeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+easy_admin_bundle:
+    #resource: "@EasyAdminBundle/Controller/"
+    resource: "@AppBundle/Controller/AdminController.php"
+    type:     annotation
+    prefix:   /admin
+
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+user_logout:
+       path:   /logout
+
+api_login_check:
+    path: /api/login_check
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+jmose_command_scheduler:
+    resource: "@JMoseCommandSchedulerBundle/Resources/config/routing.yml"
+    prefix:   /
+

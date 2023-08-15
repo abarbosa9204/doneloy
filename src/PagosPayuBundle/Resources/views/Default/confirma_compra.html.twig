@@ -1,0 +1,84 @@
+<html>
+<head>
+    <title>Mailings-2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+{% set cu = app.request.locale | capitalize %}
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<!-- Save for Web Slices (Mailings-2) -->
+<table id="Table_01" width="600" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+
+            <img style="display: inline-block; margin: 2% 0;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenhead  ) }}" width="600" height="191" alt="">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <h2 style="display: inline-block; width: 90%; color: #ffffff; background-color: #000; padding: 2% 5%; 'Times New Roman'; text-align: center; font: 1.800em 'Times New Roman'; letter-spacing: 4px;">
+                {{ qi.textoDB('mb_thanks') }}
+            </h2>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; width: 80%; color: #58595B; padding: 2% 5%; margin: 2% 5%; 'Times New Roman'; border: 1px solid #58595B; text-align: center; font: 1.200em sans-serif; letter-spacing: 4px; line-height: 33px;">
+                {{ attribute(data,'mensaje' ~ cu) | raw }}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table style="border-top: 2px solid #000; width: 96%; margin: 2%; text-align: center;">
+                <thead>
+                <th style="text-align: left;">{{ qi.textoDB('c_produc') }}</th>
+                <th>{{ qi.textoDB('c_quantity') }}</th>
+                <th>{{ qi.textoDB('c_price') }}</th>
+                <th>{{ qi.textoDB('c_total') }}</th>
+                </thead>
+
+                {% set total = 0 %}
+                {% for item in summary %}
+                    <tr>
+                        <td>
+                            <img style="width: 30%; display: inline-block; vertical-align: middle;" alt="Bakc to Basic" src="{{ (path_productos ~'/'~ item.producto.imagen) | imagine_filter('prod_list_cart') }}"/>
+                            <p style="width: 50%; display: inline-block; vertical-align: middle;">
+                                <span style="width: 100%; display: inline-block;">{{ attribute(item.producto,'nombre' ~ cu) }}</span>
+                                <span style="width: 100%; display: inline-block;">Size:{{ attribute(item.talla,'nombre' ~ cu) }}</span>
+                            </p>
+                        </td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>${{ item.producto.precio | number_format(0) }}</td>
+                        <td>${{ (item.producto.precio * item.cantidad) | number_format(0) }}</td>
+                    </tr>
+                    {% set total = total + (item.producto.precio * item.cantidad) %}
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ qi.textoDB('c_total') }}</td>
+                    <td>{{ total | number_format }}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; text-align: center; width: 100%; "><a href="#" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenstore) }}"/></a></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; text-align: center; width: 100%; ">
+                <a href="https://es.pinterest.com/Feelthebasics/ " target="_blank" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenpinterest) }}"/></a>
+                <a href="https://www.instagram.com/back.to.basics/ " target="_blank" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imageninsta) }}"/></a>
+                <a href="https://www.facebook.com/backtobasicsco/?fref=ts" target="_blank" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenface) }}"/></a>
+
+
+            </p>
+        </td>
+    </tr>
+</table>
+<!-- End Save for Web Slices -->
+</body>
+</html>

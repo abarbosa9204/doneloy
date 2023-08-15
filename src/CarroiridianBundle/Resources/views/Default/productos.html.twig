@@ -1,0 +1,155 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set escala_moneda = app.session.get('escala_moneda',1) %}
+    {% set es_whish = 'wishlist' == app.request.attributes.get('_route') %}
+    {% set es_boutique = 'boutique' == app.request.attributes.get('_route') %}
+    {% set es_pret = 'pret' == app.request.attributes.get('_route') %}
+    {% set es_corporativo = 'corporativo' == app.request.attributes.get('_route') %}
+    {% set es_mas_vendidos = 'productos_mas_vendidos' == app.request.attributes.get('_route') %}
+
+
+    {% set categoria = app.request.get('categoria') %}
+    {% set genero = app.request.get('genero') %}
+    {% set search = app.request.get('search') %}
+    {% set color = app.request.get('color') %}
+    {% set ocasion = app.request.get('ocasion') %}
+    {% set limit1 = app.request.get('limit1') %}
+    {% set limit2 = app.request.get('limit2') %}
+    {% set taller = 0 %}
+    {% set lc = app.request.locale() %}
+
+    {% set categories = ci.categorias() %}
+    {% set categoryName = '' %}
+    {% if categoria %}
+        {% set catEntity = ci.categoriaById(categoria) %}
+        {% set categoryName = catEntity['nombre'] %}
+    {% endif %}
+    {# {% for cat in categories %}
+        {% if cat['id'] == categoria %}
+            {% set categoryName = cat['nombre'] %}
+        {% endif %}
+    {% endfor %} #}
+
+    {% set ocasiones = ci.ocasiones() %}
+    {% set ocasionName = '' %}
+    {% for oc in ocasiones %}
+        {% if oc['id'] == ocasion %}
+            {% set ocasionName = oc['nombre'] %}
+        {% endif %}
+    {% endfor %}
+    {% set productBoutique = es_boutique %}
+    {% if cat_boutique %}
+        {% set productBoutique = true %}
+    {% endif %}
+
+    {% if not es_whish %}
+        {% set productos = ci.productos(categoria,genero,search,color,ocasion,taller,productBoutique, es_pret, limit1, limit2, es_mas_vendidos,es_corporativo) %}
+    {% endif %}
+    {% set wishlist = app.session.get('wish') %}
+    {% if categoria == 5 %}
+        {% set es_complementos = true %}
+    {% endif %}
+    {% set ciudad = app.session.get('ciudad',0) %}
+    {% set ciudad = app.request.get('ciudad',ciudad) %}
+
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        {% if es_boutique %}
+            <div  class="item" style="background-image: url({{ qi.imagen('banner_boutique') }})">
+                <div class="no_header" style="height: 359px;">
+                    <div class="center_H">
+                        <h1>
+                            {{ qi.textoDB('titulo_boutique') }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        {% elseif es_corporativo %}
+            <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})">
+                <div class="no_header" style="height: 359px;">
+                    <div class="center_H">
+                        <h1>
+                            {{ qi.textoDB('m_corporativo') }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        {% elseif es_pret %}
+            {% set pretMenu = qi.galeria('otros_servicios') %}
+            <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})">
+                <div class="no_header" style="height: 359px;">
+                    <div class="center_H">
+                        <h1>
+                            {{ pretMenu[0].titulo }}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        {% else  %}
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})">
+            <div class="no_header" style="height: 359px;">
+                <div class="center_H">
+                    <h1>
+                        {{ocasionName}}
+                        {{categoryName}}
+                    </h1>
+                </div>
+            </div>
+        </div>
+        {% endif  %}
+        {% include('@Home/Default/breadcrumb.html.twig') %}
+    </div>
+    <div class="container">
+        <div class="row">
+            {% if es_boutique %}
+                <div class="col-xs-12">
+                    <div class="txt_dead_product">
+                        {{ qi.textoBigDB('txt_boutique_long')|raw }}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="col-xs-12 list_products">
+
+                {% include('@Carroiridian/Default/filtro.html.twig') %}
+                <div class="productos">
+                        {% for item in productos %}
+                            {% set ruta = path('product',{id:item.id, nombre: qi.slugify(item.nombre)}) %}
+                            {% set c_agotado = '' %}
+                            {% if item.cantidad == 0 %}
+                                {% set c_agotado = 'agotado' %}
+                            {% endif %}
+                                <div class="item {{ c_agotado }} grid-item c_{{ item.colores | replace({' ':' c_'}) }} e_{{ item.estilos | replace({' ':' e_'}) }} ca_{{ item.categoria }} ">
+                                    <a href="{{ path('add_wish',{id: item.id}) }}" class="wish">
+                                        {% if not wishlist[ item.id ] is defined %}
+                                            <img src="{{ qi.imagen('ico_rosa') }}">
+                                        {% else %}
+                                            <img src="{{ qi.imagen('ico_rosa') }}" class="tiene">
+                                        {% endif %}
+                                    </a>
+                                    <img src="{{ (item.imagen) }}" onclick="window.location = '{{ ruta }}';">
+                                    <h4 onclick="window.location = '{{ ruta }}';">{{ item.nombre | raw }}</h4>
+                                    <p onclick="window.location = '{{ ruta }}';">${{ (item.precio / escala_moneda ) | number_format }}</p>
+                                    <a onclick="showLoading()" href="{{ ruta }}">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        {{ qi.textoDB('texto_ver_mas') }}
+                                    </a>
+                                </div>
+                        {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '@Carroiridian/Default/ciudades_envio.html.twig' %}
+    {{ include('@Carroiridian/Default/confirmar_ciudad.html.twig') }}
+    <p style="text-align: center">
+        <a class="boton " href="#" id="b_cc" style="background-color: #011834; color: #fff; padding: 6px;">
+            <i class="fa fa-globe" aria-hidden="true"></i>
+            {{ 'Cambia la ciudad de envio' }}
+        </a>
+    </p>
+
+{% endblock %}
+
+

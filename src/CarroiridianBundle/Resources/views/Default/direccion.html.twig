@@ -1,0 +1,63 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="carrito direccion">
+        {# include 'CarroiridianBundle:Default:pasos.html.twig' #}
+        <div class="row">
+            <h4>{{ qi.textoDB('address_1')|raw }}</h4>
+        </div>
+        <br>
+        <div class="row">
+            <ul class="list-group">
+                {% for item in direcciones %}
+                    <li class="list-group-item">
+                        <span>{{ item.departamento }} - {{ item.ciudad }}: {{ item.direccion }}</span>
+                        <a href="{{ path('direccion_sesion',{id:item.id}) }}" class="button">seleccionar</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="row">
+            <h4>{{ qi.textoDB('address_2')|raw }}</h4>
+        </div>
+
+        <div class="row">
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+                <div class="col-sm-12 col-md-6">
+                        <div class="col-xs-12">
+                            <label>Departamento</label>
+                            {{ form_errors(form.departamento) }}
+                            {{ form_widget(form.departamento) }}
+                        </div>
+                        <div class="col-xs-12">
+                            <label>Ciudad</label>
+                            {{ form_errors(form.ciudad) }}
+                            {{ form_widget(form.ciudad) }}
+                        </div>
+                        <div class="col-xs-12">
+                            <label>Dirección</label>
+                            {{ form_errors(form.direccion) }}
+                            {{ form_widget(form.direccion) }}
+                        </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                        <div class="col-xs-12">
+                            <label>Datos adicionales</label>
+                            {{ form_errors(form.adicionales) }}
+                            {{ form_widget(form.adicionales,{'attr':{'placeholder':'Conjunto residencial, unidad...'}}) }}
+                        </div>
+                        <div class="col-xs-12">
+                            <label>Costo Envio</label>
+                            <input type="text" readonly id="costo-envio"/>
+                        </div>
+                        <input class="button" type="submit" value="Enviar"/>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

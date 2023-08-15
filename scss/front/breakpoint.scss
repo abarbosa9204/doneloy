@@ -1,0 +1,742 @@
+@import "../admin/mixins";
+@import "../admin/variables";
+
+@include breakpoint(mobileonly) {
+  body {
+   // background-color: red;
+  }
+
+  h1 {
+    font-size: 2.500em;
+  }
+
+  h2 {
+    font-size: 2.000em;
+  }
+
+  .header {
+    ul{
+      display: none;
+      width: $full;
+      padding: 10px;
+      li{
+        width: $full;
+      }
+      .logo {
+        display: none;
+      }
+    }
+    #v_menu {
+      display: block;
+      float: left;
+      color: white;
+      background-color: $color1;
+      font-size: 1.500em;
+      margin: 10px 15px;
+      padding: 5px 10px;
+    }
+
+    #logo_m {
+      display: inline-block;
+    }
+
+    .opciones {
+      width: $full;
+      display: none;
+      @include opacities($white_rgb, $op_half);
+      .idioma {
+        width: auto;
+        display: inline-block;
+      }
+    }
+  }
+
+  .banner {
+    height: 400px;
+  }
+
+  .categorias {
+    text-align: center;
+    .item {
+      float: none;
+      width: 42%;
+      margin: 10px;
+      display: inline-block;
+    }
+  }
+  .links {
+    .item{
+      width:$full;
+      margin: 10px 0;
+    }
+  }
+
+  .productos {
+    margin: 0;
+    .item {
+      width: 75%;
+      margin: 10px;
+    }
+  }
+
+  .banner_la_rosa_veloz {
+    height: auto;
+    .b_img {
+      height: auto;
+      width: $full;
+    }
+    .item {
+      width: $full;
+      .center_H{
+        position: relative;
+        left: inherit;
+        top: inherit;
+        -ms-transform: translateY 0;
+        -webkit-transform: translateY 0;
+        -moz-transform: translateY 0;
+        -o-transform: translateY 0;
+        transform: translateY(0);
+        display: inline-block;
+      }
+    }
+  }
+
+  .banner_taller_flores{
+    height: 400px;
+    p{
+      width: 82%;
+      font-size: 23px;
+    }
+  }
+
+  .banner_videos {
+    height: auto;
+    .arrow {
+      display: none;
+    }
+  }
+
+  .otros_servicios {
+    .item{
+      width: $full;
+      margin: 10px 0;
+    }
+  }
+  .sucursal {
+    height:auto;
+  }
+  .filter {
+    width: $full;
+    position: absolute;
+    top: 0px;
+    left: -$full;
+    float: none;
+    z-index: 100000;
+    padding: 15px;
+    background-color: white;
+    margin: 0;
+    padding: 55px 15px;
+
+    .cont_filter {
+      width: $full;
+      height: 500px;
+      float: left;
+    }
+
+    ul{
+      li{
+        a{
+          color: white;
+        }
+      }
+    }
+    #v_filtro{
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      font-size: 25px;
+      padding: 5px 10px;
+      background-color: $color1;
+      color: white;
+      z-index: 10;
+    }
+  }
+  .footer {
+    height: auto;
+    .menu_footer  {
+      display: none;
+    }
+  }
+  .list_products {
+    position: relative;
+    margin-top: 0;
+    .productos {
+      width: $full;
+      text-align: center;
+      .item{
+        width: 90%;
+        float: none;
+        display: inline-block;
+      }
+    }
+  }
+
+  .txt_dead_product {
+    width: $full;
+    font-size: 1.000em;
+  }
+
+  .producto {
+    .gal {
+      width: $full;
+      padding: 25px 0;
+      .item_p {
+        width: $full;
+          .img{
+            height: auto;
+            .i_p {
+              width: $full;
+              top: inherit;
+              left: inherit;
+              position: relative;
+              transform: translate( 0, 0);
+            }
+          }
+        .share{
+          a {
+            font-size: 12px;
+          }
+        }
+      }
+      .description {
+        width: $full;
+      }
+      .productos {
+        .item{
+          width: $full;
+        }
+      }
+      .interes .item {
+        float: none;
+        display: inline-block;
+        margin: 5px 0;
+      }
+    }
+  }
+
+  .producto .gal .item_large .describe, .producto .gal .item_large img{
+    width: $full;
+  }
+
+  .producto .gal .item_large img {
+    margin: 10px 0;
+  }
+
+  .cont_product {
+    width: $full;
+    padding: 25px 10px;
+  }
+  .pasos {
+    .item {
+      width: $full;
+      padding: 5px 0;
+      border: 0;
+      .img {
+        width: 20%;
+        height: 30px;
+        float: right;
+      }
+      p{
+        width: 80%;
+        float: left;
+      }
+    }
+  }
+
+  .carrito {
+    .opcion {
+      form {
+        label {
+          width: $full;
+          padding: 3px 0;
+        }
+      }
+    }
+  }
+
+  .somos {
+    p{
+      font-size: 1.200em;
+    }
+    .estilos {
+      .item {
+        width: $full;
+        margin: 5px 0;
+      }
+    }
+  }
+
+  .nuestra_historia {
+    height: auto;
+    .item {
+      height: auto;
+    }
+    .cont_texto {
+      width: 80%;
+      margin: 0 10%;
+    }
+    .texto {
+      width: $full;
+      display: inline-block;
+      margin: 10px 0;
+      p {
+        font-size: 1.000em;
+      }
+    }
+  }
+
+  .sucursal {
+    .filter, .sede {
+      width: $full;
+      height: auto;
+      top: inherit;
+      left: inherit;
+      right: inherit;
+      position: relative;
+      float: left;
+    }
+    .filter {
+      background-color: $color1;
+      padding: 10px;
+      h5 {
+        font-size: 1.200em;
+        margin: 5px 10px;
+        padding: 10px 0;
+      }
+      ul {
+        width: $full;
+        display: inline-block;
+        margin: 10px;
+        padding: 0 0;
+        display: none;
+        li{
+          width: 50%;
+          float: left;
+          a{
+            font-size: 1.000em;
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+    .sede {
+      height: 500px;
+    }
+    .item {
+      height: 300px;
+    }
+  }
+
+  .contacto {
+    height: auto;
+    .no_header {
+      height: auto !important;
+      position: relative;
+      left: inherit;
+      bottom: inherit;
+      float: left;
+    }
+    .center_H{
+      position: relative;
+      left: inherit;
+      top: inherit;
+      transform: translate(0, 0);
+    }
+    form {
+      width: 90%;
+      margin: 45px 5%;
+      float: left;
+    }
+  }
+
+  .links_somos .item {
+    width: $full;
+    margin: 15px 0;
+  }
+
+
+  .links_somos .item span {
+    font-size: 24px;
+  }
+
+  .historia .item {
+    width: $full;
+    margin: 25px 0;
+  }
+
+  .cultura .item {
+    width: 60%;
+  }
+
+  .the_blog .txt {
+    img{
+      max-width: 80%;
+    }
+  }
+
+  .producto .gal .link_full .hover h2 {
+    font-size: 18px;
+  }
+  .producto .gal .link_full .hover .boton {
+    width: 40%;
+    margin: 0 30%;
+  }
+
+  .como_hacer_florero_HAO .rota_pasos {
+    height: auto;
+  }
+
+  .como_hacer_florero_HAO .rota_pasos .item {
+    height: auto;
+  }
+
+  .como_hacer_florero_HAO .rota_pasos .txt .bot {
+    position: relative;
+    bottom: inherit;
+    float: left;
+    left: inherit;
+  }
+
+  .como_hacer_florero_HAO .material{
+    width: 85%;
+  }
+
+  .como_hacer_florero_HAO .rota_pasos img {
+    width: $full;
+  }
+
+  .como_hacer_florero_HAO .rota_pasos .txt {
+    width: $full;
+  }
+
+  .link_boutique {
+    width: $full;
+    .item {
+      width: $full;
+      margin: 25px 0;
+    }
+  }
+
+  .the_blog .articulos .rotador {
+    width: 80%;
+  }
+
+}
+
+@include breakpoint(phablet){
+  body {
+    /*background-color: blue;*/
+  }
+
+  /*.no_display {
+    display: block;
+  }*/
+
+}
+
+/* iphone 6 + Landscape */
+@media only screen
+and (min-device-width: 414px)
+and (max-device-width: 736px)
+and (-webkit-min-device-pixel-ratio: 3)
+and (orientation: landscape) {
+
+
+}
+
+
+/* iphone 6 Landscape */
+@media only screen
+and (min-device-width: 375px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: landscape) {
+
+
+}
+
+/* iphone 6 Portrait */
+@media only screen
+and (min-device-width: 375px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: portrait) {
+
+
+}
+
+/* iphone 5 Landscape */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 568px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: landscape) {
+
+
+}
+
+
+/* iphone 4 portrait*/
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: portrait) {
+
+}
+
+/* iphone 4 Landscape */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: landscape) {
+
+
+
+}
+
+
+@include breakpoint(desktop){
+  body {
+    /*background-color: green;*/
+  }
+
+  #v_menu {
+    display: none;
+  }
+
+
+}
+@include breakpoint(laptop){
+  body {
+    /*background-color: orange;*/
+  }
+  .header {
+    ul {
+      margin-top: 10px;
+      li{
+        a {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(tablet){
+  body {
+    /*background-color: yellow;*/
+  }
+
+
+}
+
+/* ipad landscape*/
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+
+
+}
+
+/* ipad portrait*/
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+
+  .header {
+    ul{
+      padding: 0;
+      .logo {
+        display: none;
+      }
+      li {
+        width: 24%;
+      }
+    }
+    #logo_m {
+      width: 25%;
+      display: inline-block;
+    }
+    .opciones {
+      width: 70%;
+    }
+  }
+
+  .productos {
+    margin: 25px  0;
+    .item{
+      width: 25%;
+    }
+  }
+  .recomendados {
+    .item{
+      margin: 0 2%;
+    }
+  }
+  .sucursal {
+    .filter{
+      width: 30%;
+      h5{
+        font-size: 23px;
+      }
+      ul{
+        width: 90%;
+        padding: 0 0;
+        li{
+          a{
+            font-size: 14px;
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+    .sede{
+      width: 25%;
+    }
+  }
+
+  .list_products {
+    .productos {
+      .item{
+        width: 30%;
+        margin: 25px 1%;
+        float: none;
+        display: inline-block;
+        a{
+          font-size: 10px;
+        }
+      }
+    }
+  }
+
+  .filter {
+    .boton {
+      font-size: 10px;
+    }
+    .sub_menu {
+      a{
+        font-size: 14px;
+      }
+    }
+    ul{
+      padding: 0 0;
+      li{
+        a{
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .producto .gal .productos .item {
+    width: 35%;
+  }
+
+  .producto .gal .item_p .img{
+    height: 300px;
+  }
+  .producto .gal .item_p .share a {
+    font-size: 12px;
+  }
+  .producto .gal .description h6 {
+    font-size: 16px;
+  }
+  .producto .gal .description h2 {
+    margin: 5px 0;
+  }
+  .producto .gal .description form label{
+    width: 90%;
+  }
+
+  .links_somos .item span {
+    font-size: 25px;
+  }
+
+  .producto .gal .link_full .hover h2 {
+    font-size: 1.200em;
+  }
+
+  .producto .gal .link_full .hover .boton {
+    font-size: 0.800em;
+  }
+
+  .producto .gal .link_full .hover .txt p {
+    font-size: 10px;
+  }
+
+
+}
+
+@media (max-width: 1480px) {
+
+  .header{
+    ul{
+      li{
+        a{
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+}
+
+@media (max-width: 1366px) {
+
+  .header{
+    ul{
+      li{
+        a{
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+}
+
+@media (max-width: 1280px) {
+
+  .header{
+    ul{
+      li{
+        a{
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+}
+
+@media (max-width: 1160px) {
+
+  .header{
+    ul{
+      li{
+        a{
+          font-size: 10px;
+        }
+      }
+    }
+  }
+
+}

@@ -1,0 +1,65 @@
+{# {{array_map('unlink', glob("C:\ruta_a_la_cache\cache\*"));}} #}
+<div class="footer">
+    <div class="container">    
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="menu_footer">
+                    <li>
+                        <a href="{{ path('homepage') }}">{{ qi.textoDB('m_inicio') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('productos') }}">{{ qi.textoDB('m_compra') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('somos') }}">{{ qi.textoDB('m_somos') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('tiendas') }}">{{ qi.textoDB('m_tiendas') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('boutique') }}">{{ qi.textoDB('m_boutique') }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('the_blog') }}">{{ qi.textoDB('m_blog') }}</a>
+                    </li>
+                    {# <li>
+                        <a href="{{ path('prensa') }}">{{ qi.textoDB('m_prensa') }}</a>
+                    </li> #}
+                    <li>
+                        <a href="{{ path('terminos') }}">{{ qi.textoDB('m_terminos') }}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-md-4 col-lg-4">
+                <h3>{{ qi.textoDB('titulo_contacto_footer') }}</h3>
+                {{ qi.textoBigDB('contacto_footer')|raw }}
+            </div>
+            <div class="col-xs-12 col-md-4 col-lg-4">
+                <h3>{{ qi.textoDB('titulo_newsletter_footer') }}</h3>
+                <form id="form_newsletter" novalidate="novalidate">
+                    <input type="email" placeholder="E-mail"/>
+                    <label>
+                        <span id="terms_error">{{ qi.textoDB('terms_error') }}</span>
+                        <span id="news_email_error">{{ qi.textoDB('news_email_error') }}</span>
+                        <input type="checkbox" id="acepta">
+                        <a href="{{ path('terminos') }}" target="_blank">{{ qi.textoDB('acepta') }}</a>
+                    </label>
+
+                    <input type="submit" value="Enviar"/>
+                </form>
+            </div>
+            <div class="col-xs-12 col-md-4 col-lg-4">
+                <h3>{{ qi.textoDB('titulo_social_footer') }}</h3>
+                {% for item in qi.galeria('social') %}
+                    <a href="{{ item.link }}" target="_blank" class="social">
+                        <i class="fa {{ item.titulo }}" aria-hidden="true"></i>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="col-xs-12">
+                <a href="http://iridian.co/" class="iridian" style="width: 5%; margin: 10px 0 0 0; display: inline-block" target="_blank"><img style="width: 100%; display: inline-block" src="/images/iridian.png"/></a>
+                <p class="legal">{{ qi.textoDB('legal_footer') }}</p>
+            </div>
+        </div>
+    </div>
+</div>

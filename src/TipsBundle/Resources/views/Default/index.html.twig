@@ -1,0 +1,73 @@
+
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_boutique')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_tips') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 list_products">
+                {% include('@Carroiridian/Default/filtro.html.twig') %}
+
+                    <div class="tips">
+
+                        <div class="item">
+                            <img src="{{ qi.imagen('link_tip_caja_rosas')|imagine_filter('prod_rot_gal') }}"/>
+                            <div class="hover">
+                                <div class="center_H">
+                                    <h3>{{ qi.textoDB('titulo_link_caja_rosas') }}</h3>
+                                    <a href="{{ path('tip') }}" class="boton">{{ qi.textoDB('texto_ver_mas') }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <img src="{{ qi.imagen('link_tip_arreglo_agua')|imagine_filter('prod_rot_gal') }}"/>
+                            <div class="hover">
+                                <div class="center_H">
+                                    <h3>{{ qi.textoDB('titulo_link_arreglo_Agua') }}</h3>
+                                    <a href="{{ path('tip') }}" class="boton">{{ qi.textoDB('texto_ver_mas') }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <img src="{{ qi.imagen('link_tip_arreglo_oasis')|imagine_filter('prod_rot_gal') }}"/>
+                            <div class="hover">
+                                <div class="center_H">
+                                    <h3>{{ qi.textoDB('titulo_link_arreglo_oasis') }}</h3>
+                                    <a href="{{ path('tip') }}" class="boton">{{ qi.textoDB('texto_ver_mas') }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <img src="{{ qi.imagen('link_tip_instale_su_arreglo')|imagine_filter('prod_rot_gal') }}"/>
+                            <div class="hover">
+                                <div class="center_H">
+                                    <h3>{{ qi.textoDB('titulo_link_instale_su_arreglo') }}</h3>
+                                    <a href="{{ path('tip') }}" class="boton">{{ qi.textoDB('texto_ver_mas') }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

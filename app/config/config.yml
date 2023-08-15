@@ -1,0 +1,1068 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@HomeBundle/Resources/config/services.yml" }
+    - { resource: "@ContactoBundle/Resources/config/services.yml" }
+    - { resource: "@CarroiridianBundle/Resources/config/services.yml" }
+    - { resource: "@BlogiridianBundle/Resources/config/services.yml" }
+    - { resource: "@UserIridianBundle/Resources/config/services.yml" }
+    - { resource: "@PagosPayuBundle/Resources/config/services.yml" }
+    - { resource: "@SomosBundle/Resources/config/services.yml" }
+    - { resource: "@TiendasBundle/Resources/config/services.yml" }
+    - { resource: "@BlogBundle/Resources/config/services.yml" }
+    - { resource: "@TipsBundle/Resources/config/services.yml" }
+    - { resource: "@GeoBundle/Resources/config/services.yml" }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: es
+    app.path.images: /uploads/images/general
+    app.path.imagesgal: /uploads/images/galeria
+    app.path.carta: /uploads/documents/carta
+    app.path.productos: /uploads/productos
+    app.path.mailings: /uploads/mailings
+    app.path.blogs: /uploads/blogs
+    app.path.generos: /uploads/generos
+    app.path.inventarios: /uploads/inventarios
+
+framework:
+    #esi:             ~
+    translator: ~
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini        
+         save_path: "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals:
+        qi: "@qi"
+        ci: "@ci"
+        path_images: %app.path.images%
+        path_images_gal: %app.path.imagesgal%
+        path_cartas: %app.path.carta%
+        path_productos: %app.path.productos%
+        path_mailings: %app.path.mailings%
+        path_blogs: %app.path.blogs%
+        path_genero: %app.path.generos%
+        path_inventarios: %app.path.inventarios%
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        dql:
+            string_functions:
+                GROUP_CONCAT: AppBundle\DQL\GroupConcat
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+            numeric_functions:
+                rand: DoctrineExtensions\Query\Mysql\Rand
+        auto_generate_proxy_classes: true
+        # auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+
+stof_doctrine_extensions:
+    default_locale: es
+    orm:
+        default:
+            timestampable: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+    disable_delivery:  false
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    resetting:
+           token_ttl: 0
+    registration:
+        form:
+            type: UserIridianBundle\Form\RegistrationType
+    profile:
+        form:
+            type: UserIridianBundle\Form\ProfileFormType
+    from_email:
+            address: mauricio@iridian.co
+            sender_name: Iridian
+
+
+lexik_jwt_authentication:
+    private_key_path: %jwt_private_key_path%
+    public_key_path:  %jwt_public_key_path%
+    pass_phrase:      %jwt_key_pass_phrase%
+    token_ttl:        %jwt_token_ttl%
+
+jmose_command_scheduler:
+
+    # Default directory where scheduler will write output files
+    #  This default value assume that php bin/console is launched from project's root and that the directory is writable
+    # if log_path is set to false, logging to files is disabled at all
+    log_path: false
+    # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
+    lock_timeout: false
+    # receivers for reporting mails
+    monitor_mail: []
+    # to send "everything's all right" emails to receivers for reporting mails set this value to "true" (see monitoring)
+    send_ok: false
+
+    # Namespaces listed here won't be listed in the list
+    excluded_command_namespaces:
+        - _global
+        - scheduler
+        - server
+        - container
+        - config
+        - generate
+        - init
+        - router
+
+    # Doctrine manager
+    doctrine_manager: default
+
+
+
+
+
+
+fm_elfinder:
+    #assets_path: / # default is /assets, this is where css/js elfinder files are
+    instances:
+        default:
+            locale: %locale% # defaults to current request locale
+            editor: ckeditor # other options are tinymce, tinymce4, fm_tinymce, form, simple, custom
+            #editor_template: custom template for your editor # default null
+            #path_prefix: / # for setting custom assets path prefix, useful for non vhost configurations, i.e. http://127.0.0.1/mysite/
+            #fullscreen: true|false # default is true, applies to simple and ckeditor editors
+            #theme: smoothness # jquery theme, default is 'smoothness'
+            include_assets: true # disable if you want to manage loading of javascript and css assets manually
+            #visible_mime_types: ['image/png', 'image/jpg', 'image/jpeg'] # only show these mime types, defaults to show all
+            connector:
+                #debug: true|false # defaults to false
+                roots:       # at least one root must be defined, defines root filemanager directories
+                    uploads:
+                        #show_hidden: true|false # defaults to false, hides dotfiles
+                        driver: LocalFileSystem
+                        path: uploads/posts
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_deny: ['all']
+                        upload_max_size: 2M # also file upload sizes restricted in php.ini
+                        #attributes: example of setting attributes permission
+                        #    - { pattern: '/(.*?)/', read: true, write: false, locked: true }
+
+assetic:
+   debug:          '%kernel.debug%'
+   use_controller: '%kernel.debug%'
+   read_from:      '%kernel.root_dir%/../html/'
+   write_to:       '%kernel.root_dir%/../html/'
+   filters:
+        cssrewrite:
+            bin: '%kernel.root_dir%/../node_modules/gulp-uglify/node_modules/uglifycss/uglifycss'
+        uglifyjs2:
+            # the path to the uglifyjs executable
+            bin: '%kernel.root_dir%/../node_modules/gulp-uglify/node_modules/uglify-js/bin/uglifyjs'
+        jpegoptim:
+            bin: '%kernel.root_dir%/../node_modules/jpegoptim-bin/vendor'
+            strip_all: true
+
+ivory_ck_editor:
+    input_sync: true
+    default_config: base_config
+    configs:
+        base_config:
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters:
+              instance: default
+            toolbar:
+                - { name: "styles", items: ['Bold', 'Italic', 'BulletedList', 'Link', 'Unlink'] }
+                #- { name: "basicstyles",  groups: ["basicstyles"]}
+                - { name: "Listas",        items: ["NumberedList", 'BulletedList']}
+                - { name: "paragraph",    items: ["list","blocks",'JustifyLeft','JustifyCenter','JustifyCenter','JustifyBlock','Source']}
+                #- { name: "document",     groups: ["mode"]}
+                - { name: "insert",       items: ["Image"]}
+                - { name: "styles",       items: ["Styles", 'Format','Font','FontSize','TextColor']}
+                #- { name: "about",        groups: ["about"]}
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+            images:
+                uri_prefix:         '%app.path.images%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/images/general'
+                namer:              vich_uploader.namer_uniqid
+            imagesgal:
+                uri_prefix:         '%app.path.imagesgal%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/images/galeria'
+                namer:              vich_uploader.namer_uniqid
+            carta:
+                uri_prefix:         '%app.path.carta%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/documents/carta'
+                namer:              vich_uploader.namer_uniqid
+            productos:
+                uri_prefix:         '%app.path.productos%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/productos'
+                namer:              vich_uploader.namer_uniqid
+            mailings:
+                uri_prefix:         '%app.path.mailings%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/mailings'
+                namer:              vich_uploader.namer_uniqid
+            blogs:
+                uri_prefix:         '%app.path.blogs%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/blogs'
+                namer:              vich_uploader.namer_uniqid
+            generos:
+                uri_prefix:         '%app.path.generos%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/generos'
+                namer:              vich_uploader.namer_uniqid
+            inventarios:
+                uri_prefix:         '%%app.path.inventarios%%'
+                upload_destination: '%kernel.root_dir%/../html/uploads/inventarios'
+                namer:              vich_uploader.namer_uniqid
+
+jms_i18n_routing:
+    default_locale: es
+    locales: [es, en]
+    strategy: prefix_except_default
+
+ewz_recaptcha:
+    public_key:  6LfCUQYTAAAAAJiT7niJSURQ_1mENqfu1UJ9wW7L
+    private_key: 6LfCUQYTAAAAANiMT-5yrbqQ0I7Z4YU2Vpdila3D
+    locale_from_request: true
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path:
+            web_root: %kernel.root_dir%/../html
+            cache_prefix: media/cache
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/../html
+
+    filter_sets:
+        cache: ~
+        my_thumb_category:
+            quality: 100
+            filters:
+                thumbnail: { size: [240, 240], mode: outbound }
+        back_link:
+            quality: 100
+            filters:
+                thumbnail: { size: [496, 242], mode: outbound }
+        producto:
+            quality: 100
+            filters:
+                thumbnail: { size: [324, 305], mode: outbound }
+        producto_img:
+            quality: 100
+            filters:
+                thumbnail: { size: [258, 243], mode: outbound }
+        otros_serv:
+            quality: 100
+            filters:
+                thumbnail: { size: [356, 205], mode: outbound }
+        prod_rot_gal:
+            quality: 100
+            filters:
+                thumbnail: { size: [356, 205], mode: outbound }
+        prod_ver:
+            quality: 100
+            filters:
+                thumbnail: { size: [356, 205], mode: outbound }
+        producto:
+            quality: 100
+            filters:
+                thumbnail: { size: [317, 338], mode: outbound }
+        producto_carrito:
+            quality: 70
+            filters:
+                thumbnail: { size: [104, 104], mode: outbound }
+        banner:
+            quality: 70
+            filters:
+                thumbnail: { size: [1920, 1080], mode: outbound }
+        thumb_estilos:
+            quality: 60
+            filters:
+                thumbnail: { size: [259, 177], mode: outbound }
+        thumb_blog:
+            quality: 60
+            filters:
+                thumbnail: { size: [244, 145], mode: outbound }
+        link_somos:
+            quality: 70
+            filters:
+                thumbnail: { size: [564, 263], mode: outbound }
+        link_full:
+            quality: 100
+            filters:
+                thumbnail: { size: [777, 203], mode: outbound }
+        img_pasos:
+            quality: 100
+            filters:
+                thumbnail: { size: [526, 365], mode: outbound }
+        culture_dammi:
+            quality: 70
+            filters:
+                upscale: { min: [209, 209] }
+
+
+mobile_detect:
+    service:
+        mobile_detector: mobile_detect.mobile_detector.default
+    request_response_listener_class: SunCat\MobileDetectBundle\EventListener\RequestResponseListener
+    twig_extension_class: SunCat\MobileDetectBundle\Twig\Extension\MobileDetectExtension
+
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+        forced_allow_origin_value: ~
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+        '^/':
+            origin_regex: true
+            allow_origin: ['^http://localhost:[0-9]+']
+            allow_headers: ['X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+            hosts: ['^api\.']
+
+easy_admin:
+    site_name: Iridian CP
+    design:
+            assets:
+                js:
+                  - 'assets/vendor/jquery-ui/ui/minified/jquery-ui.min.js'
+                  - 'assets/vendor/spectrum/spectrum.js'
+                  - 'assets/vendor/moment/min/moment.min.js'
+                  - 'assets/vendor/moment-timezone/builds/moment-timezone-with-data.js'
+                  - 'assets/vendor/underscore/underscore-min.js'
+                  - '//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js'
+                  - '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js'
+                  - '//www.gstatic.com/charts/loader.js'
+                  - 'js/admin/admin_iridian.js?1.1.1'
+                  - 'js/admin/carro_iridian.js'
+                  - 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBR8WE33v8iMRlWQs6leCg1TqJQIQlNQm0&callback=initMap'
+                css:
+                  - 'assets/vendor/spectrum/spectrum.css'
+                  - '//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css'
+                  - 'assets/vendor/daterangepicker/demo/css/picker.css'
+                  - '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css'
+                  - 'css/admin/admin.css'
+            menu:
+                - label: 'General'
+                  children:
+                      - { entity: 'General', icon: 'asterisk' }
+                      - { entity: 'Seo', icon: 'search' }
+                      - { entity: 'Texto', icon: 'file-text-o', label: 'Textos' }
+                      - { entity: 'TextoBig', icon: 'expand file-text-o', label: 'Textos grandes' }
+                      - { entity: 'Imagen', icon: 'picture-o', label: 'Imagenes' }
+                      - { entity: 'Settings', icon: 'cog', label: 'Configuraciones' }
+
+                - label: 'Productos'
+                  icon: 'shopping-basket'
+                  children:
+                      - { entity: 'Categoria', icon: 'tags', label: 'Categorias' }
+                      - { entity: 'Producto', icon: 'th-list', label: 'Listado de productos' }
+                      - { entity: 'Producto', icon: 'plus-circle', label: 'Crear producto', params: { action: 'new' } }
+                      #- { entity: 'Estilo', icon: 'male', label: 'Estilos' }
+                      - { entity: 'Taller', icon: 'th-list', label: 'Fechas de talleres' }
+                      - { entity: 'Color', icon: 'paint-brush', label: 'Colores' }
+                      - { entity: 'Ocasion', icon: 'child', label: 'Ocasiones' }
+                      - { entity: 'Talla', icon: 'arrows-v', label: 'Tamaños' }
+                      - { entity: 'TipoInspiracion', icon: 'hearbeat', label: 'Tipo inspiración' }
+                      - { entity: 'Inspiracion', icon: 'heary', label: 'Inspiración' }
+                      - { entity: 'TipoDocumento', icon: 'hearbeat', label: 'Tipo docomento' }
+                      - { entity: 'RangoPrecio', icon: 'list', label: 'Rangos de precios' }
+                      #- { entity: 'Modelo', icon: 'user', label: 'Modelos' }
+                      #- { entity: 'Bono', icon: 'child', label: 'Bonos' }
+                      #- { entity: 'Valorbono', icon: 'user', label: 'Valores bonos' }
+                      #- { entity: 'Genero', icon: 'tags' }
+                - label: 'Planes de abasto'
+                  icon: 'shopping-basket'
+                  children:
+                      - { entity: 'ConfiguracionPlan', label: 'Configuración de planes', icon: 'cog' }
+                      - { entity: 'PrecioPlan', label: 'Precios por tamaño', icon: 'th-list' }
+                      - { entity: 'Flor', label: 'Variedades de flores', icon: 'list' }
+                      - { entity: 'Florero', label: 'Floreros', icon: 'list' }
+                      - { entity: 'Duracion', label: 'Duraciones', icon: 'clock-o' }
+                      - { entity: 'Tamano', label: 'Tamaños', icon: 'arrows-alt' }
+                - label: 'Contacto'
+                  icon: 'home'
+                  children:
+                      - { entity: 'ContactList', icon: 'cog', label: 'Lista' }
+                      - { entity: 'Newsletter', icon: 'cog', label: 'Newsletter' }
+                      - { label: 'Exportar contactos newsletter', icon: 'download', url: '/export.php?tabla=newsletter' }
+                - label: 'Inventarios'
+                  icon: 'home'
+                  children:
+                      - { label: 'Matriz de inventarios', icon: 'fa-file-excel-o', route: 'admin_inventarios', params: { entity: 'Inventario' } }
+                      - { entity: 'ArchivoInventario', icon: 'fa-upload', label: 'Subir archivo inventario' }
+                - label: 'Compras'
+                  icon: 'shopping-basket'
+                  children:
+                      - { entity: 'Compra', icon: 'shopping-basket', label: 'Compras' }
+                      - { label: 'Buscador', icon: 'search', route: 'facturas' }
+                      - { entity: 'Tarjeta', icon: 'hearbeat', label: 'Tarjetas' }
+                - label: 'Blog'
+                  icon: 'newspaper-o'
+                  children:
+                      - { entity: 'CategoriaBlog', icon: 'list', label: 'Categoría' }
+                      - { entity: 'Post', icon: 'newspaper-o', label: 'Post' }
+                      - { entity: 'Comentario', icon: 'commenting', label: 'Comentarios' }
+                      - { entity: 'Autor', icon: 'map', label: 'Autor' }
+                - label: 'Galeria'
+                  children:
+                      - { entity: 'Galeria', icon: 'file-image-o' }
+                      - { entity: 'Imagengaleria', icon: 'picture-o', label: 'Imagenes' }
+                - label: 'Sedes'
+                  children:
+                      - { entity: 'CiudadSede', icon: 'globe' , label: 'Ciudad'}
+                      - { entity: 'Sede', icon: 'map-marker', label: 'Sede' }
+                - { entity: 'Ciudad', icon: 'globe' , label: 'Ciudades'}
+                - { entity: 'Almacen', icon: 'shopping-basket' , label: 'Almacenes'}
+                - { entity: 'Ruta', icon: 'share', label: 'Migas de pan' }
+                - { label: 'Usuarios', entity: 'User', icon: 'users' }
+                - label: 'Reportes'
+                  icon: 'line-chart'
+                  children:
+                      - { label: 'Total vendido',  route: 'reporte_total_vendido' }
+                      - { label: 'Todas las ventas',  route: 'reporte_completo' }
+                      - { label: 'Diario',  route: 'reporte_diario' }
+                      - { label: 'Mensual',  route: 'reporte_mensual' }
+                      - { label: 'Por producto',  route: 'reporte_producto' }
+                      - { label: 'Por categoría',  route: 'reporte_categoria' }
+                      - { label: 'Por día',  route: 'reporte_dia' }
+                      - { label: 'Por Estado',  route: 'reporte_estado' }
+                - { label: 'Días no entrega',  entity: 'Nohabil', icon: 'calendar'}
+    entities:
+        General:
+            class: AppBundle\Entity\General
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'logo', type: 'image', base_path: %app.path.images% }
+
+        RangoPrecio:
+            class: CarroiridianBundle\Entity\RangoPrecio
+            list:
+                fields: 
+                    - { property: 'id' }
+                    - { property: 'textoEs' }
+                    - { property: 'textoEn' }
+                    - { property: 'minimo', label: 'Mínimo' }
+                    - { property: 'maximo', label: 'Máximo' }
+            form:
+                fields:
+                    - { property: 'textoEs' }
+                    - { property: 'textoEn' }
+                    - { property: 'minimo', label: 'Mínimo' }
+                    - { property: 'maximo', label: 'Máximo' }
+
+        Seo:
+            class: AppBundle\Entity\Seo
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'titulo_es' }
+                    - { property: 'titulo_en' }
+                    - { property: 'imagen', type: 'image', base_path: %app.path.images% }
+            form:
+                fields:
+                    - { property: 'url'}
+                    - { property: 'titulo_es' }
+                    - { property: 'titulo_en' }
+                    - { property: 'descripcion_es' }
+                    - { property: 'descripcion_en' }
+                    - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+        Taller:
+            class: CarroiridianBundle\Entity\Taller
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'taller' }
+                    - { property: 'fecha' }
+            form:
+                fields:
+                    - { property: 'taller', type: 'entity', type_options: { query_builder: 'CarroiridianBundle\Repository\ProductoRepository::getTalleres', class: 'CarroiridianBundle:Producto' }}
+                    - { property: 'fecha', type_options: {'widget': 'single_text', 'format': 'yyyy-MM-dd', 'attr': {'class': 'datepicker'}} }
+
+        ConfiguracionPlan:
+            class: CarroiridianBundle\Entity\ConfiguracionPlan
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'tipoPlan', label: 'Tipo de plan' }
+                    - { property: 'incluyeJarron', label: '¿Jarrón seleccionable?' }
+                    - { property: 'florSeleccionable', label: '¿Variedad de flor seleccionable?' }
+                    - { property: 'corporativo', label: '¿Es un plan corporativo?' }
+            form:
+                fields:
+                    - { property: 'tipoPlan', label: 'Tipo de plan', type: 'entity', type_options: { query_builder: 'CarroiridianBundle\Repository\CategoriaRepository::getAbasto', class: 'CarroiridianBundle:Categoria' }}
+                    - { property: 'incluyeJarron', label: '¿El cliente puede incluir jarrón?'}
+                    - { property: 'florSeleccionable', label: '¿El cliente puede seleccionar la variedad de flor?'}
+                    - { property: 'corporativo', label: '¿Es un plan corporativo?'}
+                    - duraciones
+
+        PrecioPlan:
+            class: CarroiridianBundle\Entity\PrecioPlan
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'plan' }
+                    - { property: 'tamano', label: 'Tamaño' }
+                    - { property: 'precio1', label: 'Precio al mes X 1 entrega' }
+                    - { property: 'precio2', label: 'Precio al mes X 2 entregas' }
+                    - { property: 'precio3', label: 'Precio al mes X 3 entregas' }
+                    - { property: 'precio4', label: 'Precio al mes X 4 entregas' }
+                    - { property: 'entregasDescuento1', label: '# entregas primer descuento' }
+                    - { property: 'descuento1', label: '% del primer descuento' }
+                    - { property: 'entregasDescuento2', label: '# entregas segundo descuento' }
+                    - { property: 'descuento2', label: '% del segundo descuento' }
+                    - { property: 'imagen', type: 'image', base_path: '%app.path.productos%'  }
+            form:
+                fields:
+                    - { property: 'plan', label: 'Plan (Producto)', type: 'entity', type_options: { query_builder: 'CarroiridianBundle\Repository\ProductoRepository::getAbasto', class: 'CarroiridianBundle:Producto' }}
+                    - tamano
+                    - { property: 'precio1', label: 'Precio al mes X 1 entrega' }
+                    - { property: 'precio2', label: 'Precio al mes X 2 entregas' }
+                    - { property: 'precio3', label: 'Precio al mes X 3 entregas' }
+                    - { property: 'precio4', label: 'Precio al mes X 4 entregas' }
+                    - { property: 'entregasDescuento1', label: '# entregas primer descuento' }
+                    - { property: 'descuento1', label: '% del primer descuento' }
+                    - { property: 'entregasDescuento2', label: '# entregas segundo descuento' }
+                    - { property: 'descuento2', label: '% del segundo descuento' }
+                    - { property: 'imageFile', label: 'Imagen', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+
+        Flor:
+            class: CarroiridianBundle\Entity\Flor
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+                    - { property: 'imagen', type: 'image', base_path: '%app.path.productos%'  }
+            form:
+                fields:
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+                    - { property: 'imageFile', label: 'Imagen', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+
+        Florero:
+            class: CarroiridianBundle\Entity\Florero
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+                    - { property: 'tamano', label: 'Tamaño' }
+                    - { property: 'producto', label: 'Producto asociado' }
+                    - { property: 'imagen', type: 'image', base_path: '%app.path.productos%'  }
+            form:
+                fields:
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+                    - { property: 'tamano', label: 'Tamaño' }
+                    - { property: 'producto', label: 'Producto asociado', type: 'entity', type_options: { query_builder: 'CarroiridianBundle\Repository\ProductoRepository::getFloreros', class: 'CarroiridianBundle:Producto' } }
+                    - { property: 'imageFile', label: 'Imagen', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+
+        Tamano:
+            class: CarroiridianBundle\Entity\Tamano
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+            form:
+                fields:
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+
+        Duracion:
+            class: CarroiridianBundle\Entity\Duracion
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+                    - { property: 'dias' }
+            form:
+                fields:
+                    - { property: 'nombreEs', label: 'Nombre en español' }
+                    - { property: 'nombreEn', label: 'Nombre en inglés' }
+                    - dias
+
+        Genero:
+          class: CarroiridianBundle\Entity\Genero
+          list:
+              fields:
+                  - { property: 'id' }
+                  - { property: 'nombre_es' }
+                  - { property: 'nombre_en' }
+                  - { property: 'imagen', type: 'image', base_path: '%app.path.generos%'  }
+          form:
+              fields:
+                  - { property: 'alt'}
+                  - { property: 'nombre_es' }
+                  - { property: 'nombre_en' }
+                  - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                  - { property: 'orden' }
+                  - { property: 'visible' }
+
+        Texto:
+            class: AppBundle\Entity\Texto
+        TextoBig:
+            class: AppBundle\Entity\TextoBig
+            form:
+                fields:
+                    - { property: 'llave' }
+                    - { property: 'es', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'en', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+        Imagen:
+            class: AppBundle\Entity\Imagen
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'llave' }
+                    - { property: 'image', type: 'image', base_path: %app.path.images% }
+                    - { property: 'alt'}
+            show:
+                fields:
+                    - { property: 'llave' }
+                    - { property: 'image', type: 'image', base_path: %app.path.images% }
+                    - { property: 'alt' }
+            form:
+                fields:
+
+                    - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'alt' }
+        Settings:
+            class: AppBundle\Entity\Settings
+        Mailing:
+            class: AppBundle\Entity\Mailing
+            disabled_actions: ['new', 'delete']
+            list:
+                fields:
+                    - id
+                    - llave
+                    - asunto
+
+            form:
+                fields:
+                    #- { property: 'llave' }
+                    - { property: 'asunto' }
+                    - { property: 'alt' }
+                    - { property: 'mensaje_es', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'mensaje_en', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'imagenheadFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType', label: 'Imagen Header'}
+                    - { property: 'imagenstoreFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType', label: 'Imagen Tienda' }
+                    - { property: 'imagenpinterestFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType', label: 'Imagen Pinterest' }
+                    - { property: 'imageninstaFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType',label: 'Imagen Instagram' }
+                    - { property: 'imagenfaceFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType', label: 'Imagen Facebook' }
+        Contact:
+            class: AppBundle\Entity\Contact
+            disabled_actions: ['new', 'delete']
+            list:
+                fields:
+                    - id
+                    - llave
+                    - mensaje_es
+                    - mensaje_en
+            form:
+                fields:
+                    - matters
+                    - { property: 'mensaje_es', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'mensaje_en', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+        ContactList:
+          class: AppBundle\Entity\ContactList
+          disabled_actions: ['new', 'delete', "edit"]
+          list:
+              actions: ['show']
+              fields:
+                  - id
+                  - nombre
+                  - apellido
+                  - email
+                  - telefono
+        Matter:
+          class: AppBundle\Entity\Matter
+          list:
+              fields:
+                  - id
+                  - destinatario
+                  - nombre_es
+                  - nombre_en
+          form:
+              fields:
+                  - destinatario
+                  - nombre_es
+                  - nombre_en
+        User:
+            class: AppBundle\Entity\User
+            list:
+                fields:
+                    - id
+                    - nombre
+                    - apellidos
+                    - telefono
+                    - username
+                    - email
+                    - enabled
+            form:
+                fields:
+                    - nombre
+                    - apellidos
+                    - telefono
+                    - username
+                    - email
+                    - { property: 'plainPassword', type: 'password', label: 'Contraseña' }
+                    - roles
+                    - enabled
+        Tarjeta:
+          class: AppBundle\Entity\Tarjeta
+          list:
+            fields:
+                - id
+                - tipoTarjeta
+                - ultimos
+                - fecha
+                - numDoc
+                - titular
+                - usuario
+        Galeria:
+            class: AppBundle\Entity\Galeria
+            list:
+                actions: ['show','edit','delete']
+        Imagengaleria:
+          class: AppBundle\Entity\Imagengaleria
+          list:
+              fields:
+                  - { property: 'id' }
+                  - { property: 'galeria'}
+                  - { property: 'llave'}
+                  - { property: 'link'}
+                  - { property: 'imageEs', type: 'image', base_path: %app.path.imagesgal% }
+                  - { property: 'imageEn', type: 'image', base_path: %app.path.imagesgal% }
+                  - { property: 'alt'}
+                  - { property: 'orden'}
+                  - { property: 'visible'}
+          form:
+              fields:
+                  - { property: 'galeria'}
+                  - { property: 'llave'}
+                  - { property: 'link'}
+                  - { property: 'tituloEs'}
+                  - { property: 'tituloEn'}
+                  - { property: 'resumenEs'}
+                  - { property: 'resumenEn'}
+                  - { property: 'imageEsFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                  - { property: 'imageEnFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                  - { property: 'imagemovilEsFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                  - { property: 'imagemovilEnFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                  - { property: 'documentoEsFile', type: 'Vich\UploaderBundle\Form\Type\VichFileType' }
+                  - { property: 'documentoEnFile', type: 'Vich\UploaderBundle\Form\Type\VichFileType' }
+                  - { property: 'alt'}
+                  - { property: 'orden'}
+                  - { property: 'visible'}
+        Producto:
+            class: CarroiridianBundle\Entity\Producto
+            list:
+                actions: ['show','edit','delete']
+                fields:
+                    - id
+                    - { property: 'nombreEs'}
+                    - categoria
+                    - { property: 'sku'}
+                    - sap
+                    - porcentajeIva
+                    - { property: 'imagen', type: 'image', base_path: '%app.path.productos%'  }
+                    - precio
+                    - { property: 'orden'}
+                    - home
+                    - recomendado
+                    - recomendadoapp
+                    - { property: 'visible'}
+                    - destacado
+                    - conEnvio
+                    - dedicatoria
+                    - siempreDisponible
+            form:
+                fields:
+                    - { property: 'sku'}
+                    - sap
+                    - { property: 'nombreEs'}
+                    - { property: 'nombreEn'}
+                    - categoria
+                    - padre
+                    - colores
+                    - { property: 'color', label: 'Color principal'}
+                    - { property: 'coloresRelacionados', label: 'Producto en otro color'}
+                    - { property: 'productosRelacionados', label: 'Productos relacionados'}
+                    - ocaciones
+                    #- generos
+                    #- estilos
+                    #- modelo
+                    #- { property: 'coloresRelacionados', label: 'Colores Disponibles' }
+                    - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'imageauxFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType', label: 'Imagen movíl home' }
+                    - ordenhome
+                    - { property: 'imagenhomeFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - precio
+                    - codigoIva
+                    - porcentajeIva
+                    - { property: 'descripcionEs', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'descripcionEn', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'alt'}
+                    - { property: 'orden'}
+                    - { property: 'visible'}
+                    - conEnvio
+                    - { property: 'taller', label: 'Es taller'}
+                    - corporativo
+                    - home
+                    - nuevo
+                    - destacado
+                    - recomendado
+                    - recomendadoapp
+                    - pret
+                    - boutique
+                    - dedicatoria
+                    - siempreDisponible
+                    - { property: 'videoTaller', label: 'Link Video taller', type: 'Symfony\Component\Form\Extension\Core\Type\TextType' }
+                    - ciudadTaller
+                    - { property: 'temarioTallerFile', delete_label: 'Eliminar archivo anterior', label: 'Temario taller', type: 'Vich\UploaderBundle\Form\Type\VichFileType'}
+                    - { property: 'horaTaller', label: 'Hora del taller', type: 'Symfony\Component\Form\Extension\Core\Type\TextType' }
+                    - { property: 'direccionTaller', label: 'Dirección del taller', type: 'Symfony\Component\Form\Extension\Core\Type\TextType' }
+        Categoria:
+            class: CarroiridianBundle\Entity\Categoria
+            list:
+                fields:
+                    - id
+                    - nombreEs
+                    - nombreEn
+                    - { property: 'imagen', type: 'image', base_path: '%app.path.productos%'  }
+                    - orden
+                    - visible
+                    - principal
+                    - abasto
+                    - pret
+            form:
+                fields:
+                    - nombreEs
+                    - nombreEn
+                    - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType'}
+                    - { property: 'imageauxFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'imagemovilFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'imagetextoesFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'imagetextoenFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - resumenEs
+                    - resumenEn
+                    - { property: 'descripcionEs', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'descripcionEn', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'alt'}
+                    - { property: 'orden'}
+                    - { property: 'visible'}
+                    - principal
+                    - abasto
+                    - pret
+                    - app
+        Estilo:
+            class: CarroiridianBundle\Entity\Estilo
+        Color:
+            class: CarroiridianBundle\Entity\Color
+            form:
+                fields:
+                    - nombreEs
+                    - nombreEn
+                    - sku
+                    - precio
+                    - { property: 'hexa', css_class: 'col-xs-12 hexa' }
+                    - { property: 'imagenFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - orden
+                    - visible
+        Talla:
+            class: CarroiridianBundle\Entity\Talla
+        Galeriaproducto:
+            class: CarroiridianBundle\Entity\Galeriaproducto
+            form:
+                fields:
+                    - producto
+                    - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'orden', type: 'hidden' }
+                    - alt
+                    - visible
+        Inventario:
+            class: CarroiridianBundle\Entity\Inventario
+        Entrada:
+            class: CarroiridianBundle\Entity\Entrada
+            form:
+                fields:
+                    - { property: 'inventario', type_options: { required: true } }
+                    - cantidad
+                    - { property: 'fecha', type: 'hidden' }
+        Compra:
+            class: CarroiridianBundle\Entity\Factura
+            disabled_actions: ['delete','new','edit']
+            list:
+                actions: []
+                fields:
+                  - { property: 'id', label: 'id factura'}
+                  - { property: 'compra', label: 'id compra'}
+                  - { property: 'precio'}
+                  - { property: 'prueba', type: 'boolean' }
+                  - idsap
+                  - docsap
+                  - estado
+                  - { property: 'usuarioCompleto', type: 'raw' }
+                  - { property: 'direccionCompleta', type: 'raw' }
+                  - { property: 'productos', type: 'raw' }
+                  - { property: 'descripcion', type: 'raw' }
+                  - { property: 'dedi', label:'Dedicatoria', type: 'raw' }
+                  - { property: 'compra.Transaccion', type: 'raw' }
+        Post:
+            class: BlogiridianBundle\Entity\Post
+            list:
+                actions: ['show','edit','delete']
+                fields:
+                    - categoria
+                    - id
+                    - tituloEs
+                    - fecha
+                    - visible
+            form:
+                fields:
+                    - categoria
+                    - tituloEs
+                    - tituloEn
+                    - fecha
+                    - autor
+                    - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'contenidoEs', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'contenidoEn', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - tags
+                    - { property: 'visible'}
+        Autor:
+            class: BlogiridianBundle\Entity\Autor
+        Comentario:
+            class: BlogiridianBundle\Entity\Comentario
+        CategoriaBlog:
+            class: BlogiridianBundle\Entity\CategoriaBlog
+        GaleriaPost:
+            class: BlogiridianBundle\Entity\GaleriaPost
+            form:
+                fields:
+                    - post
+                    - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType' }
+                    - { property: 'orden', type: 'hidden' }
+                    - alt
+                    - visible
+        CiudadSede:
+            class: GeoBundle\Entity\CiudadSede
+        Sede:
+            class: GeoBundle\Entity\Sede
+            list:
+                fields:
+                    - id
+                    - ciudad
+                    - nombre
+                    - { property: 'imagen', type: 'image', base_path: '%app.path.imagesgal%'  }
+                    - orden
+                    - visible
+            form:
+                fields:
+                    - ciudad
+                    - nombre
+                    - { property: 'imagenFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType'}
+                    - { property: 'descripcionEs', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'descripcionEn', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'orden'}
+                    - { property: 'visible'}
+                    - lat
+                    - lng
+        Ocasion:
+            class: CarroiridianBundle\Entity\Ocasion
+        TipoInspiracion:
+            class: CarroiridianBundle\Entity\TipoInspiracion
+        Inspiracion:
+            class: CarroiridianBundle\Entity\Inspiracion
+        TipoDocumento:
+            class: CarroiridianBundle\Entity\TipoDocumento
+        Ruta:
+            class: AppBundle\Entity\Ruta
+        ArchivoInventario:
+            class: CarroiridianBundle\Entity\ArchivoInventario
+            disabled_actions: ['edit']
+            list:
+                actions:
+                    - { name: 'new', label: "Nuevo Archivo" }
+                fields:
+                    - { property: 'id' }
+                    - { property: 'id', template: 'document', base_path: "%app.path.inventarios%"}
+            form:
+                fields:
+                    - { property: 'archivoFile', type: 'Vich\UploaderBundle\Form\Type\VichFileType'}
+        Ciudad:
+            class: CarroiridianBundle\Entity\Ciudad
+        Nohabil:
+            class: AppBundle\Entity\Nohabil
+        Almacen:
+            class: CarroiridianBundle\Entity\Almacen
+        Newsletter:
+            class: AppBundle\Entity\Newsletter
+
+

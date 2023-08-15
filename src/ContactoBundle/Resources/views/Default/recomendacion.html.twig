@@ -1,0 +1,60 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set cu = app.request.locale | capitalize %}
+    {% set lc = app.request.locale %}
+    <div class="banner contacto" id="contacto">
+        <div class="item" style="/*background-image: url({{ qi.imagen('banner_contacto') }})*/">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 recomendacion">
+                        <div class="col-xs-6 ">
+                            {{ form_start(form) }}
+                            <h2>{{ qi.textoDB('recomendacion_title') }}</h2>
+
+                            {{ form_errors(form.remitente) }}
+                            {{ form_widget(form.remitente, { 'attr': {'placeholder':  qi.textoDB('remitente_name') } }) }}
+
+                            {{ form_errors(form.remitenteCorreo) }}
+                            {{ form_widget(form.remitenteCorreo, { 'attr': {'placeholder': qi.textoDB('remitente_mail')} }) }}
+
+                            {{ form_errors(form.receptor) }}
+                            {{ form_widget(form.receptor, { 'attr': {'placeholder': qi.textoDB('receptor_name')} }) }}
+
+                            {{ form_errors(form.receptorCorreo) }}
+                            {{ form_widget(form.receptorCorreo, { 'attr': {'placeholder': qi.textoDB('receptor_mail')} }) }}
+
+                            {{ form_errors(form.mensaje) }}
+                            {{ form_widget(form.mensaje, { 'attr': {'placeholder': qi.textoDB('contact_message')} }) }}
+
+                            <input class="boton" type="submit" value="{{ qi.textoDB('texto_enviar') }}"/>
+                            {{ form_end(form) }}
+                        </div>
+                        <div class="col-xs-6">
+                            {% if gracias == false %}
+                                {% if producto.nombreEs is defined %}
+                                    <h2>{{ producto.gen('nombre',lc) }}</h2>
+                                {% else %}
+                                    <h2>{{ producto.gen('titulo',lc) }}</h2>
+                                {% endif %}
+                                <br>
+                                {% for item in imagenes %}
+                                    <div class="item_p">
+                                        <div class="img">
+                                            <img class="i_p" src="{{ item | imagine_filter('producto') }}">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <h2>{{ qi.textoDB('recomendacion_gracias') }}</h2>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+

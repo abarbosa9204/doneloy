@@ -1,0 +1,19 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_tienda')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_tiendas') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+
+    {% include('@Home/Default/sucursal.html.twig') %}
+
+{% endblock %}

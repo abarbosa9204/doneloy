@@ -1,0 +1,23 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block content %}
+
+
+    <div class="banner contacto">
+        <div class="item" style="background-image: url({{ qi.imagen('banner_contacto') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <div class="container forgot_pass">
+                        <form>
+                        <label>
+                            {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+                        </label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

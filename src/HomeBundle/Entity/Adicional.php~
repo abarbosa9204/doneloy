@@ -1,0 +1,2029 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Adicional
+ *
+ * @ORM\Table(name="adicional")
+ * @ORM\Entity(repositoryClass="HomeBundle\Repository\AdicionalRepository")
+ */
+class Adicional
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mujeres", type="integer", length=255, nullable=true)
+     */
+    private $mujeres;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hombres", type="integer", nullable=true)
+     */
+    private $hombres;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="colaboradoresDirecto", type="integer", nullable=true)
+     */
+    private $colaboradoresDirecto;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="colaboradoresIndirecto", type="integer", nullable=true)
+     */
+    private $colaboradoresIndirecto;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="colaboradoresIndefinido", type="integer", nullable=true)
+     */
+    private $colaboradoresIndefinido;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="colaboradoresFijo", type="integer", nullable=true)
+     */
+    private $colaboradoresFijo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="colaboradoresCompleta", type="integer", nullable=true)
+     */
+    private $colaboradoresCompleta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="colaboradoresParcial", type="integer", nullable=true)
+     */
+    private $colaboradoresParcial;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hombresAlta", type="integer", nullable=true)
+     */
+    private $hombresAlta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hombresDireccion", type="integer", nullable=true)
+     */
+    private $hombresDireccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hombresAnalista", type="integer", nullable=true)
+     */
+    private $hombresAnalista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hombresOperativa", type="integer", nullable=true)
+     */
+    private $hombresOperativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mujeresAlta", type="integer", nullable=true)
+     */
+    private $mujeresAlta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mujeresDireccion", type="integer", nullable=true)
+     */
+    private $mujeresDireccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mujeresAnalista", type="integer", nullable=true)
+     */
+    private $mujeresAnalista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mujeresOperativa", type="integer", nullable=true)
+     */
+    private $mujeresOperativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bilinguesAlta", type="integer", nullable=true)
+     */
+    private $bilinguesAlta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bilinguesDireccion", type="integer", nullable=true)
+     */
+    private $bilinguesDireccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bilinguesAnalista", type="integer", nullable=true)
+     */
+    private $bilinguesAnalista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bilingueOperativa", type="integer", nullable=true)
+     */
+    private $bilingueOperativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="teletrabajoAlta", type="integer", nullable=true)
+     */
+    private $teletrabajoAlta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="teletrabajoDireccion", type="integer", nullable=true)
+     */
+    private $teletrabajoDireccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="teletrabajoAnalista", type="integer", nullable=true)
+     */
+    private $teletrabajoAnalista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="teletrabajoOperativa", type="integer", nullable=true)
+     */
+    private $teletrabajoOperativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="menor18Alta", type="integer", nullable=true)
+     */
+    private $menor18Alta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="menor18Direccion", type="integer", nullable=true)
+     */
+    private $menor18Direccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="menor18Analista", type="integer", nullable=true)
+     */
+    private $menor18Analista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="menor18Operativa", type="integer", nullable=true)
+     */
+    private $menor18Operativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre18_33Alta", type="integer", nullable=true)
+     */
+    private $entre1833Alta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre18_33Direccion", type="integer", nullable=true)
+     */
+    private $entre1833Direccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre18_33Analista", type="integer", nullable=true)
+     */
+    private $entre1833Analista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre18_33Operativa", type="integer", nullable=true)
+     */
+    private $entre1833Operativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre34_45Alta", type="integer", nullable=true)
+     */
+    private $entre3445Alta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre34_45Direccion", type="integer", nullable=true)
+     */
+    private $entre3445Direccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre34_45Analista", type="integer", nullable=true)
+     */
+    private $entre3445Analista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre34_45Operativa", type="integer", nullable=true)
+     */
+    private $entre3445Operativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre46_54Alta", type="integer", nullable=true)
+     */
+    private $entre4654Alta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre46_54Direccion", type="integer", nullable=true)
+     */
+    private $entre4654Direccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre46_54Analista", type="integer", nullable=true)
+     */
+    private $entre4654Analista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="entre46_54Operativa", type="integer", nullable=true)
+     */
+    private $entre4654Operativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mayor55Alta", type="integer", nullable=true)
+     */
+    private $mayor55Alta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mayor55Direccion", type="integer", nullable=true)
+     */
+    private $mayor55Direccion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mayor55Analista", type="integer", nullable=true)
+     */
+    private $mayor55Analista;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mayor55Operativa", type="integer", nullable=true)
+     */
+    private $mayor55Operativa;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="vulnerable", type="integer", nullable=true)
+     */
+    private $vulnerable;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="primer", type="integer", nullable=true)
+     */
+    private $primer;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cabeza", type="integer", nullable=true)
+     */
+    private $cabeza;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="discapacidad", type="integer", nullable=true)
+     */
+    private $discapacidad;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="minorias", type="integer", nullable=true)
+     */
+    private $minorias;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="victimas", type="integer", nullable=true)
+     */
+    private $victimas;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="otros", type="string", nullable=true)
+     */
+    private $otros;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="otrosNum", type="integer", nullable=true)
+     */
+    private $otrosNum;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="sena", type="integer", nullable=true)
+     */
+    private $sena;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="senaProductiva", type="integer", nullable=true)
+     */
+    private $senaProductiva;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="aumentoOperacion", type="integer", nullable=true)
+     */
+    private $aumentoOperacion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="aumentoAdministrativo", type="integer", nullable=true)
+     */
+    private $aumentoAdministrativo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="seguridad", type="integer", nullable=true)
+     */
+    private $seguridad;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="mide", type="boolean", nullable=true)
+     */
+    private $mide;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="satisfaccionGeneral", type="integer", nullable=true)
+     */
+    private $satisfaccionGeneral;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="satisfaccionFisicas", type="integer", nullable=true)
+     */
+    private $satisfaccionFisicas;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="satisfaccionHoras", type="integer", nullable=true)
+     */
+    private $satisfaccionHoras;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="satisfaccionBienestar", type="integer", nullable=true)
+     */
+    private $satisfaccionBienestar;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="satisfaccionPertenencia", type="integer", nullable=true)
+     */
+    private $satisfaccionPertenencia;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
+     */
+    private $empresa;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
+    /**
+     * Set hombres
+     *
+     * @param integer $hombres
+     *
+     * @return Adicional
+     */
+    public function setHombres($hombres)
+    {
+        $this->hombres = $hombres;
+
+        return $this;
+    }
+
+    /**
+     * Get hombres
+     *
+     * @return int
+     */
+    public function getHombres()
+    {
+        return $this->hombres;
+    }
+
+    /**
+     * Set colaboradoresDirecto
+     *
+     * @param integer $colaboradoresDirecto
+     *
+     * @return Adicional
+     */
+    public function setColaboradoresDirecto($colaboradoresDirecto)
+    {
+        $this->colaboradoresDirecto = $colaboradoresDirecto;
+
+        return $this;
+    }
+
+    /**
+     * Get colaboradoresDirecto
+     *
+     * @return int
+     */
+    public function getColaboradoresDirecto()
+    {
+        return $this->colaboradoresDirecto;
+    }
+
+    /**
+     * Set colaboradoresIndirecto
+     *
+     * @param integer $colaboradoresIndirecto
+     *
+     * @return Adicional
+     */
+    public function setColaboradoresIndirecto($colaboradoresIndirecto)
+    {
+        $this->colaboradoresIndirecto = $colaboradoresIndirecto;
+
+        return $this;
+    }
+
+    /**
+     * Get colaboradoresIndirecto
+     *
+     * @return int
+     */
+    public function getColaboradoresIndirecto()
+    {
+        return $this->colaboradoresIndirecto;
+    }
+
+    /**
+     * Set colaboradoresIndefinido
+     *
+     * @param integer $colaboradoresIndefinido
+     *
+     * @return Adicional
+     */
+    public function setColaboradoresIndefinido($colaboradoresIndefinido)
+    {
+        $this->colaboradoresIndefinido = $colaboradoresIndefinido;
+
+        return $this;
+    }
+
+    /**
+     * Get colaboradoresIndefinido
+     *
+     * @return int
+     */
+    public function getColaboradoresIndefinido()
+    {
+        return $this->colaboradoresIndefinido;
+    }
+
+    /**
+     * Set colaboradoresFijo
+     *
+     * @param integer $colaboradoresFijo
+     *
+     * @return Adicional
+     */
+    public function setColaboradoresFijo($colaboradoresFijo)
+    {
+        $this->colaboradoresFijo = $colaboradoresFijo;
+
+        return $this;
+    }
+
+    /**
+     * Get colaboradoresFijo
+     *
+     * @return int
+     */
+    public function getColaboradoresFijo()
+    {
+        return $this->colaboradoresFijo;
+    }
+
+    /**
+     * Set colaboradoresCompleta
+     *
+     * @param integer $colaboradoresCompleta
+     *
+     * @return Adicional
+     */
+    public function setColaboradoresCompleta($colaboradoresCompleta)
+    {
+        $this->colaboradoresCompleta = $colaboradoresCompleta;
+
+        return $this;
+    }
+
+    /**
+     * Get colaboradoresCompleta
+     *
+     * @return int
+     */
+    public function getColaboradoresCompleta()
+    {
+        return $this->colaboradoresCompleta;
+    }
+
+    /**
+     * Set colaboradoresParcial
+     *
+     * @param integer $colaboradoresParcial
+     *
+     * @return Adicional
+     */
+    public function setColaboradoresParcial($colaboradoresParcial)
+    {
+        $this->colaboradoresParcial = $colaboradoresParcial;
+
+        return $this;
+    }
+
+    /**
+     * Get colaboradoresParcial
+     *
+     * @return int
+     */
+    public function getColaboradoresParcial()
+    {
+        return $this->colaboradoresParcial;
+    }
+
+    /**
+     * Set hombresAlta
+     *
+     * @param integer $hombresAlta
+     *
+     * @return Adicional
+     */
+    public function setHombresAlta($hombresAlta)
+    {
+        $this->hombresAlta = $hombresAlta;
+
+        return $this;
+    }
+
+    /**
+     * Get hombresAlta
+     *
+     * @return int
+     */
+    public function getHombresAlta()
+    {
+        return $this->hombresAlta;
+    }
+
+    /**
+     * Set hombresDireccion
+     *
+     * @param integer $hombresDireccion
+     *
+     * @return Adicional
+     */
+    public function setHombresDireccion($hombresDireccion)
+    {
+        $this->hombresDireccion = $hombresDireccion;
+
+        return $this;
+    }
+
+    /**
+     * Get hombresDireccion
+     *
+     * @return int
+     */
+    public function getHombresDireccion()
+    {
+        return $this->hombresDireccion;
+    }
+
+    /**
+     * Set hombresAnalista
+     *
+     * @param integer $hombresAnalista
+     *
+     * @return Adicional
+     */
+    public function setHombresAnalista($hombresAnalista)
+    {
+        $this->hombresAnalista = $hombresAnalista;
+
+        return $this;
+    }
+
+    /**
+     * Get hombresAnalista
+     *
+     * @return int
+     */
+    public function getHombresAnalista()
+    {
+        return $this->hombresAnalista;
+    }
+
+    /**
+     * Set hombresOperativa
+     *
+     * @param integer $hombresOperativa
+     *
+     * @return Adicional
+     */
+    public function setHombresOperativa($hombresOperativa)
+    {
+        $this->hombresOperativa = $hombresOperativa;
+
+        return $this;
+    }
+
+    /**
+     * Get hombresOperativa
+     *
+     * @return int
+     */
+    public function getHombresOperativa()
+    {
+        return $this->hombresOperativa;
+    }
+
+    /**
+     * Set mujeresAlta
+     *
+     * @param integer $mujeresAlta
+     *
+     * @return Adicional
+     */
+    public function setMujeresAlta($mujeresAlta)
+    {
+        $this->mujeresAlta = $mujeresAlta;
+
+        return $this;
+    }
+
+    /**
+     * Get mujeresAlta
+     *
+     * @return int
+     */
+    public function getMujeresAlta()
+    {
+        return $this->mujeresAlta;
+    }
+
+    /**
+     * Set mujeresDireccion
+     *
+     * @param integer $mujeresDireccion
+     *
+     * @return Adicional
+     */
+    public function setMujeresDireccion($mujeresDireccion)
+    {
+        $this->mujeresDireccion = $mujeresDireccion;
+
+        return $this;
+    }
+
+    /**
+     * Get mujeresDireccion
+     *
+     * @return int
+     */
+    public function getMujeresDireccion()
+    {
+        return $this->mujeresDireccion;
+    }
+
+    /**
+     * Set mujeresAnalista
+     *
+     * @param integer $mujeresAnalista
+     *
+     * @return Adicional
+     */
+    public function setMujeresAnalista($mujeresAnalista)
+    {
+        $this->mujeresAnalista = $mujeresAnalista;
+
+        return $this;
+    }
+
+    /**
+     * Get mujeresAnalista
+     *
+     * @return int
+     */
+    public function getMujeresAnalista()
+    {
+        return $this->mujeresAnalista;
+    }
+
+    /**
+     * Set mujeresOperativa
+     *
+     * @param integer $mujeresOperativa
+     *
+     * @return Adicional
+     */
+    public function setMujeresOperativa($mujeresOperativa)
+    {
+        $this->mujeresOperativa = $mujeresOperativa;
+
+        return $this;
+    }
+
+    /**
+     * Get mujeresOperativa
+     *
+     * @return int
+     */
+    public function getMujeresOperativa()
+    {
+        return $this->mujeresOperativa;
+    }
+
+    /**
+     * Set bilinguesAlta
+     *
+     * @param integer $bilinguesAlta
+     *
+     * @return Adicional
+     */
+    public function setBilinguesAlta($bilinguesAlta)
+    {
+        $this->bilinguesAlta = $bilinguesAlta;
+
+        return $this;
+    }
+
+    /**
+     * Get bilinguesAlta
+     *
+     * @return int
+     */
+    public function getBilinguesAlta()
+    {
+        return $this->bilinguesAlta;
+    }
+
+    /**
+     * Set bilinguesDireccion
+     *
+     * @param integer $bilinguesDireccion
+     *
+     * @return Adicional
+     */
+    public function setBilinguesDireccion($bilinguesDireccion)
+    {
+        $this->bilinguesDireccion = $bilinguesDireccion;
+
+        return $this;
+    }
+
+    /**
+     * Get bilinguesDireccion
+     *
+     * @return int
+     */
+    public function getBilinguesDireccion()
+    {
+        return $this->bilinguesDireccion;
+    }
+
+    /**
+     * Set bilinguesAnalista
+     *
+     * @param integer $bilinguesAnalista
+     *
+     * @return Adicional
+     */
+    public function setBilinguesAnalista($bilinguesAnalista)
+    {
+        $this->bilinguesAnalista = $bilinguesAnalista;
+
+        return $this;
+    }
+
+    /**
+     * Get bilinguesAnalista
+     *
+     * @return int
+     */
+    public function getBilinguesAnalista()
+    {
+        return $this->bilinguesAnalista;
+    }
+
+    /**
+     * Set bilingueOperativa
+     *
+     * @param integer $bilingueOperativa
+     *
+     * @return Adicional
+     */
+    public function setBilingueOperativa($bilingueOperativa)
+    {
+        $this->bilingueOperativa = $bilingueOperativa;
+
+        return $this;
+    }
+
+    /**
+     * Get bilingueOperativa
+     *
+     * @return int
+     */
+    public function getBilingueOperativa()
+    {
+        return $this->bilingueOperativa;
+    }
+
+    /**
+     * Set teletrabajoAlta
+     *
+     * @param integer $teletrabajoAlta
+     *
+     * @return Adicional
+     */
+    public function setTeletrabajoAlta($teletrabajoAlta)
+    {
+        $this->teletrabajoAlta = $teletrabajoAlta;
+
+        return $this;
+    }
+
+    /**
+     * Get teletrabajoAlta
+     *
+     * @return int
+     */
+    public function getTeletrabajoAlta()
+    {
+        return $this->teletrabajoAlta;
+    }
+
+    /**
+     * Set teletrabajoDireccion
+     *
+     * @param integer $teletrabajoDireccion
+     *
+     * @return Adicional
+     */
+    public function setTeletrabajoDireccion($teletrabajoDireccion)
+    {
+        $this->teletrabajoDireccion = $teletrabajoDireccion;
+
+        return $this;
+    }
+
+    /**
+     * Get teletrabajoDireccion
+     *
+     * @return int
+     */
+    public function getTeletrabajoDireccion()
+    {
+        return $this->teletrabajoDireccion;
+    }
+
+    /**
+     * Set teletrabajoAnalista
+     *
+     * @param integer $teletrabajoAnalista
+     *
+     * @return Adicional
+     */
+    public function setTeletrabajoAnalista($teletrabajoAnalista)
+    {
+        $this->teletrabajoAnalista = $teletrabajoAnalista;
+
+        return $this;
+    }
+
+    /**
+     * Get teletrabajoAnalista
+     *
+     * @return int
+     */
+    public function getTeletrabajoAnalista()
+    {
+        return $this->teletrabajoAnalista;
+    }
+
+    /**
+     * Set teletrabajoOperativa
+     *
+     * @param integer $teletrabajoOperativa
+     *
+     * @return Adicional
+     */
+    public function setTeletrabajoOperativa($teletrabajoOperativa)
+    {
+        $this->teletrabajoOperativa = $teletrabajoOperativa;
+
+        return $this;
+    }
+
+    /**
+     * Get teletrabajoOperativa
+     *
+     * @return int
+     */
+    public function getTeletrabajoOperativa()
+    {
+        return $this->teletrabajoOperativa;
+    }
+
+    /**
+     * Set menor18Alta
+     *
+     * @param integer $menor18Alta
+     *
+     * @return Adicional
+     */
+    public function setMenor18Alta($menor18Alta)
+    {
+        $this->menor18Alta = $menor18Alta;
+
+        return $this;
+    }
+
+    /**
+     * Get menor18Alta
+     *
+     * @return int
+     */
+    public function getMenor18Alta()
+    {
+        return $this->menor18Alta;
+    }
+
+    /**
+     * Set menor18Direccion
+     *
+     * @param integer $menor18Direccion
+     *
+     * @return Adicional
+     */
+    public function setMenor18Direccion($menor18Direccion)
+    {
+        $this->menor18Direccion = $menor18Direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get menor18Direccion
+     *
+     * @return int
+     */
+    public function getMenor18Direccion()
+    {
+        return $this->menor18Direccion;
+    }
+
+    /**
+     * Set menor18Analista
+     *
+     * @param integer $menor18Analista
+     *
+     * @return Adicional
+     */
+    public function setMenor18Analista($menor18Analista)
+    {
+        $this->menor18Analista = $menor18Analista;
+
+        return $this;
+    }
+
+    /**
+     * Get menor18Analista
+     *
+     * @return int
+     */
+    public function getMenor18Analista()
+    {
+        return $this->menor18Analista;
+    }
+
+    /**
+     * Set menor18Operativa
+     *
+     * @param integer $menor18Operativa
+     *
+     * @return Adicional
+     */
+    public function setMenor18Operativa($menor18Operativa)
+    {
+        $this->menor18Operativa = $menor18Operativa;
+
+        return $this;
+    }
+
+    /**
+     * Get menor18Operativa
+     *
+     * @return int
+     */
+    public function getMenor18Operativa()
+    {
+        return $this->menor18Operativa;
+    }
+
+    /**
+     * Set entre1833Alta
+     *
+     * @param integer $entre1833Alta
+     *
+     * @return Adicional
+     */
+    public function setEntre1833Alta($entre1833Alta)
+    {
+        $this->entre1833Alta = $entre1833Alta;
+
+        return $this;
+    }
+
+    /**
+     * Get entre1833Alta
+     *
+     * @return int
+     */
+    public function getEntre1833Alta()
+    {
+        return $this->entre1833Alta;
+    }
+
+    /**
+     * Set entre1833Direccion
+     *
+     * @param integer $entre1833Direccion
+     *
+     * @return Adicional
+     */
+    public function setEntre1833Direccion($entre1833Direccion)
+    {
+        $this->entre1833Direccion = $entre1833Direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get entre1833Direccion
+     *
+     * @return int
+     */
+    public function getEntre1833Direccion()
+    {
+        return $this->entre1833Direccion;
+    }
+
+    /**
+     * Set entre1833Analista
+     *
+     * @param integer $entre1833Analista
+     *
+     * @return Adicional
+     */
+    public function setEntre1833Analista($entre1833Analista)
+    {
+        $this->entre1833Analista = $entre1833Analista;
+
+        return $this;
+    }
+
+    /**
+     * Get entre1833Analista
+     *
+     * @return int
+     */
+    public function getEntre1833Analista()
+    {
+        return $this->entre1833Analista;
+    }
+
+    /**
+     * Set entre1833Operativa
+     *
+     * @param integer $entre1833Operativa
+     *
+     * @return Adicional
+     */
+    public function setEntre1833Operativa($entre1833Operativa)
+    {
+        $this->entre1833Operativa = $entre1833Operativa;
+
+        return $this;
+    }
+
+    /**
+     * Get entre1833Operativa
+     *
+     * @return int
+     */
+    public function getEntre1833Operativa()
+    {
+        return $this->entre1833Operativa;
+    }
+
+    /**
+     * Set entre3445Alta
+     *
+     * @param integer $entre3445Alta
+     *
+     * @return Adicional
+     */
+    public function setEntre3445Alta($entre3445Alta)
+    {
+        $this->entre3445Alta = $entre3445Alta;
+
+        return $this;
+    }
+
+    /**
+     * Get entre3445Alta
+     *
+     * @return int
+     */
+    public function getEntre3445Alta()
+    {
+        return $this->entre3445Alta;
+    }
+
+    /**
+     * Set entre3445Direccion
+     *
+     * @param integer $entre3445Direccion
+     *
+     * @return Adicional
+     */
+    public function setEntre3445Direccion($entre3445Direccion)
+    {
+        $this->entre3445Direccion = $entre3445Direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get entre3445Direccion
+     *
+     * @return int
+     */
+    public function getEntre3445Direccion()
+    {
+        return $this->entre3445Direccion;
+    }
+
+    /**
+     * Set entre3445Analista
+     *
+     * @param integer $entre3445Analista
+     *
+     * @return Adicional
+     */
+    public function setEntre3445Analista($entre3445Analista)
+    {
+        $this->entre3445Analista = $entre3445Analista;
+
+        return $this;
+    }
+
+    /**
+     * Get entre3445Analista
+     *
+     * @return int
+     */
+    public function getEntre3445Analista()
+    {
+        return $this->entre3445Analista;
+    }
+
+    /**
+     * Set entre3445Operativa
+     *
+     * @param integer $entre3445Operativa
+     *
+     * @return Adicional
+     */
+    public function setEntre3445Operativa($entre3445Operativa)
+    {
+        $this->entre3445Operativa = $entre3445Operativa;
+
+        return $this;
+    }
+
+    /**
+     * Get entre3445Operativa
+     *
+     * @return int
+     */
+    public function getEntre3445Operativa()
+    {
+        return $this->entre3445Operativa;
+    }
+
+    /**
+     * Set entre4654Alta
+     *
+     * @param integer $entre4654Alta
+     *
+     * @return Adicional
+     */
+    public function setEntre4654Alta($entre4654Alta)
+    {
+        $this->entre4654Alta = $entre4654Alta;
+
+        return $this;
+    }
+
+    /**
+     * Get entre4654Alta
+     *
+     * @return int
+     */
+    public function getEntre4654Alta()
+    {
+        return $this->entre4654Alta;
+    }
+
+    /**
+     * Set entre4654Direccion
+     *
+     * @param integer $entre4654Direccion
+     *
+     * @return Adicional
+     */
+    public function setEntre4654Direccion($entre4654Direccion)
+    {
+        $this->entre4654Direccion = $entre4654Direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get entre4654Direccion
+     *
+     * @return int
+     */
+    public function getEntre4654Direccion()
+    {
+        return $this->entre4654Direccion;
+    }
+
+    /**
+     * Set entre4654Analista
+     *
+     * @param integer $entre4654Analista
+     *
+     * @return Adicional
+     */
+    public function setEntre4654Analista($entre4654Analista)
+    {
+        $this->entre4654Analista = $entre4654Analista;
+
+        return $this;
+    }
+
+    /**
+     * Get entre4654Analista
+     *
+     * @return int
+     */
+    public function getEntre4654Analista()
+    {
+        return $this->entre4654Analista;
+    }
+
+    /**
+     * Set entre4654Operativa
+     *
+     * @param integer $entre4654Operativa
+     *
+     * @return Adicional
+     */
+    public function setEntre4654Operativa($entre4654Operativa)
+    {
+        $this->entre4654Operativa = $entre4654Operativa;
+
+        return $this;
+    }
+
+    /**
+     * Get entre4654Operativa
+     *
+     * @return int
+     */
+    public function getEntre4654Operativa()
+    {
+        return $this->entre4654Operativa;
+    }
+
+    /**
+     * Set mayor55Alta
+     *
+     * @param integer $mayor55Alta
+     *
+     * @return Adicional
+     */
+    public function setMayor55Alta($mayor55Alta)
+    {
+        $this->mayor55Alta = $mayor55Alta;
+
+        return $this;
+    }
+
+    /**
+     * Get mayor55Alta
+     *
+     * @return int
+     */
+    public function getMayor55Alta()
+    {
+        return $this->mayor55Alta;
+    }
+
+    /**
+     * Set mayor55Direccion
+     *
+     * @param integer $mayor55Direccion
+     *
+     * @return Adicional
+     */
+    public function setMayor55Direccion($mayor55Direccion)
+    {
+        $this->mayor55Direccion = $mayor55Direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get mayor55Direccion
+     *
+     * @return int
+     */
+    public function getMayor55Direccion()
+    {
+        return $this->mayor55Direccion;
+    }
+
+    /**
+     * Set mayor55Analista
+     *
+     * @param integer $mayor55Analista
+     *
+     * @return Adicional
+     */
+    public function setMayor55Analista($mayor55Analista)
+    {
+        $this->mayor55Analista = $mayor55Analista;
+
+        return $this;
+    }
+
+    /**
+     * Get mayor55Analista
+     *
+     * @return int
+     */
+    public function getMayor55Analista()
+    {
+        return $this->mayor55Analista;
+    }
+
+    /**
+     * Set mayor55Operativa
+     *
+     * @param integer $mayor55Operativa
+     *
+     * @return Adicional
+     */
+    public function setMayor55Operativa($mayor55Operativa)
+    {
+        $this->mayor55Operativa = $mayor55Operativa;
+
+        return $this;
+    }
+
+    /**
+     * Get mayor55Operativa
+     *
+     * @return int
+     */
+    public function getMayor55Operativa()
+    {
+        return $this->mayor55Operativa;
+    }
+
+    /**
+     * Set mujeres
+     *
+     * @param integer $mujeres
+     *
+     * @return Adicional
+     */
+    public function setMujeres($mujeres)
+    {
+        $this->mujeres = $mujeres;
+
+        return $this;
+    }
+
+    /**
+     * Get mujeres
+     *
+     * @return integer
+     */
+    public function getMujeres()
+    {
+        return $this->mujeres;
+    }
+
+    /**
+     * Set vulnerable
+     *
+     * @param integer $vulnerable
+     *
+     * @return Adicional
+     */
+    public function setVulnerable($vulnerable)
+    {
+        $this->vulnerable = $vulnerable;
+
+        return $this;
+    }
+
+    /**
+     * Get vulnerable
+     *
+     * @return integer
+     */
+    public function getVulnerable()
+    {
+        return $this->vulnerable;
+    }
+
+    /**
+     * Set primer
+     *
+     * @param integer $primer
+     *
+     * @return Adicional
+     */
+    public function setPrimer($primer)
+    {
+        $this->primer = $primer;
+
+        return $this;
+    }
+
+    /**
+     * Get primer
+     *
+     * @return integer
+     */
+    public function getPrimer()
+    {
+        return $this->primer;
+    }
+
+    /**
+     * Set cabeza
+     *
+     * @param integer $cabeza
+     *
+     * @return Adicional
+     */
+    public function setCabeza($cabeza)
+    {
+        $this->cabeza = $cabeza;
+
+        return $this;
+    }
+
+    /**
+     * Get cabeza
+     *
+     * @return integer
+     */
+    public function getCabeza()
+    {
+        return $this->cabeza;
+    }
+
+    /**
+     * Set discapacidad
+     *
+     * @param integer $discapacidad
+     *
+     * @return Adicional
+     */
+    public function setDiscapacidad($discapacidad)
+    {
+        $this->discapacidad = $discapacidad;
+
+        return $this;
+    }
+
+    /**
+     * Get discapacidad
+     *
+     * @return integer
+     */
+    public function getDiscapacidad()
+    {
+        return $this->discapacidad;
+    }
+
+    /**
+     * Set minorias
+     *
+     * @param integer $minorias
+     *
+     * @return Adicional
+     */
+    public function setMinorias($minorias)
+    {
+        $this->minorias = $minorias;
+
+        return $this;
+    }
+
+    /**
+     * Get minorias
+     *
+     * @return integer
+     */
+    public function getMinorias()
+    {
+        return $this->minorias;
+    }
+
+    /**
+     * Set victimas
+     *
+     * @param integer $victimas
+     *
+     * @return Adicional
+     */
+    public function setVictimas($victimas)
+    {
+        $this->victimas = $victimas;
+
+        return $this;
+    }
+
+    /**
+     * Get victimas
+     *
+     * @return integer
+     */
+    public function getVictimas()
+    {
+        return $this->victimas;
+    }
+
+    /**
+     * Set otros
+     *
+     * @param string $otros
+     *
+     * @return Adicional
+     */
+    public function setOtros($otros)
+    {
+        $this->otros = $otros;
+
+        return $this;
+    }
+
+    /**
+     * Get otros
+     *
+     * @return string
+     */
+    public function getOtros()
+    {
+        return $this->otros;
+    }
+
+    /**
+     * Set otrosNum
+     *
+     * @param integer $otrosNum
+     *
+     * @return Adicional
+     */
+    public function setOtrosNum($otrosNum)
+    {
+        $this->otrosNum = $otrosNum;
+
+        return $this;
+    }
+
+    /**
+     * Get otrosNum
+     *
+     * @return integer
+     */
+    public function getOtrosNum()
+    {
+        return $this->otrosNum;
+    }
+
+    /**
+     * Set sena
+     *
+     * @param integer $sena
+     *
+     * @return Adicional
+     */
+    public function setSena($sena)
+    {
+        $this->sena = $sena;
+
+        return $this;
+    }
+
+    /**
+     * Get sena
+     *
+     * @return integer
+     */
+    public function getSena()
+    {
+        return $this->sena;
+    }
+
+    /**
+     * Set senaProductiva
+     *
+     * @param integer $senaProductiva
+     *
+     * @return Adicional
+     */
+    public function setSenaProductiva($senaProductiva)
+    {
+        $this->senaProductiva = $senaProductiva;
+
+        return $this;
+    }
+
+    /**
+     * Get senaProductiva
+     *
+     * @return integer
+     */
+    public function getSenaProductiva()
+    {
+        return $this->senaProductiva;
+    }
+
+    /**
+     * Set aumentoOperacion
+     *
+     * @param integer $aumentoOperacion
+     *
+     * @return Adicional
+     */
+    public function setAumentoOperacion($aumentoOperacion)
+    {
+        $this->aumentoOperacion = $aumentoOperacion;
+
+        return $this;
+    }
+
+    /**
+     * Get aumentoOperacion
+     *
+     * @return integer
+     */
+    public function getAumentoOperacion()
+    {
+        return $this->aumentoOperacion;
+    }
+
+    /**
+     * Set aumentoAdministrativo
+     *
+     * @param integer $aumentoAdministrativo
+     *
+     * @return Adicional
+     */
+    public function setAumentoAdministrativo($aumentoAdministrativo)
+    {
+        $this->aumentoAdministrativo = $aumentoAdministrativo;
+
+        return $this;
+    }
+
+    /**
+     * Get aumentoAdministrativo
+     *
+     * @return integer
+     */
+    public function getAumentoAdministrativo()
+    {
+        return $this->aumentoAdministrativo;
+    }
+
+    /**
+     * Set seguridad
+     *
+     * @param integer $seguridad
+     *
+     * @return Adicional
+     */
+    public function setSeguridad($seguridad)
+    {
+        $this->seguridad = $seguridad;
+
+        return $this;
+    }
+
+    /**
+     * Get seguridad
+     *
+     * @return integer
+     */
+    public function getSeguridad()
+    {
+        return $this->seguridad;
+    }
+
+    /**
+     * Set mide
+     *
+     * @param boolean $mide
+     *
+     * @return Adicional
+     */
+    public function setMide($mide)
+    {
+        $this->mide = $mide;
+
+        return $this;
+    }
+
+    /**
+     * Get mide
+     *
+     * @return boolean
+     */
+    public function getMide()
+    {
+        return $this->mide;
+    }
+
+    /**
+     * Set satisfaccionGeneral
+     *
+     * @param integer $satisfaccionGeneral
+     *
+     * @return Adicional
+     */
+    public function setSatisfaccionGeneral($satisfaccionGeneral)
+    {
+        $this->satisfaccionGeneral = $satisfaccionGeneral;
+
+        return $this;
+    }
+
+    /**
+     * Get satisfaccionGeneral
+     *
+     * @return integer
+     */
+    public function getSatisfaccionGeneral()
+    {
+        return $this->satisfaccionGeneral;
+    }
+
+    /**
+     * Set satisfaccionFisicas
+     *
+     * @param integer $satisfaccionFisicas
+     *
+     * @return Adicional
+     */
+    public function setSatisfaccionFisicas($satisfaccionFisicas)
+    {
+        $this->satisfaccionFisicas = $satisfaccionFisicas;
+
+        return $this;
+    }
+
+    /**
+     * Get satisfaccionFisicas
+     *
+     * @return integer
+     */
+    public function getSatisfaccionFisicas()
+    {
+        return $this->satisfaccionFisicas;
+    }
+
+    /**
+     * Set satisfaccionHoras
+     *
+     * @param integer $satisfaccionHoras
+     *
+     * @return Adicional
+     */
+    public function setSatisfaccionHoras($satisfaccionHoras)
+    {
+        $this->satisfaccionHoras = $satisfaccionHoras;
+
+        return $this;
+    }
+
+    /**
+     * Get satisfaccionHoras
+     *
+     * @return integer
+     */
+    public function getSatisfaccionHoras()
+    {
+        return $this->satisfaccionHoras;
+    }
+
+    /**
+     * Set satisfaccionBienestar
+     *
+     * @param integer $satisfaccionBienestar
+     *
+     * @return Adicional
+     */
+    public function setSatisfaccionBienestar($satisfaccionBienestar)
+    {
+        $this->satisfaccionBienestar = $satisfaccionBienestar;
+
+        return $this;
+    }
+
+    /**
+     * Get satisfaccionBienestar
+     *
+     * @return integer
+     */
+    public function getSatisfaccionBienestar()
+    {
+        return $this->satisfaccionBienestar;
+    }
+
+    /**
+     * Set satisfaccionPertenencia
+     *
+     * @param integer $satisfaccionPertenencia
+     *
+     * @return Adicional
+     */
+    public function setSatisfaccionPertenencia($satisfaccionPertenencia)
+    {
+        $this->satisfaccionPertenencia = $satisfaccionPertenencia;
+
+        return $this;
+    }
+
+    /**
+     * Get satisfaccionPertenencia
+     *
+     * @return integer
+     */
+    public function getSatisfaccionPertenencia()
+    {
+        return $this->satisfaccionPertenencia;
+    }
+
+    /**
+     * Set empresa
+     *
+     * @param \AppBundle\Entity\User $empresa
+     *
+     * @return Adicional
+     */
+    public function setEmpresa(\AppBundle\Entity\User $empresa = null)
+    {
+        $this->empresa = $empresa;
+
+        return $this;
+    }
+
+    /**
+     * Get empresa
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+
+    /**
+     * Get empresa
+     *
+     * @return int
+     */
+    public function getEmpresaId()
+    {
+        return $this->getEmpresa()->getId();
+    }
+}

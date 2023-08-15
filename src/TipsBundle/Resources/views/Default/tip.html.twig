@@ -1,0 +1,43 @@
+
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_boutique')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_tips') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 list_products">
+                {% include('@Carroiridian/Default/filtro.html.twig') %}
+
+
+                    <div class="tip">
+                        <div class="head_t">
+                            <img src="/images/Untitled-49.jpg"/>
+                            <div class="titulo">
+                                <h2>arreglo floral en agua</h2>
+                            </div>
+                        </div>
+                        <p>Aumente el agua del florero lo mas pronto posible, su nivel debe estar al tope todos los dÍas.</p>
+                        <p>Cuidados a su Florero de Rosas: El tallo sumergido en agua no debe tener hojas, en caso de haberlas, tratar de retirar con cuidado.</p>
+                        <p>Instale su Florero teniendo en cuenta lo siguiente: En lugares iluminados, frescos, lejos de las fuentes de calor y protegidos de las corrientes de aire. Sí hay aire acondicionado, se recomienda colocar debajo del florero un plato con agua. Frente a un espejo se duplica su efecto decorativo. Escoja una rosa, recorte su tallo justo debajo de la flor y colóquela flotando en una pecera a medio llenar, es otra forma de disfrutar su apertura.</p>
+
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

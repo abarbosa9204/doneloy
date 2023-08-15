@@ -1,0 +1,292 @@
+<?php
+namespace AppBundle\Entity;
+
+use CarroiridianBundle\Entity\Envio;
+use CarroiridianBundle\Entity\Producto;
+use AppBundle\Entity\RangoEdad;
+use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="fos_user")
+ */
+class User extends BaseUser
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellidos", type="string", length=255, nullable=true)
+     */
+    private $apellidos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=255, nullable=true)
+     */
+    private $telefono;
+
+
+    /**
+     * @var Compra[]
+     *
+     * @ORM\OneToMany(targetEntity="CarroiridianBundle\Entity\Compra", mappedBy="comprador", cascade={"remove"})
+     */
+    private $compras;
+
+    /**
+     * @var Envio[]
+     *
+     * @ORM\OneToMany(targetEntity="CarroiridianBundle\Entity\Envio", mappedBy="user", cascade={"remove"})
+     */
+    private $direcciones;
+
+    /**
+     * @var Producto[]
+     *
+     * @ORM\OneToMany(targetEntity="CarroiridianBundle\Entity\Producto", mappedBy="user", cascade={"remove"})
+     */
+    private $favoritos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RangoEdad")
+     * @ORM\JoinColumn(name="rangoedad_id", referencedColumnName="id", nullable=true)
+     */
+    private $rangoedad;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->direcciones = new ArrayCollection();
+        $this->compras = new ArrayCollection();
+        $this->favoritos = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        if(is_numeric($this->getId()))
+            return $this->getId().'';
+        return ' ';
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return User
+     */
+    public function setNombre($nombre)
+    {
+        //$this->nombre = $nombre;
+        if (strpos($nombre, '_') !== false) {
+            $this->nombre = substr($nombre,0,-1);
+        }else{
+            $this->nombre = $nombre . '_';
+        }
+        $this->nombre = $nombre . '_';
+    
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellidos
+     *
+     * @param string $apellidos
+     *
+     * @return User
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+    
+        return $this;
+    }
+
+    /**
+     * Get apellidos
+     *
+     * @return string
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     *
+     * @return User
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Add compra
+     *
+     * @param \CarroiridianBundle\Entity\Compra $compra
+     *
+     * @return User
+     */
+    public function addCompra(\CarroiridianBundle\Entity\Compra $compra)
+    {
+        $this->compras[] = $compra;
+    
+        return $this;
+    }
+
+    /**
+     * Remove compra
+     *
+     * @param \CarroiridianBundle\Entity\Compra $compra
+     */
+    public function removeCompra(\CarroiridianBundle\Entity\Compra $compra)
+    {
+        $this->compras->removeElement($compra);
+    }
+
+    /**
+     * Get compras
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompras()
+    {
+        return $this->compras;
+    }
+
+    /**
+     * Add direccione
+     *
+     * @param \CarroiridianBundle\Entity\Envio $direccione
+     *
+     * @return User
+     */
+    public function addDireccione(\CarroiridianBundle\Entity\Envio $direccione)
+    {
+        $this->direcciones[] = $direccione;
+    
+        return $this;
+    }
+
+    /**
+     * Remove direccione
+     *
+     * @param \CarroiridianBundle\Entity\Envio $direccione
+     */
+    public function removeDireccione(\CarroiridianBundle\Entity\Envio $direccione)
+    {
+        $this->direcciones->removeElement($direccione);
+    }
+
+    /**
+     * Get direcciones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDirecciones()
+    {
+        return $this->direcciones;
+    }
+
+    /**
+     * Add favorito
+     *
+     * @param \CarroiridianBundle\Entity\Producto $favorito
+     *
+     * @return User
+     */
+    public function addFavorito(\CarroiridianBundle\Entity\Producto $favorito)
+    {
+        $this->favoritos[] = $favorito;
+    
+        return $this;
+    }
+
+    /**
+     * Remove favorito
+     *
+     * @param \CarroiridianBundle\Entity\Producto $favorito
+     */
+    public function removeFavorito(\CarroiridianBundle\Entity\Producto $favorito)
+    {
+        $this->favoritos->removeElement($favorito);
+    }
+
+    /**
+     * Get favoritos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFavoritos()
+    {
+        return $this->favoritos;
+    }
+
+
+    /**
+     * Set rangoedad
+     *
+     * @param \AppBundle\Entity\RangoEdad $rangoedad
+     *
+     * @return User
+     */
+    public function setRangoedad(\AppBundle\Entity\RangoEdad $rangoedad = null)
+    {
+        $this->rangoedad = $rangoedad;
+
+        return $this;
+    }
+
+    /**
+     * Get rangoedad
+     *
+     * @return \AppBundle\Entity\RangoEdad
+     */
+    public function getRangoedad()
+    {
+        return $this->rangoedad;
+    }
+}

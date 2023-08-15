@@ -1,0 +1,4 @@
+services:
+#    tiendas.example:
+#        class: TiendasBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -1,0 +1,390 @@
+<?php
+
+namespace GeoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Sede
+ *
+ * @ORM\Table(name="sede")
+ * @ORM\Entity(repositoryClass="GeoBundle\Repository\SedeRepository")
+ * @Vich\Uploadable
+ */
+class Sede
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GeoBundle\Entity\CiudadSede")
+     * @ORM\JoinColumn(name="ciudad_id", referencedColumnName="id")
+     * @Assert\NotBlank(message = "La ciudad no puede ser vacia")
+     */
+    private $ciudad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     * @Assert\NotBlank(message = "El nombre no puede ser vacio")
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imagen", type="string", length=255)
+     */
+    private $imagen;
+
+    /**
+     * @Vich\UploadableField(mapping="imagesgal", fileNameProperty="imagen")
+     *
+     * @Assert\Expression(
+     *     expression="this.getImagenFile() != '' || this.getImagen() != ''",
+     *     message="La imagen no puede ser vacia"
+     * )
+     * @var File
+     */
+    private $imagenFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion_es", type="text", nullable=true)
+     */
+    private $descripcionEs;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion_en", type="text", nullable=true)
+     */
+    private $descripcionEn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lat", type="string", length=255)
+     */
+    private $lat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lng", type="string", length=255)
+     */
+    private $lng;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="orden", type="integer")
+     * @Assert\NotBlank(message = "El orden no puede ser vacio")
+     */
+    private $orden = 1;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean")
+     */
+    private $visible = true;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+
+    public function __toString()
+    {
+        return $this->nombre.' ';
+    }
+
+    public function gen($campo,$locale){
+        $accessor = PropertyAccess::createPropertyAccessor();
+        return $accessor->getValue($this,$campo.'_'.$locale);
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Sede
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set imagen
+     *
+     * @param string $imagen
+     *
+     * @return Sede
+     */
+    public function setImagen($imagen)
+    {
+        $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
+     * Get imagen
+     *
+     * @return string
+     */
+    public function getImagen()
+    {
+        return $this->imagen;
+    }
+
+    /**
+     * Set descripcionEs
+     *
+     * @param string $descripcionEs
+     *
+     * @return Sede
+     */
+    public function setDescripcionEs($descripcionEs)
+    {
+        $this->descripcionEs = $descripcionEs;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionEs
+     *
+     * @return string
+     */
+    public function getDescripcionEs()
+    {
+        return $this->descripcionEs;
+    }
+
+    /**
+     * @param File $imagen
+     */
+    public function setImagenFile(File $imagen = null)
+    {
+        $this->imagenFile = $imagen;
+        if ($imagen) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImagenFile()
+    {
+        return $this->imagenFile;
+    }
+
+    /**
+     * Set descripcionEn
+     *
+     * @param string $descripcionEn
+     *
+     * @return Sede
+     */
+    public function setDescripcionEn($descripcionEn)
+    {
+        $this->descripcionEn = $descripcionEn;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionEn
+     *
+     * @return string
+     */
+    public function getDescripcionEn()
+    {
+        return $this->descripcionEn;
+    }
+
+    /**
+     * Set lat
+     *
+     * @param string $lat
+     *
+     * @return Sede
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return string
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param string $lng
+     *
+     * @return Sede
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return string
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * Set orden
+     *
+     * @param integer $orden
+     *
+     * @return Sede
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden
+     *
+     * @return integer
+     */
+    public function getOrden()
+    {
+        return $this->orden;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     *
+     * @return Sede
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Set ciudad
+     *
+     * @param \GeoBundle\Entity\CiudadSede $ciudad
+     *
+     * @return Sede
+     */
+    public function setCiudad(\GeoBundle\Entity\CiudadSede $ciudad = null)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return \GeoBundle\Entity\CiudadSede
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Sede
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+}

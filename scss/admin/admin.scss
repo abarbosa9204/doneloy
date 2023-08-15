@@ -1,0 +1,64 @@
+@import "../../html/assets/vendor/font-awesome/scss/font-awesome.scss";
+
+
+.fixed{
+  .content-wrapper{
+    .thumb_img{
+      clear: both;
+      width: 200px;
+      float: left;
+    }
+  }
+}
+.img_form{
+  clear: both;
+  float: left;
+}
+
+.modal-body, .modal-header, .modal-footer{
+  width: 70%;
+}
+
+.modal-header{
+  border-bottom: none;
+}
+.modal-footer{
+  border-top: none;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td{
+  border: 1px solid #c4c3c3;
+}
+.table-bordered {
+  border: 1px solid #cccccc;
+}
+.ta_center{
+  td, th{
+    text-align: center !important;
+    text-transform: uppercase;
+  }
+}
+.error{
+  color: #ff0000;
+  font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-size: 10px;
+  display: none;
+}
+.guardando{
+  display: none;
+}
+.vm{
+  vertical-align: middle !important;
+}
+.table{
+  ul{
+    li{
+      margin-bottom: 1px;
+    }
+  }
+  &.np{
+    td{
+      padding: 1px;
+    }
+  }
+}

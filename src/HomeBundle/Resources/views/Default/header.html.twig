@@ -1,0 +1,265 @@
+{% set ruta = app.request.get('_route') %}
+{% set params = app.request.attributes.get('_route_params')  %}
+{% set params = params |slice(1) %}
+{% set lc = app.request.locale %}
+{% set cant = 0 %}
+{% set carrito = app.session.get('carrito') %}
+{% for id,tallas in carrito %}
+    {% for id_talla, item in tallas %}
+        {% set cant = cant + item.cantidad %}
+    {% endfor %}
+{% endfor %}
+
+<div class="header">
+    <a id="v_menu" class=""><i class="fa fa-bars" aria-hidden="true"></i></a>
+    <a id="logo_m" href="{{ path('homepage') }}"><img src="{{ qi.imagen('logo') }}"></a>
+    <div class="opciones">
+        <div id="llamadas">
+            <a data-tel="{{qi.settingDB('tel_rosas')}}" href="#llamanos" class="call-1">Llámanos</a> o <a href="#teLlamamos" class="call-2">Te llamamos</a>
+        </div>
+        <a href="{{ path('tiendas') }}">{{ qi.textoDB('m_tiendas') }}</a>
+        <form style="display:none" id="buscador_header" action="{{ path('busca_productos') }}" class="search-form-header">
+            <div class="form-group has-feedback">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                {% if search is defined %}
+                    <input type="text"  class="form-control" name="search"  placeholder="search" value="{{ search }}">
+                {% else %}
+                    <input type="text"  class="form-control" name="search"  placeholder="search">
+                {% endif %}
+
+            </div>
+        </form>
+        <a href="javascript:showBuscador()" ><i class="fa fa-search" aria-hidden="true"></i> {{ qi.textoDB('m_buscar') }} </a>
+
+        {% if not app.user %}
+            <a href="{{ path('registro_login_inicial') }}#login"><i class="fa fa-user" aria-hidden="true"></i> {{ qi.textoDB('m_log') }} </a>
+        {% else %}
+            <a href="{{ path('historial') }}">hola {{ app.user.nombre }}</a>
+            <a href="{{ path('user_logout') }}"> &nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i> {{ qi.textoDB('m_logout') }} </a>
+        {% endif %}
+
+        <a id="moneda" data-tooltip-content="#tooltip_content"><i class="fa fa-money" aria-hidden="true"></i> {{ qi.textoDB('m_moneda') }} (<span>{{ app.session.get('moneda','COP') }}</span>) </a>
+
+        <a href="#preCarrito"><i class="fa fa-shopping-basket" aria-hidden="true"></i> {{ qi.textoDB('m_cesta') }} <span id="cant_prod" data-cant="{{ cant }}">({{ cant }})</span> {{ qi.textoDB('m_items') }}</a>
+        <p class="idioma">
+            <a href="{{ path(ruta, {"_locale": "es"} | merge(params)) }}" class="{% if lc == 'es' %}active{% endif %}">ES</a> / <a href="{{ path(ruta, {"_locale": "en"} | merge(params)) }}" class="{% if lc == 'en' %}active{% endif %}">EN</a>
+        </p>
+
+        <div class="tooltip_templates">
+            <form id="tooltip_content" class="monedas">
+                <label data-moneda="USD">
+                    <input type="radio"  name="moneda"/>
+                    USD
+                </label>
+                <label data-moneda="COP">
+                    <input type="radio" name="moneda"/>
+                    COP
+                </label>
+            </form>
+        </div>
+
+    </div>
+    <ul>
+        {# <li>
+            <a href="{{ path('homepage') }}">{{ qi.textoDB('m_inicio') }}</a>
+        </li> #}
+        <li class="drop">
+            <a href="javascript:;">
+                {{ qi.textoDB('cat_roses') }}
+            </a>
+            <ul class="submenu">
+                {% for item in ci.categorias() %}
+                <li>
+                    <a onclick="showLoading()" href="{{ path('productos_por_categoria',{'categoria': item['id'] ,'nombre': qi.slugify(item['nombre'])}) }}" class="item">
+                        {{ item.nombre }}
+                    </a>
+                </li>
+                {% endfor %}
+                <li>
+                    {% set pretMenu = qi.galeria('otros_servicios') %}
+                    <a onclick="showLoading()" href="{{ pretMenu[0].link }}">{{ pretMenu[0].titulo }}</a>
+                </li>
+            </ul>
+        </li>
+        <li class="drop">
+            <a href="javascript:;">{{ qi.textoDB('titulo_boutique') }}</a>
+            <ul class="submenu">
+                {% set bouquet = ci.categoriaById(11) %}
+                <li>
+                    <a class="item" onclick="showLoading()" href="{{ path('productos_por_categoria',{'categoria': bouquet['id'] ,'nombre': qi.slugify(bouquet['nombre']), 'boutique': 1}) }}">
+                    {{ bouquet.nombre }}
+                    </a>
+                </li>
+                {% set preta = ci.categoriaById(12) %}
+                <li>
+                    <a class="item" onclick="showLoading()" href="{{ path('productos_por_categoria',{'categoria': preta['id'] ,'nombre': qi.slugify(preta['nombre'])}) }}">
+                    {{ preta.nombre }}
+                    </a>
+                </li>
+                <li>
+                    <a onclick="showLoading()" href="{{ path('boutique') }}">
+                    {{ qi.textoDB('m_arreglo_boutique') }}
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="drop">
+            <a href="javascript:;">{{ qi.textoDB('m_ocasiones') }}</a>
+            <ul class="submenu">
+                {% for item in ci.ocasiones() %}
+                    <li><a onclick="showLoading()" href="{{ path('productos_por_ocasion',{'ocasion': item.id ,'nombre': qi.slugify(item['nombre'])}) }}">{{ item.nombre }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('somos') }}">{{ qi.textoDB('m_somos') }}</a>
+        </li>
+        {# <li>
+            <a href="{{ path('productos') }}">{{ qi.textoDB('m_compra') }}</a>
+        </li>
+        <li>
+            <a href="{{ path('somos') }}">{{ qi.textoDB('m_somos') }}</a>
+        </li>
+        <li>
+            <a href="{{ path('tiendas') }}">{{ qi.textoDB('m_tiendas') }}</a>
+        </li> #}
+        <li class="logo">
+            <a href="{{ path('homepage') }}"><img src="{{ qi.imagen('logo') }}"></a>
+        </li>
+        <li>
+            <a href="{{ path('taller-flores') }}">{{ qi.textoDB('m_taller') }}</a>
+        </li>
+        <li class="drop">
+            <a href="{{ path('plan-abasto') }}">{{ qi.textoDB('m_plan') }}</a>
+            <ul class="submenu">
+                {% for item in ci.planes(false) %}
+                    <li><a onclick="showLoading()" href="{{ path('intern-abasto',{'id': item.id, 'name': qi.slugify(item.nombre)}) }}">{{ item.nombre }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="drop">
+            <a href="javascript:;">{{ qi.textoDB('m_corporativo') }}</a>
+            <ul class="submenu">
+                <li><a href="{{ path('plan-abasto-corporativo') }}" class="item">{{ qi.textoDB('m_plan_empresarial') }}</a></li>
+                <li><a href="{{ path('taller-corporativo') }}" class="item">{{ qi.textoDB('m_taller_corporativo') }}</a></li>
+                <li><a href="{{ path('corporativo') }}" class="item">{{ qi.textoDB('m_productos_corporativos') }}</a></li>
+                <li><a href="{{ qi.imagenLink('l_titulo_eventos') }}" class="item">{{ qi.textoDB('m_eventos') }}</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ path('the_blog') }}">{{ qi.textoDB('m_blog') }}</a>
+        </li>
+        {# <li>
+            <a href="{{ path('the_blog') }}">{{ qi.textoDB('m_blog') }}</a>
+        </li>
+        <li>
+            <a href="{{ path('prensa') }}">{{ qi.textoDB('m_prensa') }}</a>
+        </li>
+        <li>
+            <a href="{{ path('contacto') }}">{{ qi.textoDB('m_contacto') }}</a>
+        </li> #}
+    </ul>
+    {# <div class="social">
+        {% for item in qi.galeria('social') %}
+            <a href="{{ item.link }}" target="_blank">
+                <i class="fa {{ item.titulo }}" aria-hidden="true"></i>
+            </a>
+        {% endfor %}
+    </div> #}
+</div>
+
+<div class="remodal pre-carrito" data-remodal-id="preCarrito">
+
+    <button data-remodal-action="close" class="remodal-close"></button>
+
+    <div class="h_c">
+        <img src="{{ qi.imagen('canasta_azul') }}"/>
+        <h2>MI CESTA</h2>
+    </div>
+
+
+    {% set cu = app.request.locale | capitalize %}
+    {% set total = 0 %}
+    {% set escala_moneda = app.session.get('escala_moneda',1) %}
+
+    {% for id,tallas in carrito %}
+        {% for id_talla, item in tallas %}
+
+            {% if item.cantidad > 0 %}
+                {% for grupo in item.productos %}
+                    {% set producto = grupo.producto %}
+                    {% set talla = ci.tallaId(id_talla) %}
+                    {% if item.color_sku == 'es_plan' %}
+                        {% set subtotal = item.color_precio / escala_moneda %}
+                    {% else %}
+                        {% set subtotal = producto.precio / escala_moneda %}
+                    {% endif %}
+
+                    <div class="producto_v">
+                        <img src="{{ (path_productos ~'/'~ producto.imagen)|imagine_filter('producto_carrito') }}"/>
+                        <div class="txt">
+                            <div class="line">
+                                <h3>{{ attribute(producto,'nombre' ~ cu) }}</h3>
+                                {% if item.color_sku == 'es_plan' %}
+                                    <p>${{ ((item.color_precio / (1 + prodcuto.porcentajeIva / 100)) / escala_moneda) | number_format(2) }}</p>
+                                {% else %}
+                                    <p>${{ (producto.precioiva / escala_moneda) | number_format(2) }}</p>
+                                {% endif %}
+                            </div>
+                            {% for grupo_comp in grupo.complementos %}
+                                {% set complemento = grupo_comp.producto %}
+                                {% set cantidad = grupo_comp.cantidad %}
+                                <div class="line">
+                                    <h3>{{ attribute(complemento,'nombre' ~ cu) }}</h3>
+                                    <p>${{ (complemento.precioiva / escala_moneda) | number_format(2) }}</p>
+                                </div>
+                                {% set subtotal = subtotal + (complemento.precioiva / escala_moneda) * cantidad %}
+                                {% set total = total + (complemento.precioiva / escala_moneda) * cantidad %}
+                            {% endfor %}
+                            <div class="line">
+                                <a class="boton eliminar" data-id="{{ id }}" data-id-talla="{{ id_talla }}" >{{ qi.textoDB('remover') }}</a>
+                                <p>${{ subtotal | number_format(2) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% if item.color_sku == 'es_plan' %}
+                        {% set total = total + (item.color_precio / escala_moneda) %}
+                    {% else %}
+                        {% set total = total + (producto.precio / escala_moneda) %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    <div class="total">
+        <h3>TOTAL</h3><h4>${{ total | number_format(2) }}</h4>
+    </div>
+<br>
+<a class="boton boton_cesta" href="{{ path('carrito') }}">{{ qi.textoDB('carrito_pagar') }}</a>
+
+
+
+
+</div>
+
+<div class="remodal llamanos" data-remodal-id="llamanos">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h2>Llámanos</h2>
+    {{ qi.textoBigDB('popup_llamanos')|raw }}
+</div>
+<div class="remodal teLlamamos" data-remodal-id="teLlamamos">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <form action="new-call" method="post">
+    <p>Diligencia el siguiente formulario y uno de nuestros asesores se comunicará contigo en el transcurso del día.</p>
+    <p>
+        {# <input required type="text" name="name" id="name_call" placeholder="Escribe tu nombre"> #}
+        <input type="text" name="name" id="name_call" placeholder="Escribe tu nombre">
+    </p>
+    <p>
+        {# <input required type="text" name="phone" id="phone_call" placeholder="Escribe tu número telefónico" pattern="(?:\+?\(?(\d{1,3})\)?)?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)" title="Tu número de teléfono no puede contenter letras"> #}
+        <input type="text" name="phone" id="phone_call" placeholder="Escribe tu número telefónico" title="Tu número de teléfono no puede contenter letras">
+    </p>
+    <button type="submit" class="boton" >ENVIAR</button>
+    </form>
+</div>

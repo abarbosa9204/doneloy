@@ -1,0 +1,57 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+<div class="wrapper">
+    <div class="carrito">
+        {% include 'CarroiridianBundle:Default:pasos.html.twig' %}
+        <h4>Muchas gracias por tu compra. Estos son los datos de tu pedido.</h4>
+
+        <div class="row resumen">
+            <div class="col-sm-12 col-md-4">
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="col-md-12">
+                    <div class="contenedor">
+                        <h4>NOMBRE</h4>
+                        <p>Fulanito</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="contenedor">
+                        <h4>DIRECCIÓN</h4>
+                        <p>Kra 12 # 45-67</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="contenedor">
+                        <h4>TELÉFONO</h4>
+                        <p>1234567</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="contenedor">
+                        <h4>TOTAL</h4>
+                        <p>1.000.000</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="contenedor">
+                        <h4>MEDIO DE PAGO</h4>
+                        <p>Tarjeta</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="contenedor">
+                        <a href="{{ path('homepage') }}" class="button">Volver al home</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

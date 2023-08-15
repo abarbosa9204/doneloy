@@ -1,0 +1,49 @@
+<?php
+
+namespace GeoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ciudad
+ *
+ * @ORM\Table(name="ciudad")
+ * @ORM\Entity(repositoryClass="GeoBundle\Repository\CiudadRepository")
+ */
+class Ciudad
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="orden", type="integer")
+     */
+    private $orden = 1;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean")
+     */
+    private $visible = true;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

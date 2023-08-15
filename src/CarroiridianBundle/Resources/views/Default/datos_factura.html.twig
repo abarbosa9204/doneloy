@@ -1,0 +1,97 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+<div class="banner banner3">
+    <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})"></div>
+    {% include('@Home/Default/breadcrumb.html.twig') %}
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-xs-12">
+        {% include('@Carroiridian/Default/filtro.html.twig') %}
+
+            <div class="cont_product carrito">
+
+            {% include 'CarroiridianBundle:Default:pasos.html.twig' %}
+                {{ form_start(form, {'method': 'post', 'action': '' }) }}
+
+                    <label>{{ qi.textoDB('titulo_informacion_facturacion') }}</label>
+                    {{ form_errors(form) }}
+                    <div class="col">
+                        {{ form_errors(form.nombre) }}
+                        {{ form_widget(form.nombre, { attr: {'placeholder':qi.textoDB('texto_registro_nombre')} } ) }}
+
+                        {{ form_errors(form.apellidos) }}
+                        {{ form_widget(form.apellidos, { attr: {'placeholder':qi.textoDB('texto_registro_apellidos')} } ) }}
+
+                        {{ form_errors(form.direccion) }}
+                        {{ form_widget(form.direccion, { attr: {'placeholder':qi.textoDB('texto_registro_direccion')} } ) }}
+
+                        {{ form_errors(form.tipodocumento) }}
+                        {{ form_widget(form.tipodocumento) }}
+
+                        {{ form_errors(form.documento) }}
+                        {{ form_widget(form.documento, { attr: {'placeholder':qi.textoDB('texto_registro_numero_documento')} } ) }}
+                        {% if userLogged %}
+                        <div style="display:none;">
+                        {% endif %}
+                        {{ form_errors(form.rangoedad) }}
+                        {{ form_widget(form.rangoedad, { attr: {'placeholder':qi.textoDB('texto_registro_rango')} } ) }}
+                        {% if userLogged %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+
+                        <div style="display:none;">
+                        {{ form_errors(form.pais) }}
+                        {{ form_widget(form.pais, { attr: {'placeholder':qi.textoDB('texto_registro_pais')} } ) }}
+                        </div>
+                        
+                        {{ form_errors(form.paisEn) }}
+                        {{ form_widget(form.paisEn, { attr: {'placeholder':qi.textoDB('texto_registro_pais')} } ) }}
+
+                        {{ form_errors(form.departamento) }}
+                        {{ form_widget(form.departamento, { attr: {'placeholder':qi.textoDB('texto_registro_departamento')} } ) }}
+
+                        {{ form_errors(form.ciudad) }}
+                        {{ form_widget(form.ciudad, { attr: {'placeholder':qi.textoDB('texto_registro_ciudad')} } ) }}
+
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email, { attr: {'placeholder':qi.textoDB('texto_registro_email')} } ) }}
+
+                        {{ form_errors(form.celular) }}
+                        {{ form_widget(form.celular, { attr: {'type': 'tel', 'placeholder':qi.textoDB('texto_registro_celular')} } ) }}
+                    </div>
+
+                    <br>
+                    <label class="terminos">
+                        {% if form_errors(form.terms) | length > 0 %}
+                            <ul>
+                                <li>{{ qi.textoDB('terms_error') }}</li>
+                            </ul>
+                        {% endif %}
+                        {{ form_widget(form.terms) }}
+                        <a href="{{ path('terminos') }}" target="_blank">{{ qi.textoDB('acepta') }}</a>
+                    </label>
+                    <br>
+                    <input onclick="document.factura.checkValidity()?showLoading():false" class="button" type="submit" value="{{ qi.textoDB('texto_continuar') }}"/>
+
+                {{ form_end(form) }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

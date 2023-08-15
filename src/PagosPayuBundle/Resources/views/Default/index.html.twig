@@ -1,0 +1,38 @@
+<!-- Global site tag (gtag.js) - Google Ads: 953693498 -->
+{# <script async src="https://www.googletagmanager.com/gtag/js?id=AW-953693498"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-953693498'); </script> #}
+
+{# <!-- Event snippet for Compras conversion page In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. --> <script> function gtag_report_conversion(url) { var callback = function () { if (typeof(url) != 'undefined') { window.location = url; } }; gtag('event', 'conversion', { 'send_to': 'AW-953693498/W35hCJ7uqVwQuurgxgM', 'transaction_id': '', 'event_callback': callback }); return false; } </script> #}
+
+<form method="post" action="https://gateway.payulatam.com/ppp-web-gateway/" id="myform" style="display: none;">
+{# <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu" id="myform" style="display: none;"> #}
+    <input name="merchantId"    type="hidden"  value="{{ datos_payu.merchantId }}"   >
+    <input name="accountId"     type="hidden"  value="{{ datos_payu.accountId }}" >
+    <input name="description"   type="hidden"  value="{{ descripcion_text }}"  >
+    <input name="referenceCode" type="hidden"  value="{{ referenceCode }}" >
+    <input name="amount"        type="hidden"  value="{{ compra.precio | number_format(2, '.', '') }}"   >
+    <input name="tax"           type="hidden"  value="{{ tax | number_format(2, '.', '') }}"  >
+    <input name="taxReturnBase" type="hidden"  value="{{ taxReturnBase | number_format(2, '.', '') }}" >
+    <input name="currency"      type="hidden"  value="{{ app.session.get('moneda','COP') }}" >
+    <input name="signature"     type="hidden"  value="{{ firma }}"  >
+    {# <input name="test"          type="hidden"  value="{{ datos_payu.test }}" > #}
+    <input name="buyerEmail"    type="hidden"  value="{{ factura.email }}" >
+    <input name="responseUrl"    type="hidden"  value="{{ url('pagar_payu_respuesta',{},false) }}" >
+    <input name="confirmationUrl"    type="hidden"  value="{{ url('pagar_payu_confirmacion',{},false) }}" >
+
+    <input name="shippingAddress"    type="hidden"  value="{{ factura.envio.direccion }}" >
+    <input name="shippingCity"    type="hidden"  value="{{ factura.envio.ciudad.nombre }}" >
+    <input name="shippingCountry"    type="hidden"  value="CO" >
+    <input name="Submit"        type="submit"  value="Enviar" id="submit">
+</form>
+<script>
+    {# gtag_report_conversion('https://www.rosasdoneloy.com/pagar-payu'); #}
+    var sub = document.getElementById('submit');
+    sub.click();
+</script>
+
+{# dump(full_array) #}
+{# dump(body) #}
+{# dump(response) #}
+{# descripcion | raw #};
+
+

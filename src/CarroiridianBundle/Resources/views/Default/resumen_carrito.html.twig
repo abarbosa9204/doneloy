@@ -1,0 +1,125 @@
+{% set carrito = app.session.get('carrito') %}
+{% set es_resumen = 'resumen_compra' == app.request.attributes.get('_route') %}
+{% set escala_moneda = app.session.get('escala_moneda',1) %}
+<label>{{ qi.textoDB('titulo_informacion_facturacion') }}</label>
+<br>
+<table class="col-md-12 col-sm-12 col-xs-12 table-striped table-condensed cf" cellpadding="100" cellspacing="100">
+    <thead class="cf">
+    <tr>
+        <th>{{ qi.textoDB('carrito_titulo_producto') }}</th>
+        <th class="numeric">{{ qi.textoDB('carrito_titulo_nombre') }}</th>
+        <th class="numeric">{{ qi.textoDB('carrito_titulo_precio') }}</th>
+        <th class="numeric">{{ qi.textoDB('carrito_titulo_cantidad') }}</th>
+        <th class="numeric">{{ qi.textoDB('carrito_titulo_total') }}</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% set cu = app.request.locale | capitalize %}
+        {% set total = 0 %}
+        {% set iva = 0 %}
+        {% for id,tallas in carrito %}
+            {% for id_talla, item in tallas %}
+                {% if item.cantidad > 0 %}
+                    {% set solos = 0 %}
+                    {% set producto = "" %}
+                    {% set talla = "" %}
+                    {% set color = item.color %}
+                    {% for key,grupo in item.productos %}
+                        {% set producto = grupo.producto %}
+                        {% set talla = ci.tallaId(id_talla) %}
+                        {% set complementos = grupo.complementos %}
+                        {% if complementos | length > 0 %}
+                            {% set max = ci.inventario(id, id_talla).cantidad %}
+                            {{ include('@Carroiridian/Default/resumen.html.twig',{'producto': producto,'talla': talla,'complementos':complementos,'combo':true,'cantidad':1,'max':max,'eliminar':'eliminar_combo','key':key}) }}
+                            {% set total = total + (producto.precio) %}
+                            {% set iva = iva + (producto.iva) %}
+                            {% for key_comp,grupo_comp in complementos %}
+                                {% set complemento = grupo_comp.producto %}
+                                {% set total = total + (complemento.precio) %}
+                                {% set iva = iva + (complemento.iva) %}
+                            {% endfor %}
+                        {% else %}
+                            {% set solos = solos + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if solos > 0 %}
+                        {% if item.color_sku == 'es_plan' %}
+                            {% set total = total + (item.color_precio * solos) %}
+                            {% set max = 1 %}
+                            {% set iva = iva + (item.color_precio - (item.color_precio / (1 + producto.porcentajeIva / 100))) %}
+                        {% else %}
+                            {% set total = total + (producto.precio * solos) %}
+                            {% set max = ci.inventario(id, id_talla).cantidad %}
+                            {% set iva = iva + (producto.iva * solos) %}
+                        {% endif %}
+                        {{ include('@Carroiridian/Default/resumen.html.twig',{'producto': producto,'color_sku': item.color_sku, 'precio_p': item.color_precio,'talla': talla,'complementos':[],'combo':false,'cantidad':solos,'max':max,'eliminar':'eliminar','key':loop.index0,'color':color}) }}
+
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {% if app.session.get('rosa',false) %}
+            <tr>
+                <td data-title="TIPO_ENVIO" class="numeric">
+                    <img class="ico_moto_v" src="{{ qi.imagen('ico_moto_veloz') }}">
+                </td>
+                <td data-title="DESTINO" class="numeric">
+                    Rosa Veloz
+                </td>
+                <td data-title="precio" class="numeric">
+                    <h4>${{ (qi.settingDB('precio_rosa_veloz') / escala_moneda )  | number_format(2) }}</h4>
+                </td>
+                <td data-title="CANTIDAD" class="numeric">1</td>
+                <td data-title="TOTAL" class="numeric">
+                    <h4>${{ (qi.settingDB('precio_rosa_veloz') / escala_moneda) | number_format(2) }}</h4>
+                    {% if not es_resumen %}
+                        <a class="boton eliminar_rosa" data-id="" data-id-talla="" data-cant="">REMOVER</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% set total = total + qi.settingDB('precio_rosa_veloz') %}
+            {% set iva = iva + (qi.settingDB('precio_rosa_veloz') - qi.settingDB('precio_rosa_veloz') / 1.19) %}
+        {% endif %}
+
+        {% if app.session.get('envio',false) %}
+            {% set envio = app.session.get('envio') %}
+            <tr>
+                <td data-title="TIPO_ENVIO" class="numeric">
+                    <img class="ico_moto_v" src="{{ qi.imagen('ico_moto_veloz') }}">
+                </td>
+                <td data-title="DESTINO" class="numeric">
+                    {{ envio.ciudad.nombre }}
+                </td>
+                <td data-title="precio" class="numeric">
+                    <h4>${{ (envio.ciudad.costo / escala_moneda) | number_format(2) }}</h4>
+                </td>
+                <td data-title="CANTIDAD" class="numeric">1</td>
+                <td data-title="TOTAL" class="numeric">
+                    <h4>${{ (envio.ciudad.costo / escala_moneda) | number_format(2) }}</h4>
+                </td>
+            </tr>
+            {% set total = total + envio.ciudad.costo %}
+            {% set iva = iva + (envio.ciudad.costo - envio.ciudad.costo / 1.16) %}
+        {% endif %}
+
+
+        <tr>
+            <td colspan="3"></td>
+            <td>SUB TOTAL</td>
+            <td id="carrito-iva">${{ ((total - iva) / escala_moneda) | number_format(2) }}</td>
+        </tr>
+
+        <tr>
+            <td colspan="3"></td>
+            <td>IVA</td>
+            <td>${{ (iva / escala_moneda) | number_format(2) }}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="3"></td>
+            <td>TOTAL</td>
+            <td id="total-mercado-pago">${{ (total / escala_moneda) | number_format(2) }}</td>
+        </tr>
+    </tbody>
+</table>

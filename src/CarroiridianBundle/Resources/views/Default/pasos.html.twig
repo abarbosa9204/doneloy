@@ -1,0 +1,38 @@
+<div class="pasos">
+
+    <div class="item {% if app.request.get('_route') == 'carrito' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_cesta_pasos') }})"></div>
+        <p>
+            <a href="{{ path('carrito') }}">{{ qi.textoDB('titulo_pasos_cesta') }}</a>
+        </p>
+    </div>
+    {% if ci.conDedicatoria() %}
+    <div class="item {% if app.request.get('_route') == 'dedicatoria' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_mensaje_pasos') }})"></div>
+        <p>
+            <a href="{{ path('dedicatoria') }}">{{ qi.textoDB('titulo_pasos_mensaje') }}</a>
+        </p>
+    </div>
+    {% endif %}
+    <div class="item {% if app.request.get('_route') == 'registro_login' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_datos_pasos') }})"></div>
+        <p>
+            <a href="{{ path('registro_login') }}">{{ qi.textoDB('titulo_pasos_datos') }}</a>
+        </p>
+    </div>
+    {% if ci.conEnvio() %}
+    <div class="item {% if app.request.get('_route') == 'datos-envio' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_datos_envio_pasos') }})"></div>
+        <p>
+            <a href="{{ path('datos-envio') }}">{{ qi.textoDB('titulo_pasos_datos_envio') }}</a>
+        </p>
+    </div>
+    {% endif %}
+    <div class="item {% if app.request.get('_route') == 'resumen_compra' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_pago_pasos') }})"></div>
+        <p>
+            <a href="{{ path('resumen_compra') }}">{{ qi.textoDB('titulo_pasos_pago') }}</a>
+        </p>
+    </div>
+
+</div>

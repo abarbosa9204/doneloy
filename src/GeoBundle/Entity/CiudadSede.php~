@@ -1,0 +1,127 @@
+<?php
+
+namespace GeoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ciudad
+ *
+ * @ORM\Table(name="ciudadsede")
+ * @ORM\Entity(repositoryClass="GeoBundle\Repository\CiudadSedeRepository")
+ */
+class CiudadSede
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    private $nombre;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="orden", type="integer")
+     */
+    private $orden = 1;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean")
+     */
+    private $visible = true;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set orden
+     *
+     * @param integer $orden
+     *
+     * @return Ciudad
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden
+     *
+     * @return integer
+     */
+    public function getOrden()
+    {
+        return $this->orden;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     *
+     * @return Ciudad
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return CiudadSede
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+}

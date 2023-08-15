@@ -1,0 +1,35 @@
+body
+{
+    min-height:100vh;
+}
+.box
+{
+    background: #FFF;
+    box-sizing: border-box;
+    color:#011834;
+    font-size:1.4em;
+    max-width:400px;
+    padding:30px;
+    line-height: 1.6em;
+    top:50%;
+    left:50%;
+    text-align: justify;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    width:90%;
+}
+.box img
+{
+    display:block;
+    margin:20px auto;
+}
+.box a
+{
+    text-decoration: underline;
+    font-weight: bold;
+}
+html
+{
+    background:url(bglanding.jpg) no-repeat center center;
+    background-size:cover;
+}

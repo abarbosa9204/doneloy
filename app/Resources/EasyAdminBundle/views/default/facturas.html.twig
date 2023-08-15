@@ -1,0 +1,45 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+
+
+{% block page_title %}Rosas Don Eloy{% endblock %}
+
+{% block content_header %}
+    <div class="row">
+        <h1>Listado de facturas</h1>
+    </div>
+{% endblock content_header %}
+
+{% block main %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            {% block table_head %}
+                <tr>
+                    <th>Id factura</th>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>Ref. PAYU</th>
+                    <th>Probar</th>
+                </tr>
+            {% endblock table_head %}
+            </thead>
+
+            <tbody>
+            {% block table_body %}
+                {% for item in facturas %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.documento }}</td>
+                        <td>Test_DE_{{ item.compra_id }}</td>
+                        <td><a href="{{ path('easyadmin',{action:'search',entity:'Compra',query:item.documento}) }}" target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a> </td>
+                    </tr>
+                {% endfor %}
+            {% endblock table_body %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock main %}
+

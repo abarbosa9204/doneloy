@@ -1,0 +1,32 @@
+{% set lc = app.request.locale %}
+<p style="color: #4A7689;font-family: Helvetica">Hola {{ contacto.receptor }}, {{ contacto.remitente }} te quiere hacer una recomendación desde la página de Don ELoy Rosas</p>
+<br/>
+<table style="width: 100%;max-width: 600px; border: 1px;text-align: center;font-family: Helvetica;border-collapse: collapse;">
+
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td style="border-top: 1px solid #ffffff;">Mensaje</td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">{{ contacto.mensaje | nl2br }}</td>
+    </tr>
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td style="border-top: 1px solid #ffffff;">
+            <a href="{{ url('product',{id:producto.id, nombre: qi.slugify(producto.gen('nombre',lc))}) }}" target="_blank" style="color: #ffffff;">
+                {{ producto.gen('nombre',lc) }}
+            </a>
+        </td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">
+            <a href="{{ url('product',{id:producto.id, nombre: qi.slugify(producto.gen('nombre',lc))}) }}" target="_blank">
+                <img src="{{ imagenes[0]  | imagine_filter('producto') }}">
+            </a>
+        </td>
+    </tr>
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td style="border-top: 1px solid #ffffff;">
+            Link
+        </td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">
+            <a href="{{ path('product',{id:producto.id, nombre: qi.slugify(producto.gen('nombre',lc))}) }}" target="_blank" style="color: #647687;">
+                {{ url('product',{id:producto.id, nombre: qi.slugify(producto.gen('nombre',lc))}) }}
+            </a>
+        </td>
+    </tr>
+</table>

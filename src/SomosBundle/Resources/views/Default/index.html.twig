@@ -1,0 +1,63 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    <div class="banner">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_somos')|imagine_filter('banner') }})">
+            <div class="no_header">
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+
+    <div class="container somos">
+
+        <h3>{{ qi.textoDB('titulo_somos') }}</h3>
+
+        {{ qi.textoBigDB('texto_somos')|raw }}
+
+        <div class="estilos">
+            {% for item in qi.galeria('galeria_estilos') %}
+            <div class="item itemHover">
+                <div class="img">
+                    <img src="{{ item.imagen|imagine_filter('thumb_estilos') }}"/>
+                    <div class="hover">
+                        <p class="center_H">{{ item.resumen }}</p>
+                    </div>
+                </div>
+                <h3>{{ item.titulo }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div class="nuestra_historia">
+        <div class="item" style="background-image: url({{ qi.imagen('banner_somos_historia') }})">
+
+            <div class="cont_texto">
+                <div class="texto">
+                    {{ qi.textoBigDB('texto_nuestra_historia')|raw }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container links_somos">
+        <div class="item">
+            <img src="{{ qi.imagen('imagen_link_historia_rosa')|imagine_filter('link_somos') }}"/>
+            <a href="{{ path('historia') }}" class="hover">
+                <span>{{ qi.textoDB('titulo_link_historia_rosa') }}</span>
+            </a>
+        </div>
+        <div class="item">
+            <img src="{{ qi.imagen('imagen_link_cultura_rosa')|imagine_filter('link_somos') }}"/>
+            <a href="{{ path('cultura') }}" class="hover">
+                <span>{{ qi.textoDB('titulo_link_cultura_rosa') }}</span>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

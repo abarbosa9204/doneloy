@@ -1,0 +1,131 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+    {% include('@Carroiridian/Default/banner_cesta.html.twig') %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                {% include('@Carroiridian/Default/filtro.html.twig') %}
+                <div class="cont_product carrito">
+                    {% include 'CarroiridianBundle:Default:pasos.html.twig' %}
+                    <div id="no-more-tables">
+                        {{ include('@Carroiridian/Default/resumen_carrito.html.twig') }}
+                    </div>
+                    {# <a onclick="showLoading()" href="{{ path('pagar_payu') }}" class="boton" id="pagar">{{ qi.textoDB('carrito_pagar') }}</a>                     #}
+                    <a onclick="mercadoPago()" href="javascript:void(0)" class="boton" id="mercado_pagar">Pagar</a>
+                    <div class="cho-container" style="display:none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous">  
+  </script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+  
+<script type="text/javascript">
+function mercadoPago(){
+    let dialog = bootbox.dialog({
+        title: 'Procesando la solicitud',
+        message: '<p><i class="fa fa-spin fa-spinner"></i> Cargando...</p>'
+    });
+                
+    dialog.init(function(){
+        $.ajax({
+            url: "mercado-pago-carrito",    
+            type: "post",
+            async: true,
+            dataType: "json",
+            data: {
+                value: $('#total-mercado-pago').html()
+            },
+            success: function(data) {      
+                setTimeout(function(){
+                    console.log(data);
+                    $('.cho-container').empty();
+                        if(data.status=='success'){  
+                            dialog.modal('hide');              
+                            const mp = new MercadoPago(data.public_key, {
+                                locale: 'es-CO'
+                            });
+                            mp.checkout({
+                                preference: {
+                                    id: data.response.id
+                                },
+                                render: {
+                                    container: '.cho-container',
+                                    label: 'Pagar',
+                                },
+                                theme: {
+                                    elementsColor: '#c0392b',
+                                    headerColor: '#c0392b',
+                                }
+                            });
+                            
+                            setTimeout(function(){
+                                $('.mercadopago-button').trigger('click');        
+                                dialog.modal('hide');
+                            }, 1000);
+                        }else{
+                            dialog.find('.bootbox-body').html('Error procesando la solicitud');                        
+                        }
+                }, 2000);
+                        
+            },
+            error: function(data) {
+                    console.log(data);
+                    setTimeout(function(){
+                        dialog.find('.bootbox-body').html('Error procesando la solicitud');
+                        dialog.modal('hide');
+                    }, 1000);
+            }
+        });
+    });
+}
+</script>
+
+
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        goog_snippet_vars = function() {
+            var w = window;
+            w.google_conversion_id = 1010060956;
+            w.google_conversion_label = "nnsYCPOninUQnJ3R4QM";
+            w.google_remarketing_only = false;
+        }
+        // DO NOT CHANGE THE CODE BELOW.
+        goog_report_conversion = function(url) {
+            goog_snippet_vars();
+            window.google_conversion_format = "3";
+            var opt = new Object();
+            opt.onload_callback = function() {
+                if (typeof(url) != 'undefined') {
+                    window.location = url;
+                }
+            }
+            var conv_handler = window['google_trackConversion'];
+            if (typeof(conv_handler) == 'function') {
+                conv_handler(opt);
+            }
+        }
+        /* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js"></script>
+    <script>
+        $(function () {
+            $('#pagar').click(function (e) {
+                e.preventDefault();
+                goog_report_conversion($(this).attr('href'));
+            });
+        });
+    </script>
+{% endblock %}

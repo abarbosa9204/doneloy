@@ -1,0 +1,39 @@
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div class="banner banner3">
+    <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})"></div>
+    {% include('@Home/Default/breadcrumb.html.twig') %}
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <div class="cont_product">
+
+                {{ include('@FOSUser/Default/pasos_perfil.html.twig') }}
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        {{ form_start(form, { 'action': path('mis_datos'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+                        {{ form_widget(form) }}
+                        <div>
+                            <input class="button" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

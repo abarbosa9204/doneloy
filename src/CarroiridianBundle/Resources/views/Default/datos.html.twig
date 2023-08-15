@@ -1,0 +1,157 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set ruta = app.request.get('_route') %}
+    {% set registro = ruta == 'registro_login' %}
+{% include('@Carroiridian/Default/banner_cesta.html.twig') %}
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-xs-12">
+        {% include('@Carroiridian/Default/filtro.html.twig') %}
+
+            <div class="cont_product carrito">
+            {% if registro %}
+                {% include 'CarroiridianBundle:Default:pasos.html.twig' %}
+            {% endif %}
+
+                <div class="opcion" id="login">
+                    <form>
+                        {% if registro %}
+                            <label data-pos="1">
+                                <input type="radio" name="dedica"/>
+                                REGISTRA TUS DATOS
+                            </label>
+                        {% endif %}
+                        <label data-pos="2">
+                            {% if registro %}
+                                <input type="radio" name="dedica"/>
+                                ¿YA TIENES UNA CUENTA?
+                            {% else %}
+                                INICIO DE SESIÓN
+                            {% endif %}
+                        </label>
+                        {% if registro %}
+                            <label data-pos="3">
+                                <input type="radio" name="dedica"/>
+                                Quiero comprar sin
+                                registrarme
+                            </label>
+                        {% endif %}
+                    </form>
+                </div>
+
+                <div class="rotar">
+
+                    <div class="swiper-wrapper">
+
+                        {% if registro %}
+                        {{ form_start(form, {'method': 'post', 'action': '', 'attr': {'class': 'swiper-slide form'}}) }}
+
+                            <div class="col">
+
+
+                                {{ form_errors(form) }}
+
+
+                                {{ form_errors(form.nombre) }}
+                                {{ form_widget(form.nombre, { attr: {'placeholder':qi.textoDB('texto_registro_nombre')} } ) }}
+
+
+
+                                {{ form_errors(form.apellidos) }}
+                                {{ form_widget(form.apellidos, { attr: {'placeholder':qi.textoDB('texto_registro_apellidos')} } ) }}
+
+
+
+                                {{ form_errors(form.telefono) }}
+                                {{ form_widget(form.telefono, { attr: {'placeholder':qi.textoDB('texto_registro_telefono')} } ) }}
+
+
+                                {{ form_errors(form.email) }}
+                                {{ form_widget(form.email, { attr: {'placeholder':qi.textoDB('texto_registro_email')} } ) }}
+
+                            </div>
+
+                            <div class="col">
+
+                                {{ form_errors(form.username) }}
+                                {{ form_widget(form.username, { attr: {'placeholder':qi.textoDB('texto_registro_usuario')} } ) }}
+
+                                {{ form_errors(form.plainPassword.first) }}
+                                {{ form_widget(form.plainPassword.first, { attr: {'placeholder':qi.textoDB('texto_registro_contraseña')} } ) }}
+
+                                {{ form_errors(form.plainPassword.second) }}
+                                {{ form_widget(form.plainPassword.second, { attr: {'placeholder':qi.textoDB('texto_registro_repetir_contraseña')} } ) }}
+
+                                {{ form_errors(form.rangoedad) }}
+                                {{ form_widget(form.rangoedad, { attr: {'placeholder':qi.textoDB('texto_registro_rango')} } ) }}
+
+                            </div>
+
+                            <br>
+                            <label class="terminos">
+                                {% if form_errors(form.terms) | length > 0 %}
+                                    <ul>
+                                        <li>{{ qi.textoDB('terms_error') }}</li>
+                                    </ul>
+                                {% endif %}
+                                {{ form_widget(form.terms) }}
+                                <a href="{{ path('terminos') }}" target="_blank">{{ qi.textoDB('acepta') }}</a>
+                            </label>
+                            <br>
+                            <input onclick="document.fos_user_registration_form_nombre.checkValidity()?showLoading():false" class="button" type="submit" value="{{ qi.textoDB('texto_enviar') }}"/>
+
+                        {{ form_end(form) }}
+
+                        {% endif %}
+                        <form class="swiper-slide" action="{{ path("fos_user_security_check") }}" method="post">
+                            <div class="col">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+
+                                    {% for flashMessage in app.session.flashbag.get('error') %}
+                                        {{ flashMessage }}
+                                    {% endfor %}
+
+
+
+                                    <input type="text" id="username" name="_username" placeholder="Usuario" required="required" />
+
+                                    <input type="password" id="password" name="_password" placeholder="Contraseña" required="required"/>
+
+                                    <label class="float_r" for="remember_me">
+                                        <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> {{ qi.textoDB('texto_login_recuerdame') }}
+                                    </label>
+
+                                    <a class="float_r" href="{{ path('fos_user_resetting_request') }}">{{ qi.textoDB('texto_olvide_contraseña') }}</a>
+
+                                <br/>
+                                <input onclick="showLoading()" class="button" type="submit" value="{{ qi.textoDB('texto_enviar') }}"/>
+                            </div>
+                        </form>
+                        {% if registro %}
+                        <form class="swiper-slide">
+                            <div class="col">
+                                <a class="boton" href="{{ path('sin_registro') }}">{{ qi.textoDB('texto_continuar') }}</a>
+                            </div>
+                        </form>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

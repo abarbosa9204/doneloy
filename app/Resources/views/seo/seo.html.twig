@@ -1,0 +1,23 @@
+<title>{{ titulo }}</title>
+<meta name="description" content="{{ descripcion }}" />
+<link rel="image_src" href="{{ homepage ~ path_images ~ '/' ~ imagen }}"/>
+<meta name="author" content="{{ qi.getSettingDB('seo_autor') }}">
+<!-- Google+ -->
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="{{ descripcion }}">
+<meta name="twitter:site" content="{{ qi.getSettingDB('seo_twitter:site') }}">
+<meta name="twitter:title" content="{{ titulo }}">
+<meta name="twitter:description" content="{{ descripcion }}">
+<meta name="twitter:creator" content="{{ qi.getSettingDB('seo_twitter:site') }}">
+<!-- Twitter Summary card images must be at least 120x120px -->
+<meta name="twitter:image" content="{{ homepage ~ path_images ~ '/' ~ imagen }}">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="{{ titulo }}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{{ url }}" />
+<meta property="og:image" content="{{ homepage ~ path_images ~ '/' ~ imagen }}" />
+<meta property="og:description" content="{{ descripcion }}" />
+<meta property="og:site_name" content="{{ qi.getSettingDB('seo_og:site_name') }}" />
+<meta property="fb:admins" content="{{ qi.getSettingDB('seo_fb:admins') }}" />

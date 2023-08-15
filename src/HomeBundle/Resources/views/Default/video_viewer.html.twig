@@ -1,0 +1,8 @@
+{% set ancho = 560 %}
+{% if is_mobile() %}
+    {% set ancho = 250 %}
+{% endif %}
+<div class="remodal video_viewer" data-remodal-id="video_view">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <iframe id="popup-youtube-player" width="{{ ancho }}" height="315" src="" frameborder="0" allowfullscreen></iframe>
+</div>

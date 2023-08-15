@@ -1,0 +1,188 @@
+{% extends 'lay_iridian.html.twig' %}
+
+
+{% block content %}
+    {% set lc = app.request.locale() %}
+
+    <div class="banner sliderHome">
+        <div class="swiper-wrapper">
+            {% for item in qi.galeria('banner_home') %}
+                {% set imagen = item.imagen %}
+                {% if is_mobile() %}
+                    {% set imagen = item.imagenmovil %}
+                {% endif %}
+                <div class="item swiper-slide" style="background-image: url({{ imagen }})">
+                    <div class="cont">
+                    </div>
+                </div>
+            {% endfor %}
+            {% for item in ci.productosHome(5) %}
+                {% set imagen = item.imagenhome %}
+                {% if is_mobile() %}
+                    {% set imagen = item.imagenaux %}
+                {% endif %}
+                <div class="item swiper-slide" style="background-image: url({{ item.imagenhome }})">
+                    <div class="cont">
+                        <h2>{{ item.nombre }}</h2><br>
+                        <a href="{{ path('product',{id:item.id, nombre: qi.slugify(item.nombre)}) }}">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            {{ qi.textoDB('ver_producto') }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {# <div class="titulo">
+                <img src="{{ qi.imagen('logo_azul') }}">
+                <h2>{{ qi.textoDB('titulo_categoria') }}</h2>
+            </div> #}
+
+            <div class="col-xs-12 categorias">
+                {% for item in ci.categorias() %}
+                <a href="{{ path('productos_por_categoria',{'categoria': item['id'] ,'nombre': qi.slugify(item['nombre'])}) }}" class="item">
+                    <img src="{{ item.imagen|imagine_filter('my_thumb_category') }}">
+                    <p>{{ item.nombre }}</p>
+                </a>
+                {% endfor %}
+            </div>
+
+            {# <div class="col-xs-12 links">
+
+                <div class="item">
+                    <img src="{{ qi.imagen('l_back_boutique')|imagine_filter('back_link') }}">
+                    <div class="hover">
+                        <img src="{{ qi.imagen('l_titulo_boutique') }}">
+                        <p>{{ qi.textoDB('l_txt_boutique') }}</p>
+                    </div>
+                    <a href="{{ path('boutique') }}"></a>
+                </div>
+
+                <div class="item">
+                    <img src="{{ qi.imagen('l_back_eventos')|imagine_filter('back_link') }}">
+                    <div class="hover">
+                        <img src="{{ qi.imagen('l_titulo_eventos') }}">
+                        <p>{{ qi.textoDB('l_txt_eventos') }}</p>
+                    </div>
+                    <a href="{{ qi.imagenLink('l_titulo_eventos') }}"></a>
+                </div>
+
+            </div> #}
+
+            <div class="titulo">
+                <h2>{{ qi.textoDB('titulo_recomendados_mes') }}</h2>
+            </div>
+
+            <div class="col-xs-12 productos recomendados">
+                {% for item in ci.productosRecomendados(5) %}
+                <div class="item">
+                    <img src="{{ item.imagen|imagine_filter('producto') }}">
+                    <h4>{{ item.nombre | raw }}</h4>
+                    <p>${{ item.precio | number_format }}</p>
+                    <a class="#" href="{{ path('product',{id:item.id, nombre: qi.slugify(item.nombre)}) }}">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        {{ qi.textoDB('agregar_carrito') }}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="banner_rosa_perfecta">
+        <div class="item" style="background-image: url({{ qi.imagen('banner_larosa_perfecta') }})">
+            <div class="center_H">
+                <img src="{{ qi.imagen('titulo_la_rosa_perfecta') }}">
+                <p>{{ qi.textoDB('txt_banner_la_rosa_perfecta') }}</p>
+                <!--<a href="#">{{ qi.textoDB('elige_ya') }}</a>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="banner_la_rosa_veloz">
+
+        <div class="item">
+            <img class="b_img" src="{{ qi.imagen('banner_rosa_veloz') }}">
+        </div>
+        <div class="item">
+            <div class="center_H">
+                <h2>{{ qi.textoDB('titulo_banner_la_rosa_veloz') }}</h2>
+                {{ qi.textoBigDB('txt_banner_la_rosa_veloz')|raw }}
+                <a href="{{ path('productos_por_categoria') }}">{{ qi.textoDB('pide_roza_veloz') }}</a>
+                {% if qi.settingDB('habilitar_links_apps') == 1 %}
+                    <br>
+                    <a href="#" class="link_ext">
+                        <img src="{{ qi.imagen('google_play') }}">
+                    </a>
+
+                    <a href="#" class="link_ext">
+                        <img src="{{ qi.imagen('app_store') }}">
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="banner_taller_flores">
+        <div class="item" style="background-image: url({{ qi.imagen('banner_taller_flores') }})">
+            <div class="item">
+                <div class="center_H">
+                    <h2>{{ qi.textoDB('titullo_banner_taller_flore') }}</h2>
+                    <br>
+                    <p>{{ qi.textoDB('txt_banner_taller_flores') }}</p>
+                    <br>
+                    <a href="{{ path('taller-flores') }}">{{ qi.textoDB('reserva_ya') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="titulo">
+                <h2>{{ qi.textoDB('titulo_otros_servicios') }}</h2>
+            </div>
+
+            <div class="col-xs-12 otros_servicios">
+
+                {% for item in qi.galeria('otros_servicios') %}
+                <div class="item">
+                    <img src="{{ item.imagen|imagine_filter('otros_serv') }}">
+                    <h3>{{ item.titulo }}</h3>
+                    <div class="hover">
+                        <p>{{ item.resumen }}</p>
+                    </div>
+                    <a href="{{ item.link }}"></a>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="banner_videos">
+        <a class="arrow prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        <div class="root">
+            <div class="swiper-wrapper">
+            {% for item in qi.galeria('banner_videos') %}
+            <div class="item swiper-slide video_l">
+                <img src="{{ item.imagen|imagine_filter('thumb_estilos') }}">
+                <img class="ico_play" src="/images/ico_play.png"/>
+                <a class="hover" href="#video_view" data-video="{{ item.link }}?enablejsapi=1&version=3&playerapiid=ytplayer"></a>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        <a class="arrow next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+    </div>
+
+    {% include('@Home/Default/sucursal.html.twig') %}
+
+{% endblock %}

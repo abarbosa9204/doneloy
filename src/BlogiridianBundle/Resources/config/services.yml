@@ -1,0 +1,4 @@
+services:
+#    blogiridian.example:
+#        class: BlogiridianBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

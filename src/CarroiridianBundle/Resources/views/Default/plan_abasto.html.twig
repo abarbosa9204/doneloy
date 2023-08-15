@@ -1,0 +1,50 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set categoria = app.request.get('categoria') %}
+    {% set genero = app.request.get('genero') %}
+    {% set lc = app.request.locale() %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_taller_flores')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_plan_abasto') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="txt_dead_product">
+                    {{ qi.textoBigDB('texto_plan_abasto')|raw }}
+                </div>
+            </div>
+            <div class="col-xs-12 producto abasto">
+                <div class="gal">
+                    {% set categoria = app.request.get('categoria') %}
+                    {% set lc = app.request.locale() %}
+                    {% for cat in ci.planes(corporativo) %}
+                        {% set categoria = cat.id %}
+                        <a href="{{ path('intern-abasto', {'id': categoria, 'name': qi.slugify(cat.nombre)}) }}">
+                        <div class="link_full">
+                            <img src="{{ cat.imagen|imagine_filter('link_full') }}"/>
+                            <div class="hover">
+                                <div class="txt">
+                                    <h2>{{ cat.nombre }}</h2>
+                                    <p>{{ cat.resumen }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

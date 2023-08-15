@@ -1,0 +1,66 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set categoria = app.request.get('categoria') %}
+    {% set genero = app.request.get('genero') %}
+    {% set lc = app.request.locale() %}
+    {% set productos = ci.productos() %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_boutique')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_boutique') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 list_products">
+                {% include('@Carroiridian/Default/filtro.html.twig') %}
+                <div class="col-xs-12">
+                    <div class="txt_dead_product">
+                        {{ qi.textoBigDB('txt_boutique_long')|raw }}
+                    </div>
+                </div>
+                <div class="productos">
+                    {% for item in productos %}
+                        {% set c_agotado = '' %}
+                        {% if item.cantidad == 0 %}
+                            {% set c_agotado = 'agotado' %}
+                        {% endif %}
+                            <div class="item {{ c_agotado }} grid-item c_{{ item.colores | replace({' ':' c_'}) }} e_{{ item.estilos | replace({' ':' e_'}) }} ca_{{ item.categoria }} ">
+                                <img src="{{ item.imagen|imagine_filter('producto') }}">
+                                <h4>{{ item.nombre }}</h4>
+                                <h4>asasdasdasd</h4>
+                                <p>${{ item.precio | number_format }}</p>
+                                <a href="{{ path('product',{id:item.id, nombre: qi.slugify(item.nombre)}) }}">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    {{ qi.textoDB('agregar_carrito') }}
+                                </a>
+                            </div>
+                    {% endfor %}
+                </div>
+
+                <div class="link_boutique">
+                    <div class="item">
+                        <img src="{{ qi.imagen('imagen_link_taller_flores')|imagine_filter('link_somos') }}"/>
+                        <a href="{{ path('taller-flores') }}" class="hover"></a>
+                        <h3>{{ qi.textoDB('titulo_link_talLer_flores') }}</h3>
+                    </div>
+                    <div class="item">
+                        <img src="{{ qi.imagen('imagen_link_plan_abasto')|imagine_filter('link_somos') }}"/>
+                        <a href="{{ path('plan-abasto') }}" class="hover"></a>
+                        <h3>{{ qi.textoDB('titulo_link_plan_abasto') }}</h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

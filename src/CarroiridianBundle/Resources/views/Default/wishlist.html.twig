@@ -1,0 +1,41 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set categoria = app.request.get('categoria') %}
+    {% set genero = app.request.get('genero') %}
+    {% set lc = app.request.locale() %}
+    <div class="banner banner_v2">
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})">
+            <div class="title_g float_l">
+                <h3>{{ qi.textoDB('wishlist_banner_store') }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="products">
+            <div class="list">
+                <div class="grid">
+                    {% for item in productos %}
+                        {% set c_agotado = '' %}
+                        {% if item.cantidad == 0 %}
+                            {% set c_agotado = 'agotado' %}
+                        {% endif %}
+                            <div class="item {{ c_agotado }} grid-item c_{{ item.colores | replace({' ':' c_'}) }} e_{{ item.estilos | replace({' ':' e_'}) }} ca_{{ item.categoria }} ">
+                                <div class="img" style="background-image: url({{ item.imagen }})"></div>
+                                <div class="img img2" style="background-image: url({{ item.imagenaux }})"></div>
+                                <a href="{{ path('product',{id:item.id, nombre: qi.slugify(item.nombre)}) }}"></a>
+                                <div class="txt">
+                                    <div class="cont_center_v">
+                                        <h4>{{ item.nombre }}</h4>
+                                    </div>
+                                </div>
+                                <div class="oos"><h3>{{ qi.textoDB('store_out_stock') }}</h3></div>
+                            </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

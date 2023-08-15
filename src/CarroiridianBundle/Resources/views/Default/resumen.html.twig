@@ -1,0 +1,110 @@
+{% set abasto = producto.padre != null  %}
+{% set padre = null %}
+{% set escala_moneda = app.session.get('escala_moneda',1) %}
+<tr data-id="{{ id }}" data-id-talla="{{ id_talla }}">
+    <td data-title="PRODUCTO">
+        {% if abasto %}
+            {% set padre = ci.productoById(producto.padre.id) %}
+            <img src="{{ padre.imagen|imagine_filter('producto_carrito') }}"/>
+        {% else %}
+            <img src="{{ (path_productos ~'/'~ producto.imagen)|imagine_filter('producto_carrito') }}"/>
+        {% endif %}
+    </td>
+    <td data-title="NOMBRE" class="numeric">
+            {% if abasto %}
+                <h3>{{ padre.nombrecat }}</h3>
+                <h3>{{ padre.nombre | raw }}</h3>
+                <h3>{{ attribute(producto,'nombre' ~ cu) | raw }}</h3>
+            {% else %}
+                <h3>{{ attribute(producto,'nombre' ~ cu) | raw }}</h3>
+                {% if talla.id != 1 %}
+                    <p>{{ attribute(talla,'nombre' ~ cu) }}</p>
+                {% endif %}
+                {% if color is defined %}
+                    {% if color != '' %}
+                        {% if (color_sku == 'es_plan') or (color_sku == 'es_taller') or (color_sku == 'f_plan') %}
+                            <p>{{ color | raw }}</p>
+                        {% else %}
+                            <p>{{ qi.textoDB('rosas') }} {{ color }}</p>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </td>
+    <td data-title="PRECIO" class="numeric">
+        {% if color_sku == 'es_plan' %}
+            <h4>${{ (precio_p / escala_moneda) | number_format(2) }}</h4>
+        {% else %}
+            <h4>${{ (producto.precio / escala_moneda) | number_format(2) }}</h4>
+        {% endif %}
+    </td>
+    <td data-title="CANTIDAD" class="numeric">
+        {% set es_resumen = 'resumen_compra' == app.request.attributes.get('_route') %}
+        {# {% set es_resumen = false %} #}
+        {% if not combo %}
+            {% if not es_resumen %}
+                {% if color_sku == 'es_plan' or color_sku == 'es_taller' %}
+                1
+                {% else %}
+                <select class="select-cant">
+                    {% for i in 1..max %}
+                        <option value="{{ i }}" {% if i == cantidad %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            {% else %}
+                {{ cantidad }}
+            {% endif %}
+        {% else %}
+            1
+            {# <select class="select-cant">
+                {% for i in 1..5 %}
+                    <option value="{{ i }}" {% if i == cantidad %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select> #}
+        {% endif %}
+    </td>
+    <td data-title="TOTAL" class="numeric">
+        {% if color_sku == 'es_plan' %}
+            <h4>${{ (precio_p / escala_moneda) | number_format(2) }}</h4>
+        {% else %}
+            <h4>${{ (producto.precio / escala_moneda * cantidad) | number_format(2) }}</h4>
+        {% endif %}
+        {% if not es_resumen %}
+            <a class="boton {{ eliminar }}" data-id="{{ id }}" data-id-talla="{{ id_talla }}" data-cant="-{{ item.cantidad }}" data-key="{{ key }}">REMOVER</a>
+        {% endif %}
+    </td>
+</tr>
+{% set total = total + (producto.precio / escala_moneda * item.cantidad) %}
+{% for key_comp,grupo_comp in complementos %}
+    {% set complemento = grupo_comp.producto %}
+    {% set producto = complemento %}
+    {% set cantidad = grupo_comp.cantidad %}
+    {% set id_comp = producto.id %}
+
+    <tr data-id="{{ id_comp }}" data-id-talla="{{ id_talla }}" style="border-top: 0">
+        <td data-title="PRODUCTO">
+            <img src="{{ (path_productos ~'/'~ producto.imagen)|imagine_filter('producto_carrito') }}"/>
+        </td>
+        <td data-title="NOMBRE" class="numeric"><h4>
+                <h3>{{ attribute(producto,'nombre' ~ cu) | raw }}</h3>
+                <!--<p>{{ attribute(talla,'nombre' ~ cu) }}</p>-->
+            </h4></td>
+        <td data-title="PRECIO" class="numeric"><h4>${{ (producto.precio / escala_moneda) | number_format(2) }}</h4></td>
+        <td data-title="CANTIDAD" class="numeric">
+            <select class="select-cant">
+                {% for i in 1..5 %}
+                    <option value="{{ i }}" {% if i == cantidad %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td data-title="TOTAL" class="numeric">
+            <h4>${{ (producto.precio / escala_moneda) | number_format(2) }}</h4>
+            {% if not es_resumen %}
+                <a class="boton eliminar_comp" data-id="{{ id }}" data-id-talla="{{ id_talla }}" data-cant="-{{ item.cantidad }}" data-key="{{ key }}" data-key-comp="{{ key_comp }}" data-comp="{{ id_comp }}">REMOVER</a>
+            {% endif %}
+        </td>
+    </tr>
+
+    {% set total = total + (complemento.precio / escala_moneda) * cantidad %}
+{% endfor %}

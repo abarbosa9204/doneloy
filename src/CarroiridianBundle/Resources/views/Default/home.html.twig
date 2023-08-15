@@ -1,0 +1,27 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set lc = app.request.locale %}
+    <div class="container-fluid">
+        <div class="row home_store">
+            <div class="col-lg-12">
+
+                {% for genero in ci.generos() %}
+                    <div class="link item" style="background-image: url({{ path_genero ~'/'~ genero.imagen }})">
+                        <div class="hover"></div>
+                        <div class="cont_center_v">
+                            <a href="{{ path('productos_por_genero',{'genero': genero.id}) }}" class="button">
+                                {{ genero.nombre }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

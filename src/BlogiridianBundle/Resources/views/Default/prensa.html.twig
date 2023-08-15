@@ -1,0 +1,60 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set lc = app.request.locale() %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_blog')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_prensa') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 producto">
+
+                {% include '@Blogiridian/Default/filtro.html.twig' with {cat:false}  %}
+
+
+
+                <div class="gal the_blog">
+                    <div class="articulos">
+                        <a class="arrow prev"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+                        <div class="rotador">
+                            <div class="swiper-wrapper">
+                                {% for item in qi.galeria('galeria_articulos') %}
+                                <a href="" class="swiper-slide" data-titulo="{{ item.titulo }}" data-resumen="{{ item.resumen|nl2br }}" data-imagenEn="{{ item.imagen_en }}">
+                                    <img src="{{ item.imagen }}"/>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <a class="arrow next"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                    </div>
+
+                    <div class="txt">
+                        <img class="big_img" src="/images/Untitled-42.jpg"/>
+                        <h2>NOMBRE DEL ARTÍCULO</h2>
+                        <div class="resumen">
+                            <p>El día de la mujer no es solo una gran conmemoración, es una forma de demostrarle a ellas, amor, respeto y gratitud a través de lindos regalos y momentos que quedan en su recuerdo.</p>
+                            <p>De esos obsequios y presentes, sobresalen las flores, que dentro de la cultura universal y desde hace miles de años, se han convertido en el referente único y principal a la hora de engrandecer a una mujer.
+                            </p>
+                            <p>De otro lado, las flores lograron tener un papel importante en la vida del ser humano y ese protagónico se lo han ganado porque son tan sublimes que merecen que se les celebre su valor, por medio de una mujer que es un símbolo de vida, belleza y feminidad.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

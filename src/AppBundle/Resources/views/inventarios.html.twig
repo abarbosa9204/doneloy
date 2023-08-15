@@ -1,0 +1,157 @@
+{% set _entity_config = easyadmin_entity('Inventario') %}
+{% trans_default_domain _entity_config.translation_domain %}
+{% set _trans_parameters = { '%entity_name%': _entity_config.name|trans, '%entity_label%': _entity_config.label|trans } %}
+
+{% extends _entity_config.templates.layout %}
+
+{% block body_id 'easyadmin-new-' ~ _entity_config.name %}
+{% block body_class 'new list new-' ~ _entity_config.name|lower %}
+
+{% block content_title %}
+    Inventarios
+{% endblock %}
+
+{% block main %}
+    {% block entity_form %}
+        {% set tam = tallas | length %}
+        <a href="{{ path('excel_generador_inventarios') }}" class="btn btn-primary">Descargar formato base</a>
+        <br/><br/>
+        <div class="row">
+        <div class="form-action  action-search col-sm-4">
+            <form method="get" action="/admin/inventarios">
+                <input type="hidden" name="action" value="search">
+                <input type="hidden" name="entity" value="Inventario">
+                <input type="hidden" name="menuIndex" value="4">
+                <input type="hidden" name="submenuIndex" value="0">
+                <div class="input-group">
+                    <input class="form-control" type="search" name="query" value="" placeholder="SKU o Nombre">
+                    <span class="input-group-btn">
+                        <button class="btn" type="submit" formtarget="_self">
+                            <i class="fa fa-search"></i>
+                            <span class="hidden-xs hidden-sm">Buscar</span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        </div>
+        <br/><br/>
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered" id="inventarios">
+            <tr class="ta_center">
+                <th></th>
+                <th></th>
+                {% for talla in tallas %}
+                    <th {% if precio %}colspan="3"{% else %}colspan="2"{% endif %}>{{ talla.nombreEs | upper }}</th>
+                {% endfor %}
+            </tr>
+            <tr class="ta_center">
+                <th>SKU</th>
+                <th>PRODUCTO</th>
+                {% for talla in tallas %}
+                    {% if precio %}
+                        <th>PRECIO</th>
+                    {% endif %}
+                    <th colspan="2">CANTIDAD</th>
+                {% endfor %}
+            </tr>
+            {% for fila in inventarios %}
+                <tr data-producto-id="{{ fila['producto_id'] }}">
+                    <td>{{ fila['sku'] }}</td>
+                    <td>{{ fila['nombre'] }}</td>
+                    {% for i in 0..(tam-1) %}
+                        {% if precio %}
+                            <td>
+                                <span class="error"><i class="fa fa-exclamation-circle" aria-hidden="true">Campo inválido</i></span>
+                                <span class="guardando"><i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>Guardando</span>
+                                <input data-tipo="precio"   data-talla-id="{{ tallas[i].id }}" class="form-control precio talla_{{ tallas[i].id }}"   type="text" value="{{ fila['precio_'~(i+1)] }}">
+                            </td>
+                        {% endif %}
+                        <td>
+                            <span class="error"><i class="fa fa-exclamation-circle" aria-hidden="true">Campo inválido</i></span>
+                            <span class="guardando"><i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>Guardando</span>
+                            <input data-tipo="cantidad" data-talla-id="{{ tallas[i].id }}" class="form-control cantidad talla_{{ tallas[i].id }}" type="text" value="{{ fila['cantidad_'~(i+1)] }}"></td>
+                        <td class="vm" data-talla-id="{{ tallas[i].id }}"><a href="#"><i class="fa fa-floppy-o" aria-hidden="true"></i></a></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        </div>
+        
+        {% set _paginator_request_parameters = app.request.query.all|merge({'referer': null}) %}
+        {% if paginator.haveToPaginate %}
+        <div class="list-pagination">
+            <div class="row">
+                <div class="col-sm-3 hidden-xs">
+                    <strong>{{ paginator.from }}</strong> - <strong>{{ paginator.to }}</strong> de <strong>{{ paginator.total }}</strong>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    <ul class="pagination list-pagination-paginator {{ 1 == paginator.currentPage ? 'first-page' : '' }} {{ paginator.hasNextPage ? '' : 'last-page' }}">
+                        {% if 1 == paginator.currentPage %}
+                            <li class="disabled">
+                                <span>
+                                    <i class="fa fa-angle-double-left"></i> Primera
+                                </span>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ path('admin_inventarios', _paginator_request_parameters|merge({ page: 1 }) ) }}">
+                                    <i class="fa fa-angle-double-left"></i> Primera
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if paginator.hasPreviousPage %}
+                            <li>
+                                <a href="{{ path('admin_inventarios', _paginator_request_parameters|merge({ page: paginator.previousPage }) ) }}">
+                                    <i class="fa fa-angle-left"></i> Anterior
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <span>
+                                    <i class="fa fa-angle-left"></i> Anterior
+                                </span>
+                            </li>
+                        {% endif %}
+
+                        {% if paginator.hasNextPage %}
+                            <li>
+                                <a href="{{ path('admin_inventarios', _paginator_request_parameters|merge({ page: paginator.nextPage }) ) }}">
+                                    Siguiente <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <span>
+                                    Siguiente <i class="fa fa-angle-right"></i>
+                                </span>
+                            </li>
+                        {% endif %}
+
+                        {% if paginator.currentPage < paginator.lastPage %}
+                            <li>
+                                <a href="{{ path('admin_inventarios', _paginator_request_parameters|merge({ page: paginator.lastPage }) ) }}">
+                                    Última <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <span>
+                                    Última <i class="fa fa-angle-double-right"></i>
+                                </span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    {% endblock entity_form %}
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    {{ include('@EasyAdmin/default/includes/_select2_widget.html.twig') }}
+{% endblock %}

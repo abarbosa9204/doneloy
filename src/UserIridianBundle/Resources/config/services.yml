@@ -1,0 +1,4 @@
+services:
+#    user_iridian.example:
+#        class: UserIridianBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

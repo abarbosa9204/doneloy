@@ -1,0 +1,29 @@
+{% set escala_moneda = app.session.get('escala_moneda',1) %}
+<div class="remodal" data-remodal-id="complementos">
+
+
+    <div class="productos complementos">
+
+        <h3>{{ qi.textoDB('titulo_complementos') }}</h3>
+
+
+        {% for item in ci.productosComplementos(4) %}
+            <div class="item">
+                <img src="{{ item.imagen|imagine_filter('producto') }}">
+                <h4>{{ item.nombre | raw }}</h4>
+                <p>${{ (item.precio / escala_moneda) | number_format }}</p>
+                <a class="add_complemento" id="comp_{{ item.id }}" data-id="{{ item.id }}" data-add="{{ qi.textoDB('agregar_carrito') }}" data-remove="{{ qi.textoDB('quitar_carrito') }}">
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                    <span>{{ qi.textoDB('agregar_carrito') }}</span>
+                </a>
+
+            </div>
+        {% endfor %}
+
+       <br>
+        <!--<a class="boton" data-remodal-action="cancel">NO GRACIAS</a>-->
+        <a class="boton" data-remodal-action="confirm">CONTINUAR</a>
+
+    </div>
+
+</div>

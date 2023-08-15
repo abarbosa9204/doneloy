@@ -1,0 +1,9 @@
+{% set i = 0 %}
+{% for item in ciudades %}
+    {% set selected = '' %}
+    {% if i == 0 %}
+        {% set selected = 'selected' %}
+    {% endif %}
+    <option value="{{ item.id }}" data-costo="${{ item.costo | number_format }}" data-costo-noformato="{{ item.costo }}" {{selected}}>{{ item.nombre }}</option>
+    {% set i = i + 1 %}
+{% endfor %}

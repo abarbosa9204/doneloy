@@ -1,0 +1,12 @@
+<div class="remodal resumen_compra" data-remodal-id="resumenCompra">
+    <div class="productos carrito">
+        <h3>{{ qi.textoDB('titulo_resumen_compra') }}</h3>
+        <div id="no-more-tables">
+            {{ include('@Carroiridian/Default/resumen_carrito.html.twig') }}
+        </div>
+        <br>
+        <a class="boton" data-remodal-action="cancel">{{ qi.textoDB('texto_continuar_comprando') }}</a>
+
+    </div>
+
+</div>

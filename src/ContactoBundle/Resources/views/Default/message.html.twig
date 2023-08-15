@@ -1,0 +1,20 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    <div class="banner contacto">
+        <div class="item" style="background-image: url({{ qi.imagen('banner_contact') }})">
+            <div class="col_50 float_r">
+                <div class="cont_center_v">
+                    <h4>Hemos recibido tu mensaje, te responderemos lo más pronto posible a tu correo.
+
+                        Gracias por contactarte con nosotros.</h4>
+
+                        <a href="{{ path('contacto') }}" class="button">Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

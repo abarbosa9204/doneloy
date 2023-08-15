@@ -1,0 +1,1 @@
+<?php echo '<p style="max-width: 100%;">'. file_get_contents('log_jimmy.log') . '</p>'; ?>

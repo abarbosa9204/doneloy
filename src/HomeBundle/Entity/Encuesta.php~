@@ -1,0 +1,2408 @@
+<?php
+
+namespace HomeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Encuesta
+ *
+ * @ORM\Table(name="encuesta")
+ * @ORM\Entity(repositoryClass="HomeBundle\Repository\EncuestaRepository")
+ */
+class Encuesta
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="direccion", type="string", length=255, nullable=true)
+     */
+    private $direccion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=255, nullable=true)
+     */
+    private $telefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nit", type="string", length=255, nullable=true)
+     */
+    private $nit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="actividad", type="string", length=255, nullable=true)
+     */
+    private $actividad;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="tipoEmpresa", type="array", length=255, nullable=true)
+     */
+    private $tipoEmpresa;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipoEmpresaOtro", type="string", length=255, nullable=true)
+     */
+    private $tipoEmpresaOtro;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="directivos", type="array", nullable=true)
+     */
+    private $directivos;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="sedes", type="array", nullable=true)
+     */
+    private $sedes;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="zonaFranca", type="boolean", nullable=true)
+     */
+    private $zonaFranca;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ciudad", type="string", length=255, nullable=true)
+     */
+    private $ciudad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zonaFrancaNombre", type="string", length=255, nullable=true)
+     */
+    private $zonaFrancaNombre;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="doctorado", type="integer", nullable=true)
+     */
+    private $doctorado;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="maestria", type="integer", nullable=true)
+     */
+    private $maestria;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="especializacion", type="integer", nullable=true)
+     */
+    private $especializacion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="profesional", type="integer", nullable=true)
+     */
+    private $profesional;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tecnologico", type="integer", nullable=true)
+     */
+    private $tecnologico;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tecnico", type="integer", nullable=true)
+     */
+    private $tecnico;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bachiller", type="integer", nullable=true)
+     */
+    private $bachiller;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="sena", type="integer", nullable=true)
+     */
+    private $sena;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="servicios", type="array", nullable=true)
+     */
+    private $servicios;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="servicioEs", type="integer", nullable=true)
+     */
+    private $servicioEs;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="servicioEn", type="integer", nullable=true)
+     */
+    private $servicioEn;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="servicioPt", type="integer", nullable=true)
+     */
+    private $servicioPt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="servicioFr", type="integer", nullable=true)
+     */
+    private $servicioFr;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="televenta", type="integer", nullable=true)
+     */
+    private $televenta;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="gestionRecursos", type="integer", nullable=true)
+     */
+    private $gestionRecursos;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="facturacion", type="integer", nullable=true)
+     */
+    private $facturacion;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="finanzas", type="integer", nullable=true)
+     */
+    private $finanzas;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="gestionCompras", type="integer", nullable=true)
+     */
+    private $gestionCompras;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="logistica", type="integer", nullable=true)
+     */
+    private $logistica;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="atencion", type="integer", nullable=true)
+     */
+    private $atencion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="serviciosOtros", type="string", length=255, nullable=true)
+     */
+    private $serviciosOtros;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="servicioOtrosPorcentaje", type="integer", nullable=true)
+     */
+    private $servicioOtrosPorcentaje;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionContact", type="integer", nullable=true)
+     */
+    private $distribucionContact;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionTelecomunicaciones", type="integer", nullable=true)
+     */
+    private $distribucionTelecomunicaciones;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionSalud", type="integer", nullable=true)
+     */
+    private $distribucionSalud;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionGobierno", type="integer", nullable=true)
+     */
+    private $distribucionGobierno;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionBanca", type="integer", nullable=true)
+     */
+    private $distribucionBanca;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionSeguros", type="integer", nullable=true)
+     */
+    private $distribucionSeguros;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionMedios", type="integer", nullable=true)
+     */
+    private $distribucionMedios;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionConsumo", type="integer", nullable=true)
+     */
+    private $distribucionConsumo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionTransporte", type="integer", nullable=true)
+     */
+    private $distribucionTransporte;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionServicios", type="integer", nullable=true)
+     */
+    private $distribucionServicios;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionHidrocarburos", type="integer", nullable=true)
+     */
+    private $distribucionHidrocarburos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="distribucionOtros", type="string", length=255, nullable=true)
+     */
+    private $distribucionOtros;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="distribucionOtrosPorcentaje", type="integer", nullable=true)
+     */
+    private $distribucionOtrosPorcentaje;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="activos", type="string", length=255, nullable=true)
+     */
+    private $activos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pasivos", type="string", length=255, nullable=true)
+     */
+    private $pasivos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="patrimonio", type="string", length=255, nullable=true)
+     */
+    private $patrimonio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ingresos", type="string", length=255, nullable=true)
+     */
+    private $ingresos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="utilidad", type="string", length=255, nullable=true)
+     */
+    private $utilidad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="exportaciones", type="string", length=255, nullable=true)
+     */
+    private $exportaciones;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="exportacionePais", type="array", nullable=true)
+     */
+    private $exportacionePais;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="certificacionesObtenidas", type="string", length=255, nullable=true)
+     */
+    private $certificacionesObtenidas;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="certificacionesCurso", type="string", length=255, nullable=true)
+     */
+    private $certificacionesCurso;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="plataformas", type="array", nullable=true)
+     */
+    private $plataformas;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="plataformasOtro", type="string", length=255, nullable=true)
+     */
+    private $plataformasOtro;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="actividadInbound", type="integer", nullable=true)
+     */
+    private $actividadInbound;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="actividadOutbound", type="integer", nullable=true)
+     */
+    private $actividadOutbound;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="actividadBackoffice", type="integer", nullable=true)
+     */
+    private $actividadBackoffice;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="actividadAtencion", type="integer", nullable=true)
+     */
+    private $actividadAtencion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="actividadOtros", type="string", length=255, nullable=true)
+     */
+    private $actividadOtros;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="actividadOtrosPorcentaje", type="integer", nullable=true)
+     */
+    private $actividadOtrosPorcentaje;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mediosVoz", type="integer", nullable=true)
+     */
+    private $mediosVoz;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mediosEmail", type="integer", nullable=true)
+     */
+    private $mediosEmail;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mediosWebchat", type="integer", nullable=true)
+     */
+    private $mediosWebchat;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mediosSms", type="integer", nullable=true)
+     */
+    private $mediosSms;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mediosRedes", type="integer", nullable=true)
+     */
+    private $mediosRedes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mediosOtros", type="string", length=255, nullable=true)
+     */
+    private $mediosOtros;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mediosOtrosPorcentaje", type="integer", nullable=true)
+     */
+    private $mediosOtrosPorcentaje;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipoProveedor", type="string", length=255, nullable=true)
+     */
+    private $tipoProveedor;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
+     */
+    private $empresa;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Encuesta
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return Encuesta
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     *
+     * @return Encuesta
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set nit
+     *
+     * @param string $nit
+     *
+     * @return Encuesta
+     */
+    public function setNit($nit)
+    {
+        $this->nit = $nit;
+
+        return $this;
+    }
+
+    /**
+     * Get nit
+     *
+     * @return string
+     */
+    public function getNit()
+    {
+        return $this->nit;
+    }
+
+    /**
+     * Set actividad
+     *
+     * @param string $actividad
+     *
+     * @return Encuesta
+     */
+    public function setActividad($actividad)
+    {
+        $this->actividad = $actividad;
+
+        return $this;
+    }
+
+    /**
+     * Get actividad
+     *
+     * @return string
+     */
+    public function getActividad()
+    {
+        return $this->actividad;
+    }
+
+    /**
+     * Set tipoEmpresaOtro
+     *
+     * @param string $tipoEmpresaOtro
+     *
+     * @return Encuesta
+     */
+    public function setTipoEmpresaOtro($tipoEmpresaOtro)
+    {
+        $this->tipoEmpresaOtro = $tipoEmpresaOtro;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoEmpresaOtro
+     *
+     * @return string
+     */
+    public function getTipoEmpresaOtro()
+    {
+        return $this->tipoEmpresaOtro;
+    }
+
+    /**
+     * Set directivos
+     *
+     * @param array $directivos
+     *
+     * @return Encuesta
+     */
+    public function setDirectivos($directivos)
+    {
+        $this->directivos = $directivos;
+
+        return $this;
+    }
+
+    /**
+     * Get directivos
+     *
+     * @return array
+     */
+    public function getDirectivos()
+    {
+        return $this->directivos;
+    }
+
+    /**
+     * Add directivo
+     *
+     * @param string $directivo
+     *
+     * @return Encuesta
+     */
+    public function addDirectivo($directivo)
+    {
+        $directivos = $this->getDirectivos();
+        $directivos[] = $directivo;
+        $this->setDirectivos($directivos);
+        return $this;
+    }
+
+    /**
+     * Remove directivo
+     *
+     * @param string $directivo
+     *
+     * @return Encuesta
+     */
+    public function removeDirectivo($directivo)
+    {
+        return $this;
+    }
+
+    /**
+     * Set sedes
+     *
+     * @param array $sedes
+     *
+     * @return Encuesta
+     */
+    public function setSedes($sedes)
+    {
+        $this->sedes = $sedes;
+
+        return $this;
+    }
+
+    /**
+     * Get sedes
+     *
+     * @return array
+     */
+    public function getSedes()
+    {
+        return $this->sedes;
+    }
+
+    /**
+     * Add sede
+     *
+     * @param string $sede
+     *
+     * @return Encuesta
+     */
+    public function addSede($sede)
+    {
+        $sedes = $this->getSedes();
+        $sedes[] = $sede;
+        $this->setSedes($sedes);
+        return $this;
+    }
+
+    /**
+     * Remove sede
+     *
+     * @param string $sede
+     *
+     * @return Encuesta
+     */
+    public function removeSede($sede)
+    {
+        return $this;
+    }
+
+    /**
+     * Set zonaFranca
+     *
+     * @param boolean $zonaFranca
+     *
+     * @return Encuesta
+     */
+    public function setZonaFranca($zonaFranca)
+    {
+        $this->zonaFranca = $zonaFranca;
+
+        return $this;
+    }
+
+    /**
+     * Get zonaFranca
+     *
+     * @return bool
+     */
+    public function getZonaFranca()
+    {
+        return $this->zonaFranca;
+    }
+
+    /**
+     * Set ciudad
+     *
+     * @param string $ciudad
+     *
+     * @return Encuesta
+     */
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return string
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    /**
+     * Set zonaFrancaNombre
+     *
+     * @param string $zonaFrancaNombre
+     *
+     * @return Encuesta
+     */
+    public function setZonaFrancaNombre($zonaFrancaNombre)
+    {
+        $this->zonaFrancaNombre = $zonaFrancaNombre;
+
+        return $this;
+    }
+
+    /**
+     * Get zonaFrancaNombre
+     *
+     * @return string
+     */
+    public function getZonaFrancaNombre()
+    {
+        return $this->zonaFrancaNombre;
+    }
+
+    /**
+     * Set doctorado
+     *
+     * @param integer $doctorado
+     *
+     * @return Encuesta
+     */
+    public function setDoctorado($doctorado)
+    {
+        $this->doctorado = $doctorado;
+
+        return $this;
+    }
+
+    /**
+     * Get doctorado
+     *
+     * @return int
+     */
+    public function getDoctorado()
+    {
+        return $this->doctorado;
+    }
+
+    /**
+     * Set maestria
+     *
+     * @param integer $maestria
+     *
+     * @return Encuesta
+     */
+    public function setMaestria($maestria)
+    {
+        $this->maestria = $maestria;
+
+        return $this;
+    }
+
+    /**
+     * Get maestria
+     *
+     * @return int
+     */
+    public function getMaestria()
+    {
+        return $this->maestria;
+    }
+
+    /**
+     * Set especializacion
+     *
+     * @param integer $especializacion
+     *
+     * @return Encuesta
+     */
+    public function setEspecializacion($especializacion)
+    {
+        $this->especializacion = $especializacion;
+
+        return $this;
+    }
+
+    /**
+     * Get especializacion
+     *
+     * @return int
+     */
+    public function getEspecializacion()
+    {
+        return $this->especializacion;
+    }
+
+    /**
+     * Set profesional
+     *
+     * @param integer $profesional
+     *
+     * @return Encuesta
+     */
+    public function setProfesional($profesional)
+    {
+        $this->profesional = $profesional;
+
+        return $this;
+    }
+
+    /**
+     * Get profesional
+     *
+     * @return int
+     */
+    public function getProfesional()
+    {
+        return $this->profesional;
+    }
+
+    /**
+     * Set tecnologico
+     *
+     * @param integer $tecnologico
+     *
+     * @return Encuesta
+     */
+    public function setTecnologico($tecnologico)
+    {
+        $this->tecnologico = $tecnologico;
+
+        return $this;
+    }
+
+    /**
+     * Get tecnologico
+     *
+     * @return int
+     */
+    public function getTecnologico()
+    {
+        return $this->tecnologico;
+    }
+
+    /**
+     * Set tecnico
+     *
+     * @param integer $tecnico
+     *
+     * @return Encuesta
+     */
+    public function setTecnico($tecnico)
+    {
+        $this->tecnico = $tecnico;
+
+        return $this;
+    }
+
+    /**
+     * Get tecnico
+     *
+     * @return int
+     */
+    public function getTecnico()
+    {
+        return $this->tecnico;
+    }
+
+    /**
+     * Set bachiller
+     *
+     * @param integer $bachiller
+     *
+     * @return Encuesta
+     */
+    public function setBachiller($bachiller)
+    {
+        $this->bachiller = $bachiller;
+
+        return $this;
+    }
+
+    /**
+     * Get bachiller
+     *
+     * @return int
+     */
+    public function getBachiller()
+    {
+        return $this->bachiller;
+    }
+
+    /**
+     * Set sena
+     *
+     * @param integer $sena
+     *
+     * @return Encuesta
+     */
+    public function setSena($sena)
+    {
+        $this->sena = $sena;
+
+        return $this;
+    }
+
+    /**
+     * Get sena
+     *
+     * @return int
+     */
+    public function getSena()
+    {
+        return $this->sena;
+    }
+
+    /**
+     * Set servicioEs
+     *
+     * @param integer $servicioEs
+     *
+     * @return Encuesta
+     */
+    public function setServicioEs($servicioEs)
+    {
+        $this->servicioEs = $servicioEs;
+
+        return $this;
+    }
+
+    /**
+     * Get servicioEs
+     *
+     * @return int
+     */
+    public function getServicioEs()
+    {
+        return $this->servicioEs;
+    }
+
+    /**
+     * Set servicioEn
+     *
+     * @param integer $servicioEn
+     *
+     * @return Encuesta
+     */
+    public function setServicioEn($servicioEn)
+    {
+        $this->servicioEn = $servicioEn;
+
+        return $this;
+    }
+
+    /**
+     * Get servicioEn
+     *
+     * @return int
+     */
+    public function getServicioEn()
+    {
+        return $this->servicioEn;
+    }
+
+    /**
+     * Set servicioPt
+     *
+     * @param integer $servicioPt
+     *
+     * @return Encuesta
+     */
+    public function setServicioPt($servicioPt)
+    {
+        $this->servicioPt = $servicioPt;
+
+        return $this;
+    }
+
+    /**
+     * Get servicioPt
+     *
+     * @return int
+     */
+    public function getServicioPt()
+    {
+        return $this->servicioPt;
+    }
+
+    /**
+     * Set servicioFr
+     *
+     * @param integer $servicioFr
+     *
+     * @return Encuesta
+     */
+    public function setServicioFr($servicioFr)
+    {
+        $this->servicioFr = $servicioFr;
+
+        return $this;
+    }
+
+    /**
+     * Get servicioFr
+     *
+     * @return int
+     */
+    public function getServicioFr()
+    {
+        return $this->servicioFr;
+    }
+
+    /**
+     * Set televenta
+     *
+     * @param integer $televenta
+     *
+     * @return Encuesta
+     */
+    public function setTeleventa($televenta)
+    {
+        $this->televenta = $televenta;
+
+        return $this;
+    }
+
+    /**
+     * Get televenta
+     *
+     * @return int
+     */
+    public function getTeleventa()
+    {
+        return $this->televenta;
+    }
+
+    /**
+     * Set gestionRecursos
+     *
+     * @param integer $gestionRecursos
+     *
+     * @return Encuesta
+     */
+    public function setGestionRecursos($gestionRecursos)
+    {
+        $this->gestionRecursos = $gestionRecursos;
+
+        return $this;
+    }
+
+    /**
+     * Get gestionRecursos
+     *
+     * @return int
+     */
+    public function getGestionRecursos()
+    {
+        return $this->gestionRecursos;
+    }
+
+    /**
+     * Set facturacion
+     *
+     * @param integer $facturacion
+     *
+     * @return Encuesta
+     */
+    public function setFacturacion($facturacion)
+    {
+        $this->facturacion = $facturacion;
+
+        return $this;
+    }
+
+    /**
+     * Get facturacion
+     *
+     * @return int
+     */
+    public function getFacturacion()
+    {
+        return $this->facturacion;
+    }
+
+    /**
+     * Set finanzas
+     *
+     * @param integer $finanzas
+     *
+     * @return Encuesta
+     */
+    public function setFinanzas($finanzas)
+    {
+        $this->finanzas = $finanzas;
+
+        return $this;
+    }
+
+    /**
+     * Get finanzas
+     *
+     * @return int
+     */
+    public function getFinanzas()
+    {
+        return $this->finanzas;
+    }
+
+    /**
+     * Set gestionCompras
+     *
+     * @param integer $gestionCompras
+     *
+     * @return Encuesta
+     */
+    public function setGestionCompras($gestionCompras)
+    {
+        $this->gestionCompras = $gestionCompras;
+
+        return $this;
+    }
+
+    /**
+     * Get gestionCompras
+     *
+     * @return int
+     */
+    public function getGestionCompras()
+    {
+        return $this->gestionCompras;
+    }
+
+    /**
+     * Set logistica
+     *
+     * @param integer $logistica
+     *
+     * @return Encuesta
+     */
+    public function setLogistica($logistica)
+    {
+        $this->logistica = $logistica;
+
+        return $this;
+    }
+
+    /**
+     * Get logistica
+     *
+     * @return int
+     */
+    public function getLogistica()
+    {
+        return $this->logistica;
+    }
+
+    /**
+     * Set atencion
+     *
+     * @param integer $atencion
+     *
+     * @return Encuesta
+     */
+    public function setAtencion($atencion)
+    {
+        $this->atencion = $atencion;
+
+        return $this;
+    }
+
+    /**
+     * Get atencion
+     *
+     * @return int
+     */
+    public function getAtencion()
+    {
+        return $this->atencion;
+    }
+
+    /**
+     * Set serviciosOtros
+     *
+     * @param string $serviciosOtros
+     *
+     * @return Encuesta
+     */
+    public function setServiciosOtros($serviciosOtros)
+    {
+        $this->serviciosOtros = $serviciosOtros;
+
+        return $this;
+    }
+
+    /**
+     * Get serviciosOtros
+     *
+     * @return string
+     */
+    public function getServiciosOtros()
+    {
+        return $this->serviciosOtros;
+    }
+
+    /**
+     * Set servicioOtrosPorcentaje
+     *
+     * @param integer $servicioOtrosPorcentaje
+     *
+     * @return Encuesta
+     */
+    public function setServicioOtrosPorcentaje($servicioOtrosPorcentaje)
+    {
+        $this->servicioOtrosPorcentaje = $servicioOtrosPorcentaje;
+
+        return $this;
+    }
+
+    /**
+     * Get servicioOtrosPorcentaje
+     *
+     * @return int
+     */
+    public function getServicioOtrosPorcentaje()
+    {
+        return $this->servicioOtrosPorcentaje;
+    }
+
+    /**
+     * Set distribucionTelecomunicaciones
+     *
+     * @param integer $distribucionTelecomunicaciones
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionTelecomunicaciones($distribucionTelecomunicaciones)
+    {
+        $this->distribucionTelecomunicaciones = $distribucionTelecomunicaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionTelecomunicaciones
+     *
+     * @return int
+     */
+    public function getDistribucionTelecomunicaciones()
+    {
+        return $this->distribucionTelecomunicaciones;
+    }
+
+    /**
+     * Set distribucionSalud
+     *
+     * @param integer $distribucionSalud
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionSalud($distribucionSalud)
+    {
+        $this->distribucionSalud = $distribucionSalud;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionSalud
+     *
+     * @return int
+     */
+    public function getDistribucionSalud()
+    {
+        return $this->distribucionSalud;
+    }
+
+    /**
+     * Set distribucionGobierno
+     *
+     * @param integer $distribucionGobierno
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionGobierno($distribucionGobierno)
+    {
+        $this->distribucionGobierno = $distribucionGobierno;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionGobierno
+     *
+     * @return int
+     */
+    public function getDistribucionGobierno()
+    {
+        return $this->distribucionGobierno;
+    }
+
+    /**
+     * Set distribucionBanca
+     *
+     * @param integer $distribucionBanca
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionBanca($distribucionBanca)
+    {
+        $this->distribucionBanca = $distribucionBanca;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionBanca
+     *
+     * @return int
+     */
+    public function getDistribucionBanca()
+    {
+        return $this->distribucionBanca;
+    }
+
+    /**
+     * Set distribucionSeguros
+     *
+     * @param integer $distribucionSeguros
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionSeguros($distribucionSeguros)
+    {
+        $this->distribucionSeguros = $distribucionSeguros;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionSeguros
+     *
+     * @return int
+     */
+    public function getDistribucionSeguros()
+    {
+        return $this->distribucionSeguros;
+    }
+
+    /**
+     * Set distribucionMedios
+     *
+     * @param integer $distribucionMedios
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionMedios($distribucionMedios)
+    {
+        $this->distribucionMedios = $distribucionMedios;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionMedios
+     *
+     * @return int
+     */
+    public function getDistribucionMedios()
+    {
+        return $this->distribucionMedios;
+    }
+
+    /**
+     * Set distribucionConsumo
+     *
+     * @param integer $distribucionConsumo
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionConsumo($distribucionConsumo)
+    {
+        $this->distribucionConsumo = $distribucionConsumo;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionConsumo
+     *
+     * @return int
+     */
+    public function getDistribucionConsumo()
+    {
+        return $this->distribucionConsumo;
+    }
+
+    /**
+     * Set distribucionTransporte
+     *
+     * @param integer $distribucionTransporte
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionTransporte($distribucionTransporte)
+    {
+        $this->distribucionTransporte = $distribucionTransporte;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionTransporte
+     *
+     * @return int
+     */
+    public function getDistribucionTransporte()
+    {
+        return $this->distribucionTransporte;
+    }
+
+    /**
+     * Set distribucionServicios
+     *
+     * @param integer $distribucionServicios
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionServicios($distribucionServicios)
+    {
+        $this->distribucionServicios = $distribucionServicios;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionServicios
+     *
+     * @return int
+     */
+    public function getDistribucionServicios()
+    {
+        return $this->distribucionServicios;
+    }
+
+    /**
+     * Set distribucionHidrocarburos
+     *
+     * @param integer $distribucionHidrocarburos
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionHidrocarburos($distribucionHidrocarburos)
+    {
+        $this->distribucionHidrocarburos = $distribucionHidrocarburos;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionHidrocarburos
+     *
+     * @return int
+     */
+    public function getDistribucionHidrocarburos()
+    {
+        return $this->distribucionHidrocarburos;
+    }
+
+    /**
+     * Set distribucionOtros
+     *
+     * @param string $distribucionOtros
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionOtros($distribucionOtros)
+    {
+        $this->distribucionOtros = $distribucionOtros;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionOtros
+     *
+     * @return string
+     */
+    public function getDistribucionOtros()
+    {
+        return $this->distribucionOtros;
+    }
+
+    /**
+     * Set distribucionOtrosPorcentaje
+     *
+     * @param integer $distribucionOtrosPorcentaje
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionOtrosPorcentaje($distribucionOtrosPorcentaje)
+    {
+        $this->distribucionOtrosPorcentaje = $distribucionOtrosPorcentaje;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionOtrosPorcentaje
+     *
+     * @return int
+     */
+    public function getDistribucionOtrosPorcentaje()
+    {
+        return $this->distribucionOtrosPorcentaje;
+    }
+
+    /**
+     * Set activos
+     *
+     * @param string $activos
+     *
+     * @return Encuesta
+     */
+    public function setActivos($activos)
+    {
+        $this->activos = $activos;
+
+        return $this;
+    }
+
+    /**
+     * Get activos
+     *
+     * @return string
+     */
+    public function getActivos()
+    {
+        return $this->activos;
+    }
+
+    /**
+     * Set pasivos
+     *
+     * @param string $pasivos
+     *
+     * @return Encuesta
+     */
+    public function setPasivos($pasivos)
+    {
+        $this->pasivos = $pasivos;
+
+        return $this;
+    }
+
+    /**
+     * Get pasivos
+     *
+     * @return string
+     */
+    public function getPasivos()
+    {
+        return $this->pasivos;
+    }
+
+    /**
+     * Set patrimonio
+     *
+     * @param string $patrimonio
+     *
+     * @return Encuesta
+     */
+    public function setPatrimonio($patrimonio)
+    {
+        $this->patrimonio = $patrimonio;
+
+        return $this;
+    }
+
+    /**
+     * Get patrimonio
+     *
+     * @return string
+     */
+    public function getPatrimonio()
+    {
+        return $this->patrimonio;
+    }
+
+    /**
+     * Set ingresos
+     *
+     * @param string $ingresos
+     *
+     * @return Encuesta
+     */
+    public function setIngresos($ingresos)
+    {
+        $this->ingresos = $ingresos;
+
+        return $this;
+    }
+
+    /**
+     * Get ingresos
+     *
+     * @return string
+     */
+    public function getIngresos()
+    {
+        return $this->ingresos;
+    }
+
+    /**
+     * Set utilidad
+     *
+     * @param string $utilidad
+     *
+     * @return Encuesta
+     */
+    public function setUtilidad($utilidad)
+    {
+        $this->utilidad = $utilidad;
+
+        return $this;
+    }
+
+    /**
+     * Get utilidad
+     *
+     * @return string
+     */
+    public function getUtilidad()
+    {
+        return $this->utilidad;
+    }
+
+    /**
+     * Set exportaciones
+     *
+     * @param string $exportaciones
+     *
+     * @return Encuesta
+     */
+    public function setExportaciones($exportaciones)
+    {
+        $this->exportaciones = $exportaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get exportaciones
+     *
+     * @return string
+     */
+    public function getExportaciones()
+    {
+        return $this->exportaciones;
+    }
+
+    /**
+     * Set exportacionePais
+     *
+     * @param array $exportacionePais
+     *
+     * @return Encuesta
+     */
+    public function setExportacionePais($exportacionePais)
+    {
+        $this->exportacionePais = $exportacionePais;
+
+        return $this;
+    }
+
+    /**
+     * Get exportacionePais
+     *
+     * @return array
+     */
+    public function getExportacionePais()
+    {
+        return $this->exportacionePais;
+    }
+
+    /**
+     * Add exportacion
+     *
+     * @param string $exportacion
+     *
+     * @return Encuesta
+     */
+    public function addExportacion($exportacion)
+    {
+        $exportaciones = $this->getExportacionePais();
+        $exportaciones[] = $exportacion;
+        $this->setExportacionePais($exportaciones);
+        return $this;
+    }
+
+    /**
+     * Remove exportacion
+     *
+     * @param string $exportacion
+     *
+     * @return Encuesta
+     */
+    public function removeExportacion($exportacion)
+    {
+        return $this;
+    }
+
+    /**
+     * Set certificacionesObtenidas
+     *
+     * @param string $certificacionesObtenidas
+     *
+     * @return Encuesta
+     */
+    public function setCertificacionesObtenidas($certificacionesObtenidas)
+    {
+        $this->certificacionesObtenidas = $certificacionesObtenidas;
+
+        return $this;
+    }
+
+    /**
+     * Get certificacionesObtenidas
+     *
+     * @return string
+     */
+    public function getCertificacionesObtenidas()
+    {
+        return $this->certificacionesObtenidas;
+    }
+
+    /**
+     * Set certificacionesCurso
+     *
+     * @param string $certificacionesCurso
+     *
+     * @return Encuesta
+     */
+    public function setCertificacionesCurso($certificacionesCurso)
+    {
+        $this->certificacionesCurso = $certificacionesCurso;
+
+        return $this;
+    }
+
+    /**
+     * Get certificacionesCurso
+     *
+     * @return string
+     */
+    public function getCertificacionesCurso()
+    {
+        return $this->certificacionesCurso;
+    }
+
+    /**
+     * Set plataformas
+     *
+     * @param array $plataformas
+     *
+     * @return Encuesta
+     */
+    public function setPlataformas($plataformas)
+    {
+        $this->plataformas = $plataformas;
+
+        return $this;
+    }
+
+    /**
+     * Get plataformas
+     *
+     * @return array
+     */
+    public function getPlataformas()
+    {
+        return $this->plataformas;
+    }
+
+    /**
+     * Add plataforma
+     *
+     * @param string $plataforma
+     *
+     * @return Encuesta
+     */
+    public function addPlataforma($plataforma)
+    {
+        $plataformas = $this->getPlataformas();
+        $plataformas[] = $plataforma;
+        $this->setPlataformas($plataformas);
+        return $this;
+    }
+
+    /**
+     * Remove plataforma
+     *
+     * @param string $eplataforma
+     *
+     * @return Encuesta
+     */
+    public function removePlataforma($plataforma)
+    {
+        return $this;
+    }
+
+    /**
+     * Set plataformasOtro
+     *
+     * @param string $plataformasOtro
+     *
+     * @return Encuesta
+     */
+    public function setPlataformasOtro($plataformasOtro)
+    {
+        $this->plataformasOtro = $plataformasOtro;
+
+        return $this;
+    }
+
+    /**
+     * Get plataformasOtro
+     *
+     * @return string
+     */
+    public function getPlataformasOtro()
+    {
+        return $this->plataformasOtro;
+    }
+
+    /**
+     * Set actividadInbound
+     *
+     * @param integer $actividadInbound
+     *
+     * @return Encuesta
+     */
+    public function setActividadInbound($actividadInbound)
+    {
+        $this->actividadInbound = $actividadInbound;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadInbound
+     *
+     * @return int
+     */
+    public function getActividadInbound()
+    {
+        return $this->actividadInbound;
+    }
+
+    /**
+     * Set actividadOutbound
+     *
+     * @param integer $actividadOutbound
+     *
+     * @return Encuesta
+     */
+    public function setActividadOutbound($actividadOutbound)
+    {
+        $this->actividadOutbound = $actividadOutbound;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadOutbound
+     *
+     * @return int
+     */
+    public function getActividadOutbound()
+    {
+        return $this->actividadOutbound;
+    }
+
+    /**
+     * Set actividadBackoffice
+     *
+     * @param integer $actividadBackoffice
+     *
+     * @return Encuesta
+     */
+    public function setActividadBackoffice($actividadBackoffice)
+    {
+        $this->actividadBackoffice = $actividadBackoffice;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadBackoffice
+     *
+     * @return int
+     */
+    public function getActividadBackoffice()
+    {
+        return $this->actividadBackoffice;
+    }
+
+    /**
+     * Set actividadAtencion
+     *
+     * @param integer $actividadAtencion
+     *
+     * @return Encuesta
+     */
+    public function setActividadAtencion($actividadAtencion)
+    {
+        $this->actividadAtencion = $actividadAtencion;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadAtencion
+     *
+     * @return int
+     */
+    public function getActividadAtencion()
+    {
+        return $this->actividadAtencion;
+    }
+
+    /**
+     * Set actividadOtros
+     *
+     * @param string $actividadOtros
+     *
+     * @return Encuesta
+     */
+    public function setActividadOtros($actividadOtros)
+    {
+        $this->actividadOtros = $actividadOtros;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadOtros
+     *
+     * @return string
+     */
+    public function getActividadOtros()
+    {
+        return $this->actividadOtros;
+    }
+
+    /**
+     * Set actividadOtrosPorcentaje
+     *
+     * @param integer $actividadOtrosPorcentaje
+     *
+     * @return Encuesta
+     */
+    public function setActividadOtrosPorcentaje($actividadOtrosPorcentaje)
+    {
+        $this->actividadOtrosPorcentaje = $actividadOtrosPorcentaje;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadOtrosPorcentaje
+     *
+     * @return int
+     */
+    public function getActividadOtrosPorcentaje()
+    {
+        return $this->actividadOtrosPorcentaje;
+    }
+
+    /**
+     * Set mediosVoz
+     *
+     * @param integer $mediosVoz
+     *
+     * @return Encuesta
+     */
+    public function setMediosVoz($mediosVoz)
+    {
+        $this->mediosVoz = $mediosVoz;
+
+        return $this;
+    }
+
+    /**
+     * Get mediosVoz
+     *
+     * @return int
+     */
+    public function getMediosVoz()
+    {
+        return $this->mediosVoz;
+    }
+
+    /**
+     * Set mediosEmail
+     *
+     * @param integer $mediosEmail
+     *
+     * @return Encuesta
+     */
+    public function setMediosEmail($mediosEmail)
+    {
+        $this->mediosEmail = $mediosEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get mediosEmail
+     *
+     * @return int
+     */
+    public function getMediosEmail()
+    {
+        return $this->mediosEmail;
+    }
+
+    /**
+     * Set mediosWebchat
+     *
+     * @param integer $mediosWebchat
+     *
+     * @return Encuesta
+     */
+    public function setMediosWebchat($mediosWebchat)
+    {
+        $this->mediosWebchat = $mediosWebchat;
+
+        return $this;
+    }
+
+    /**
+     * Get mediosWebchat
+     *
+     * @return int
+     */
+    public function getMediosWebchat()
+    {
+        return $this->mediosWebchat;
+    }
+
+    /**
+     * Set mediosSms
+     *
+     * @param integer $mediosSms
+     *
+     * @return Encuesta
+     */
+    public function setMediosSms($mediosSms)
+    {
+        $this->mediosSms = $mediosSms;
+
+        return $this;
+    }
+
+    /**
+     * Get mediosSms
+     *
+     * @return int
+     */
+    public function getMediosSms()
+    {
+        return $this->mediosSms;
+    }
+
+    /**
+     * Set mediosRedes
+     *
+     * @param integer $mediosRedes
+     *
+     * @return Encuesta
+     */
+    public function setMediosRedes($mediosRedes)
+    {
+        $this->mediosRedes = $mediosRedes;
+
+        return $this;
+    }
+
+    /**
+     * Get mediosRedes
+     *
+     * @return int
+     */
+    public function getMediosRedes()
+    {
+        return $this->mediosRedes;
+    }
+
+    /**
+     * Set mediosOtros
+     *
+     * @param string $mediosOtros
+     *
+     * @return Encuesta
+     */
+    public function setMediosOtros($mediosOtros)
+    {
+        $this->mediosOtros = $mediosOtros;
+
+        return $this;
+    }
+
+    /**
+     * Get mediosOtros
+     *
+     * @return string
+     */
+    public function getMediosOtros()
+    {
+        return $this->mediosOtros;
+    }
+
+    /**
+     * Set mediosOtrosPorcentaje
+     *
+     * @param integer $mediosOtrosPorcentaje
+     *
+     * @return Encuesta
+     */
+    public function setMediosOtrosPorcentaje($mediosOtrosPorcentaje)
+    {
+        $this->mediosOtrosPorcentaje = $mediosOtrosPorcentaje;
+
+        return $this;
+    }
+
+    /**
+     * Get mediosOtrosPorcentaje
+     *
+     * @return int
+     */
+    public function getMediosOtrosPorcentaje()
+    {
+        return $this->mediosOtrosPorcentaje;
+    }
+
+    /**
+     * Set servicios
+     *
+     * @param integer $servicios
+     *
+     * @return Encuesta
+     */
+    public function setServicios($servicios)
+    {
+        $this->servicios = $servicios;
+
+        return $this;
+    }
+
+    /**
+     * Get servicios
+     *
+     * @return integer
+     */
+    public function getServicios()
+    {
+        return $this->servicios;
+    }
+
+    /**
+     * Add servicio
+     *
+     * @param string $servicio
+     *
+     * @return Encuesta
+     */
+    public function addServicio($servicio)
+    {
+        $servicios = $this->getServicios();
+        $servicios[] = $servicio;
+        $this->setServicios($servicios);
+        return $this;
+    }
+
+    /**
+     * Remove servicio
+     *
+     * @param string $servicio
+     *
+     * @return Encuesta
+     */
+    public function removeServicio($servicio)
+    {
+        return $this;
+    }
+
+    /**
+     * Set distribucionContact
+     *
+     * @param integer $distribucionContact
+     *
+     * @return Encuesta
+     */
+    public function setDistribucionContact($distribucionContact)
+    {
+        $this->distribucionContact = $distribucionContact;
+
+        return $this;
+    }
+
+    /**
+     * Get distribucionContact
+     *
+     * @return integer
+     */
+    public function getDistribucionContact()
+    {
+        return $this->distribucionContact;
+    }
+
+
+    /**
+     * Set tipoProveedor
+     *
+     * @param string $tipoProveedor
+     *
+     * @return Encuesta
+     */
+    public function setTipoProveedor($tipoProveedor)
+    {
+        $this->tipoProveedor = $tipoProveedor;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoProveedor
+     *
+     * @return string
+     */
+    public function getTipoProveedor()
+    {
+        return $this->tipoProveedor;
+    }
+
+    /**
+     * Set empresa
+     *
+     * @param \AppBundle\Entity\User $empresa
+     *
+     * @return Encuesta
+     */
+    public function setEmpresa(\AppBundle\Entity\User $empresa = null)
+    {
+        $this->empresa = $empresa;
+
+        return $this;
+    }
+
+    /**
+     * Get empresa
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+}

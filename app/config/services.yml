@@ -1,0 +1,48 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+    acme_demo.authentication.handler.login_success_handler.class: AppBundle\Security\Authentication\Handler\LoginSuccessHandler
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    qi:
+        class: AppBundle\Service\QI
+        arguments: ['@doctrine.orm.entity_manager','@request_stack','@service_container']
+
+    ci:
+        class: CarroiridianBundle\Service\CI
+        arguments: ['@doctrine.orm.entity_manager','@request_stack','@service_container']
+
+    app.form.registration:
+        class: UserIridianBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    app.form.profile:
+            class: UserIridianBundle\Form\ProfileFormType
+            tags:
+                - { name: form.type, alias: app_user_profile }
+
+    login_failure_handler:
+        class:  UserIridianBundle\Security\Authentication\Handler\AuthenticationFailureHandler
+
+    login_success_handler:
+          class:  UserIridianBundle\Security\Authentication\Handler\LoginSuccessHandler
+          arguments:  ['@router', '@security.authorization_checker']
+          tags:
+              - { name: 'monolog.logger', channel: 'security' }
+
+    twig.extension.text:
+         class: Twig_Extensions_Extension_Text
+         tags:
+             - { name: twig.extension }
+
+    twig.extension.intl:
+         class: Twig_Extensions_Extension_Intl
+         tags:
+             - { name: twig.extension }
+
+

@@ -1,0 +1,18 @@
+{% set nombre_ciudad = '' %}
+<div id="modal_ciudades" class="remodal" data-remodal-id="cambiar_ciudad" style="width: auto" data-remodal-options="hashTracking: false,closeOnOutsideClick: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="productos" style="width: 80%;">
+        <div class="item" style="width: 344px;height: 50px;max-width: 90%">
+            <p>Seleccione la ciudad de envio</p>
+            <select id="envio_ciudad" name="ciudad_id" style="width: 80%">
+                <option value="0">Ciudades</option>
+                {% for item in ci.ciudadesEnvio() %}
+                    <option value="{{ item.id }}" {% if ciudad == item.id %} selected {% set nombre_ciudad = item.nombre %} {% endif %}>{{ item.nombre | upper }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+{% if nombre_ciudad != '' %}
+    <p style="text-align: center">Ciudad de envio actual: {{ nombre_ciudad | upper  }} </p>
+{% endif %}

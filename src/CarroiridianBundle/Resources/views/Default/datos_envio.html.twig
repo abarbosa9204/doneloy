@@ -1,0 +1,121 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+{%  include('@Carroiridian/Default/banner_cesta.html.twig') %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-xs-12">
+        {% include('@Carroiridian/Default/filtro.html.twig') %}
+
+            <div class="cont_product carrito">
+
+            {% include 'CarroiridianBundle:Default:pasos.html.twig' %}
+
+                {{ form_start(form, {'method': 'post', 'action': '' }) }}
+
+                    <label>{{ qi.textoDB('titulo_informacion_envio') }}</label>
+                    <label><input type="radio" id="datos_igual">{{ qi.textoDB('texto_datos_igual_facturacion') }}</label>
+
+                    {% if envios | length > 0 %}
+                        <label>{{ qi.textoDB('titulo_envios_anteriores') }}</label>
+                        <select name="" id="direcciones" style="width: 60%;">
+                            <option value="">Direcciones anteriores</option>
+                            {% for item in envios %}
+                                <option value="" data-nombre="{{ item.nombre }}"
+                                        data-apellidos="{{ item.apellidos }}"
+                                        data-ciudad="{{ item.ciudad }}"
+                                        data-direccion="{{ item.direccion }}"
+                                        data-oficina="{{ item.oficina }}"
+                                        data-telefono="{{ item.telefono }}"
+                                        data-adicionales="{{ item.adicionales }}">{{ item.direccion }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+
+                    <label>{{ qi.textoDB('texto_datos_envio_otra_persona') }}</label>
+
+
+                    <div class="col">
+                        {{ form_errors(form.nombre) }}
+                        {{ form_widget(form.nombre, { attr: {'placeholder':qi.textoDB('texto_envio_nombre'),'data-val': factura.nombre } } ) }}
+
+                        {{ form_errors(form.apellidos) }}
+                        {{ form_widget(form.apellidos, { attr: {'placeholder':qi.textoDB('texto_envio_apellidos'),'data-val': factura.apellidos} } ) }}
+
+                        {{ form_errors(form.fechaDeEnvio) }}
+                        <label>{{ qi.textoDB('texto_registro_fechaenvio') }}</label>
+                        {% set dia_envio = qi.settingDB('dia_envio') %}
+                        {% set str_dia_envio = '+'~dia_envio~'d' %}
+                        {{ form_widget(form.fechaDeEnvio, { attr: {'data-val': fechaPlan, 'readonly':"readonly",'placeholder':qi.textoDB('texto_registro_fechaenvio'), 'data2-provide':'datepicker','data-date-format':'mm-dd-yyyy','data-date-autoclose':true,'data-date-start-date':start,'date-date-today-btn':true} } ) }}
+
+                        {{ form_errors(form.ciudad) }}
+                        <label>{{ qi.textoDB('lugar_envio') | upper }}</label>
+                        {{ form_widget(form.ciudad, { attr: {'placeholder':qi.textoDB('texto_registro_ciudad'),'data-val': factura.ciudad.id} } ) }}
+                    </div>
+                    <div class="col">
+                        {{ form_errors(form.direccion) }}
+                            {{ form_widget(form.direccion, { attr: {'placeholder':qi.textoDB('texto_envio_direccion'),'data-val': factura.direccion} } ) }}
+
+                        {{ form_errors(form.oficina) }}
+                        {{ form_widget(form.oficina) }}
+
+                        {{ form_errors(form.telefono) }}
+                        {{ form_widget(form.telefono, { attr: {'placeholder':qi.textoDB('texto_registro_telefono'),'data-val': factura.celular} } ) }}
+
+                        {{ form_errors(form.adicionales) }}
+                        {{ form_widget(form.adicionales, { attr: {'placeholder':qi.textoDB('texto_envio_adicionales')} } ) }}
+                    </div>
+                    <br>
+                    <input onclick="document.envio.checkValidity()?showLoading():false" class="button" type="submit" value="{{ qi.textoDB('texto_enviar') }}"/>
+
+                {{ form_end(form) }}
+
+            </div>
+
+            <!--<a class="boton" href="#resumenCompra">prueba resumen compra</a>-->
+
+        </div>
+
+    </div>
+
+</div>
+
+{{ include('@Carroiridian/Default/confirmar_ciudad.html.twig') }}
+
+{% include '@Carroiridian/Default/resumen_compra.html.twig' with {'carrito': carrito} %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {% set dia_envio = qi.settingDB('dia_envio') %}
+    {% set str_dia_envio = '+'~dia_envio~'d' %}
+    <script type="text/javascript">
+        setTimeout(function(){ cal(); }, 2000);
+
+        function cal(){
+            $(function () {
+                console.log('{{ dia }}');
+                var forbidden=[
+                    {% for item in prohibidos %}
+                    '{{ item.dia | date('Y-m-d') }}',
+                    {% endfor %}
+                ]
+                $('#envio_fechaDeEnvio').datepicker({
+                    format: 'mm-dd-yyyy',
+                    startDate: '{{ dia }}',
+                    autoclose: true,
+                    todayBtn: true,
+                    beforeShowDay:function(Date){
+                        var curr_date = Date.toJSON().substring(0,10);
+
+                        if (forbidden.indexOf(curr_date)>-1) return false;
+                    }
+                });
+            });
+        }
+    </script>
+{% endblock %}

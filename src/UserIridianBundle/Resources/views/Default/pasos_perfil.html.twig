@@ -1,0 +1,24 @@
+<div class="pasos">
+
+    <div class="item {% if app.request.get('_route') == 'historial' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_cesta_pasos') }})"></div>
+        <p>
+            <a href="{{ path('historial') }}">HISTORIAL</a>
+        </p>
+    </div>
+    <div class="item {% if app.request.get('_route') == 'mis_datos' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_datos_pasos') }})"></div>
+        <p>
+            <a href="{{ path('mis_datos') }}">MIS DATOS</a>
+        </p>
+    </div>
+    <!--
+    <div class="item {% if app.request.get('_route') == 'registro_login' %} active{% endif %}">
+        <div class="img" style="background-image: url({{ qi.imagen('ico_datos_pasos') }})"></div>
+        <p>
+            <a href="{{ path('facturacion') }}">FACTURACIÓN</a>
+        </p>
+    </div>
+    -->
+
+</div>

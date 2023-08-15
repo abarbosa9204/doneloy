@@ -1,0 +1,186 @@
+/**************************
+- Copyright (c) 2016.
+- Version: 1.0      
+- reset.css - Created by: Claudia Buitrago
+- Based on David Beltran reset file, Yui and Meyer reset file and Normalize.css v2.1.2 | MIT License | git.io/normalize
+****************************/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+ * Stylesheet: reset
+ * Clean Project v1.1
+ * Autor / Author: Quickin - info@quickin.co
+
+ *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+[hidden] {
+ display: none;
+}
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+/* Correct `block` display not defined in IE 8/9.*/
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display: block;
+}
+a {
+	text-decoration:none;
+}
+address, caption, cite, code, dfn, em, th, var, optgroup {
+	font-style:inherit;
+	font-weight:inherit
+}
+a:focus, input[type=text] {
+	outline:0px;
+}
+audio, canvas, video {
+	display: inline-block;
+}
+audio:not([controls]) {
+	display: none;
+	height: 0;
+}
+abbr, acronym {
+	border:0 none;
+	font-variant:normal
+}
+b, strong {
+	font-weight: 700;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+	margin:0;
+	padding:0;
+}
+button::-moz-focus-inner, input::-moz-focus-inner {
+ border: 0;
+ padding: 0;
+}
+button, input, select, textarea {
+	font-family: inherit;
+	font-size: 100%;
+	margin: 0;
+}
+button, input {
+	line-height: normal;
+}
+button, select {
+	text-transform: none;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+	-webkit-appearance: button;
+	cursor: pointer;
+}
+button[disabled], html input[disabled] {
+	cursor: default;
+}
+caption, th {
+	text-align:left
+}
+code, kbd, pre, samp {
+	font-family: monospace, serif;
+	font-size: 1em;
+}
+del, ins {
+	text-decoration:none
+}
+em {
+	font-style:italic;
+}
+fieldset, img, button {
+	border:0 none
+}
+figure {
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:100%;
+	font-weight:normal
+}
+hr {
+	border:0 none;
+	border-top:1px solid #000000;
+	height:1px;
+	margin:0;
+	text-align:left;
+	width:100%;
+}
+html {
+	background:#FFFFFF none repeat scroll 0 0;
+	color:#000000;
+	font-size:62.5%;
+	font-family: sans-serif; /* 1 1. Set default font family to sans-serif.*/
+	-ms-text-size-adjust: 100%; /* 2 Prevent iOS text size adjust after orientation change, without disabling user zoom.*/
+	-webkit-text-size-adjust: 100%; /* 2 */
+}
+input, button, textarea, select, optgroup, option {
+	font-family:inherit;
+	font-size:inherit;
+	font-style:inherit;
+	font-weight:inherit;
+}
+input[type=button], input[type=submit] {
+	cursor:hand;
+	cursor:pointer;
+}
+input[type="checkbox"], input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+input[type="search"] {
+	-webkit-appearance: textfield;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+ -webkit-appearance: none;
+}
+legend {
+	border: 0;
+	padding: 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+ol {
+	list-style:decimal
+}
+ol li {
+	list-style: decimal outside
+}
+pre {
+	white-space: pre-wrap;
+}
+q {
+	quotes: "\201C" "\201D" "\2018" "\2019";
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0
+}
+ul {
+	list-style:none;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	font-size:65%;
+	vertical-align:text-top;
+	top: -0.5em;
+}
+sub {
+	vertical-align:text-bottom;
+	bottom: -0.25em;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+textarea {
+	overflow: auto; /* 1 */
+	resize:none;
+	vertical-align: top; /* 2 */
+}

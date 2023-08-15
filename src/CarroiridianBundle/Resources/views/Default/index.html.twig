@@ -1,0 +1,30 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+        {% include('@Carroiridian/Default/banner_cesta.html.twig') %}
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    {% include('@Carroiridian/Default/filtro.html.twig') %}
+                    <div class="cont_product carrito">
+                        {% include 'CarroiridianBundle:Default:pasos.html.twig' %}
+                        <div id="no-more-tables">
+                                {{ include('@Carroiridian/Default/resumen_carrito.html.twig') }}
+                        </div>
+                        <a href="{{ path('limpiar_carrito') }}" class="boton">LIMPIAR CESTA</a>
+                        <a href="{{ path('productos') }}" class="boton">CONTINUAR COMPRANDO</a>
+                        <br>
+                        <a onclick="showLoading()" href="{{ path('dedicatoria') }}" class="boton">REALIZAR COMPRA</a>
+
+                    </div>
+                 </div>
+
+            </div>
+        </div>
+
+
+
+{% endblock %}

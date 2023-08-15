@@ -1,0 +1,68 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set lc = app.request.locale() %}
+    {% set cu = app.request.locale | capitalize %}
+    {% set escala_moneda = app.session.get('escala_moneda',1) %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_taller_flores')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{taller.gen('nombre',lc)}}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-xs-12">
+            <div class="txt_dead_product">
+                {{ qi.textoBigDB('texto_taller_flores')|raw }}
+            </div>
+        </div>
+        <div class="single-worshop">
+            <div class="video">
+                <div class="item video_l">
+                    <img src="{{qi.getYoutubeImage(taller.videoTaller)}}" alt="">
+                    <a class="hover" href="#video_view" data-video="{{taller.videoTaller}}?enablejsapi=1&version=3&playerapiid=ytplayer"></a>
+                </div>
+            </div>
+            <div class="info">
+                <h2>{{taller.gen('nombre',lc)}}</h2>
+                <span class="price">${{ (taller.precio / escala_moneda ) | number_format }}</span>
+                <div class="description">
+                    {{ taller.gen('descripcion',cu) | raw }}
+                </div>
+                <a href="/uploads/productos/{{taller.temarioTaller}}" target="_blank">Descargar temario en PDF <img src="/images/arrowDown.svg" alt="download_PDF"></a>
+                {% set fechas = ci.getTallerProximasFechas(id) %}
+                {% if fechas|length > 0 %}
+                <div class="dateWorkshop">
+                    <span>Fecha del taller:</span>
+                    <div class="custom-select">
+                        <select name="date-workshop" id="date-workshop">
+                            {% for fecha in fechas %}
+                            <option value="{{fecha}}">{{fecha}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <a class="boton add_workshop" href=""  data-id="{{ id }}" data-cant="1">
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                    AGREGAR A LA CESTA
+                </a>
+                {% else %}
+                <p>No hay fechas próximas disponibles para este taller.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <select class="hidden" id="complementos_ids" multiple></select>
+    <select class="hidden" id="complementos_cant" multiple></select>
+<script>
+ console.log({{ci.WorkShops(id)}}) 
+</script>
+
+{% endblock %}
+
+

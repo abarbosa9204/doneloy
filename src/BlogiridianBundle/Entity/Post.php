@@ -1,0 +1,460 @@
+<?php
+
+namespace BlogiridianBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+/**
+ * Post
+ *
+ * @ORM\Table(name="post")
+ * @ORM\Entity(repositoryClass="BlogiridianBundle\Repository\PostRepository")
+ * @Vich\Uploadable
+ */
+class Post
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="BlogiridianBundle\Entity\CategoriaBlog")
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     */
+    private $categoria;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="BlogiridianBundle\Entity\Autor")
+     * @ORM\JoinColumn(name="autor_id", referencedColumnName="id", nullable=true)
+     */
+    private $autor;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BlogiridianBundle\Entity\GaleriaPost", mappedBy="post")
+     */
+    private $galerias;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo_es", type="string", length=255)
+     */
+    private $tituloEs;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo_en", type="string", length=255, nullable=true)
+     */
+    private $tituloEn;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="date")
+     */
+    private $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255)
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="blogs", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenido_es", type="text")
+     */
+    private $contenidoEs;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenido_en", type="text", nullable=true)
+     */
+    private $contenidoEn;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean")
+     */
+    private $visible = true;
+
+    /**
+     * List of tags associated to the product.
+     *
+     * @var array
+     * @ORM\Column(name="tags", type="array")
+     */
+    private $tags = array();
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    public function __toString()
+    {
+        return $this->getTituloEs().' ';
+    }
+
+    public function gen($campo,$locale){
+        $accessor = PropertyAccess::createPropertyAccessor();
+        return $accessor->getValue($this,$campo.'_'.$locale);
+    }
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set tituloEs
+     *
+     * @param string $tituloEs
+     *
+     * @return Post
+     */
+    public function setTituloEs($tituloEs)
+    {
+        $this->tituloEs = $tituloEs;
+
+        return $this;
+    }
+
+    /**
+     * Get tituloEs
+     *
+     * @return string
+     */
+    public function getTituloEs()
+    {
+        return $this->tituloEs;
+    }
+
+    /**
+     * Set tituloEn
+     *
+     * @param string $tituloEn
+     *
+     * @return Post
+     */
+    public function setTituloEn($tituloEn)
+    {
+        $this->tituloEn = $tituloEn;
+
+        return $this;
+    }
+
+    /**
+     * Get tituloEn
+     *
+     * @return string
+     */
+    public function getTituloEn()
+    {
+        return $this->tituloEn;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     *
+     * @return Post
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+
+    /**
+     * Set contenidoEs
+     *
+     * @param string $contenidoEs
+     *
+     * @return Post
+     */
+    public function setContenidoEs($contenidoEs)
+    {
+        $this->contenidoEs = $contenidoEs;
+
+        return $this;
+    }
+
+    /**
+     * Get contenidoEs
+     *
+     * @return string
+     */
+    public function getContenidoEs()
+    {
+        return $this->contenidoEs;
+    }
+
+    /**
+     * Set contenidoEn
+     *
+     * @param string $contenidoEn
+     *
+     * @return Post
+     */
+    public function setContenidoEn($contenidoEn)
+    {
+        $this->contenidoEn = $contenidoEn;
+
+        return $this;
+    }
+
+    /**
+     * Get contenidoEn
+     *
+     * @return string
+     */
+    public function getContenidoEn()
+    {
+        return $this->contenidoEn;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param array $tags
+     *
+     * @return Post
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set autor
+     *
+     * @param \BlogiridianBundle\Entity\Autor $autor
+     *
+     * @return Post
+     */
+    public function setAutor(\BlogiridianBundle\Entity\Autor $autor = null)
+    {
+        $this->autor = $autor;
+
+        return $this;
+    }
+
+    /**
+     * Get autor
+     *
+     * @return \BlogiridianBundle\Entity\Autor
+     */
+    public function getAutor()
+    {
+        return $this->autor;
+    }
+
+    /**
+     * Add galeria
+     *
+     * @param \BlogiridianBundle\Entity\GaleriaPost $galeria
+     *
+     * @return Post
+     */
+    public function addGaleria(\BlogiridianBundle\Entity\GaleriaPost $galeria)
+    {
+        $this->galerias[] = $galeria;
+
+        return $this;
+    }
+
+    /**
+     * Remove galeria
+     *
+     * @param \BlogiridianBundle\Entity\GaleriaPost $galeria
+     */
+    public function removeGaleria(\BlogiridianBundle\Entity\GaleriaPost $galeria)
+    {
+        $this->galerias->removeElement($galeria);
+    }
+
+    /**
+     * Get galerias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGalerias()
+    {
+        return $this->galerias;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Post
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param File $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     *
+     * @return Post
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Set categoria
+     *
+     * @param \BlogiridianBundle\Entity\CategoriaBlog $categoria
+     *
+     * @return Post
+     */
+    public function setCategoria(\BlogiridianBundle\Entity\CategoriaBlog $categoria = null)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \BlogiridianBundle\Entity\CategoriaBlog
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Ingrediente
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+}

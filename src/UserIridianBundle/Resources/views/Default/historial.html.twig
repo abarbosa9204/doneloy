@@ -1,0 +1,65 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    <div class="banner banner3">
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})"></div>
+        {% include('@Home/Default/breadcrumb.html.twig') %}
+    </div>
+
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-xs-12">
+
+                <div class="cont_product">
+
+                    {{ include('@FOSUser/Default/pasos_perfil.html.twig') }}
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Para</th>
+                                <th>Fecha de envío</th>
+                                <th>Dirección</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                                <th>Tracking</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for factura in historial %}
+                                <tr>
+                                    <td>{{ factura.para }}</td>
+                                    <td>{{ factura.fechaDeEnvio }}</td>
+                                    <td>{{ factura.direccion }}</td>
+                                    <td>${{ factura.precio | number_format }}</td>
+                                    <td>{{ factura.estado }}</td>
+                                    <td>
+                                        {% if factura.camino %}
+                                            En camino
+                                        {% elseif factura.entrgado %}
+                                            Entregado
+                                        {% elseif factura.recibido %}
+                                            En sistema
+                                        {% else %}
+
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

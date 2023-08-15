@@ -1,0 +1,106 @@
+{% set cant = 0 %}
+{% set carrito = app.session.get('carrito') %}
+{% for id,tallas in carrito %}
+    {% for id_talla, item in tallas %}
+        {% set cant = cant + item.cantidad %}
+    {% endfor %}
+{% endfor %}
+{% set categoria = app.request.get('categoria') %}
+{% set lc = app.request.locale() %}
+{% set es_taller = 'taller-flores' == app.request.attributes.get('_route') %}
+<div class="filter" id="">
+    <a id="v_filtro" data-visible="0"><i class="fa fa-check " aria-hidden="true"></i></a>
+    <div class="cont_filter">
+        <form action="{{ path('busca_productos') }}" class="search-form">
+            <div class="form-group has-feedback">
+                <label for="search" class="sr-only">Search</label>
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                {% if search is defined %}
+                    <input type="text"  class="form-control" name="search"  placeholder="search" value="{{ search }}">
+                {% else %}
+                    <input type="text"  class="form-control" name="search"  placeholder="search">
+                {% endif %}
+
+            </div>
+        </form>
+        {# <a class="boton" href="{{ path('carrito') }}">
+            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            {{ qi.textoDB('texto_filtro_cesta') }} ({{ cant }})
+        </a> #}
+        <a class="boton" href="{{ path('wishlist') }}">
+            <img src="{{ qi.imagen('ico_rosa') }}">
+            {{ qi.textoDB('text_lista_preferidos') }}
+        </a>
+        <a class="boton" href="{{ path('productos_mas_vendidos') }}">
+            <img src="{{ qi.imagen('ico_rosa') }}">
+            {{ qi.textoDB('text_masVendidos') }}
+        </a>
+
+        {% if not es_taller %}
+        <a class="boton boton2 {% if app.request.get('_route') == 'boutique' %} no_view{% endif %}" data-toggle="collapse" href="#collapseCategoria">
+            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+            {{ qi.textoDB('texto_filtro_categorias') }}
+        </a>
+
+        <ul class="collapse" id="collapseCategoria">
+            <h2>{{ qi.textoDB('filter_cat') }}</h2>
+            {% for item in ci.categorias() %}
+                {% set clase_cat = '' %}
+                {% if categoria %}
+                    {% if categoria == item['id'] %}
+                        {% set clase_cat = 'active' %}
+                    {% endif %}
+                {% endif %}
+                <li>
+                    <a class="{{ clase_cat }}" href="{{ path('productos_por_categoria',{'categoria': item['id'] ,'nombre': qi.slugify(item['nombre'])}) }}">{{ item['nombre'] }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a class="boton boton2 {% if app.request.get('_route') == 'boutique' %} no_view{% endif %}" data-toggle="collapse" href="#collapseColor">
+            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+            {{ qi.textoDB('texto_filtro_porcolor') }}
+        </a>
+
+        <ul class="collapse" id="collapseColor">
+            {% for item in ci.colores() %}
+                <li><a href="{{ path('productos_por_color',{'color': item.id ,'nombre': qi.slugify(item['nombre'])}) }}"><img src="{{ item.imagen }}">  {{ item.nombre }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <a class="boton boton2 {% if app.request.get('_route') == 'boutique' %} no_view{% endif %}" data-toggle="collapse" href="#collapseOcasion">
+            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+            {{ qi.textoDB('texto_filtro_por_ocasion') }}
+        </a>
+
+        <ul class="collapse" id="collapseOcasion">
+            {% for item in ci.ocasiones() %}
+                <li><a href="{{ path('productos_por_ocasion',{'ocasion': item.id ,'nombre': qi.slugify(item['nombre'])}) }}">{{ item.nombre }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <a class="boton boton2 {% if app.request.get('_route') == 'boutique' %} no_view{% endif %}" data-toggle="collapse" href="#collapsePrecio">
+            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+            {{ qi.textoDB('texto_filtro_por_precio') }}
+        </a>
+
+        <ul class="collapse" id="collapsePrecio">
+            {% for rango in ci.rangosPrecio() %}
+            {% if rango.maximo %}
+            <li><a href="{{ path('productos_por_precio',{'limit1': rango.minimo,'limit2': rango.maximo}) }}">{{rango.gen('texto',lc)}}</a></li>
+            {% else %}
+            <li><a href="{{ path('productos_por_precio',{'limit1': rango.minimo}) }}">{{rango.gen('texto',lc)}}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+
+        {% endif %}
+
+        {# <div class="sub_menu">
+            <a href="{{ path('homepage') }}">{{ qi.textoDB('m_inicio') }}</a>
+            <a href="{{ path('boutique') }}">{{ qi.textoDB('m_boutique') }}</a>
+            <a href="{{ qi.imagenLink('l_titulo_eventos') }}" target="_blank">{{ qi.textoDB('m_eventos') }}</a>
+            <a href="{{ path('pret') }}">{{ qi.textoDB('m_linea_pret') }}</a>
+        </div> #}
+    </div>
+</div>

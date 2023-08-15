@@ -1,0 +1,99 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    {% include('@Carroiridian/Default/banner_cesta.html.twig') %}
+
+    {% set lc = app.request.locale %}
+
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12">
+                {% include('@Carroiridian/Default/filtro.html.twig') %}
+
+                <div class="cont_product carrito">
+
+                    {% include 'CarroiridianBundle:Default:pasos.html.twig' %}
+
+                    <div class="opcion">
+                        <form>
+                            <label data-pos="1">
+                                <input type="radio" name="dedica"/>
+                                ESCRIBE TU DEDICATORIA
+                            </label>
+                            <label data-pos="2">
+                                <input type="radio" name="dedica"/>
+                                TE AYUDAMOS A ENCONTRAR INSPIRACIÓN
+                            </label>
+                        </form>
+                    </div>
+
+                    <div class="rotar">
+                        <div class="swiper-wrapper">
+                            {{ form_start(form, {'method': 'post', 'action': '', 'attr': {'class': 'swiper-slide'}}) }}
+                                <div class="col">
+                                    {{ form_errors(form) }}
+
+                                    <label>{{ qi.textoDB('ESCRIBE TU DEDICATORIA') }}</label>
+                                    {{ form_errors(form.de) }}
+                                    <label><input type="checkbox" id="anonimo"> {{ qi.textoDB('anonimo') }}</label>
+                                    {{ form_widget(form.de, { attr: {'placeholder':qi.textoDB('Remitente:')} } ) }}
+
+                                    {{ form_errors(form.para) }}
+                                    {{ form_widget(form.para, { attr: {'placeholder':qi.textoDB('Para:')} } ) }}
+
+                                    {{ form_errors(form.mensaje) }}
+                                    {{ form_widget(form.mensaje, { attr: {'placeholder':qi.textoDB('Mensaje:')} } ) }}
+                                </div>
+                                <br>
+                                <a href="{{ path('carrito') }}" class="boton">{{ qi.textoDB('Atras') }}</a>
+                                <input onclick="document.dedicatoria.checkValidity()?showLoading():false" type="submit" value="{{ qi.textoDB('texto_continuar') }}"/>
+
+                            {{ form_end(form) }}
+
+                            <form class="swiper-slide">
+
+                                <div class="col">
+                                    <select id="tipo_inspiracion">
+                                        <option>
+                                            Tipo de mensaje:
+                                        </option>
+                                        {% for item in tipos %}
+                                            <option value="{{ item.id }}">{{ item.gen('nombre',lc) }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <br>
+
+                                {% for item in inspiraciones %}
+                                <div class="item tipo_{{ item.tipoinspiracion.id }} resumen_mensaje">
+                                    <h3>{{ item.gen('titulo',lc) }}</h3>
+                                    <p>{{ item.gen('mensaje',lc) | truncate(140,true) }}</p>
+                                    <a href="#dedicatoriaFull_{{ item.id }}" class="boton">{{ qi.textoDB('texto_ver_mas') }}</a>
+                                </div>
+                                {% endfor %}
+                                <!--
+                                <br>
+                                <input type="submit" value="Atras"/>
+                                <input type="submit" value="Enviar"/>
+
+                                -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    {% for item in inspiraciones %}
+    {{ include('@Carroiridian/Default/dedicatoriaFull.html.twig',{item:item}) }}
+    {% endfor %}
+
+{% endblock %}

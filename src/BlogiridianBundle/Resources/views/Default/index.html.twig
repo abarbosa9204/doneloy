@@ -1,0 +1,53 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set lc = app.request.locale() %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_blog')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_blog') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 producto">
+
+                {% include('@Blogiridian/Default/filtro.html.twig') %}
+
+                <div class="gal blogs">
+                    {% for item in ultimos %}
+                        <div class="item itemHover">
+                            <div class="img">
+                                <img src="{{ item.imagen|imagine_filter('thumb_blog') }}"/>
+
+                            </div>
+                            <h3>{{ item.titulo }}</h3>
+                            <div class="hover" href="#">
+                                <p></p>
+                                <a href="{{ path('post',{ id:item.id, name: qi.slugify(item.titulo) }) }}" class="boton">{{ qi.textoDB('texto_ver_mas') }}</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+        $(".share2").jsSocials({
+            shares: [ "facebook","pinterest"]
+        });
+
+    </script>
+{% endblock %}
+

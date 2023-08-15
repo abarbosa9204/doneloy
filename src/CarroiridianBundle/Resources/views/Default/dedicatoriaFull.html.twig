@@ -1,0 +1,19 @@
+<div class="remodal mensajeFull" data-remodal-id="dedicatoriaFull_{{ item.id }}" style="background-image: url({{ qi.imagen('back_mensajeFull') }}); background-size: 100% auto; background-repeat: no-repeat;">
+
+    <form>
+        <label>{{ item.gen('titulo',lc) }}</label>
+        <!--
+        <br>
+        <input type="text" placeholder="De:">
+        <input type="text" placeholder="Para:">
+        -->
+        <br>
+        <label id="dedicatoria_{{ item.id }}">
+            {{ item.gen('mensaje',lc) | nl2br  }}
+        </label>
+    </form>
+
+    <a class="boton" data-remodal-action="cancel">VOLVER</a>
+    <a class="boton select_inspiracion" data-remodal-action="confirm" data-id="{{ item.id }}">SELECCIONAR</a>
+
+</div>

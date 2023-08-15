@@ -1,0 +1,55 @@
+{% set _entity_config = easyadmin_entity('Inventario') %}
+{% extends _entity_config.templates.layout %}
+{% block content_title %}
+    Reportes
+{% endblock %}
+
+{% block main %}
+    {% block entity_form %}
+        <h1>{{ titulo }}</h1>
+        <br/><br/>
+        <div class="row">
+            <form action="{{ path(app.request.get("_route")) }}" method="get" id="rango" style="display: none">
+                <input type="text" id="start" name="start">
+                <input type="text" id="end" name="end">
+                <input type="text" name="menuIndex" value="11">
+                <input type="text" name="submenuIndex" value="6">
+            </form>
+            <div class="col-sm-12">
+                <div id="piechart" style="width: 100%; height: 500px;"></div>
+            </div>
+            <div class="col-sm-8">
+                <br>
+                <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: auto;margin: 0 0 20px">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                    <span></span> <b class="caret"></b>
+                </div>
+
+                <table class="table table-striped table-bordered" id="reporte">
+                    <thead>
+                        <tr>
+                            {% for item in cols %}
+                                <td><strong>{{ item }}</strong></td>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in reporte %}
+                        <tr>
+                            {% for col in cols %}
+                                <td>{{ item[col] }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    {% endblock entity_form %}
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    {{ include('@EasyAdmin/default/includes/_select2_widget.html.twig') }}
+{% endblock %}

@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>Mailings-1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<!-- Save for Web Slices (Mailings-1) -->
+{% set cu = app.request.locale | capitalize %}
+<table id="Table_01" width="600" height="796" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <img style="display: inline-block" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenhead  ) }}" width="600" alt="">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; width: 90%; background-color: #000; color: #fff; padding: 2% 5%; font: 2.000em 'Times New Roman'; "><span style="float: left;">{{ qi.textoDB('mb_from') }} {{ from }}</span><span style="float: right;">{{ qi.textoDB('mb_to') }} {{ to }}</span></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; width: 90%; color: #58595B; padding: 2% 5%; font: 1.200em sans-serif; letter-spacing: 4px; line-height: 33px;">
+                {{ attribute(data,'mensaje' ~ cu) | raw }}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; width: 90%; color: #58595B; padding: 2% 5%; 'Times New Roman'; border: 1px solid #58595B; text-align: center;">
+                <span style="display: inline-block; width: 100%; color: #000; padding: 2% 0; font-size: 4.500em;">{{ qi.textoDB('mb_code') }}</span>
+                <span style="display: inline-block; width: 100%; padding: 2% 0; font-size: 4.000em;">{{ code  }}</span>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; text-align: center; width: 100%; "><a href="#" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenstore  ) }}"/></a></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="display: inline-block; text-align: center; width: 100%; ">
+                <a href="https://es.pinterest.com/Feelthebasics/ " target="_blank" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenpinterest) }}"/></a>
+                <a href="https://www.instagram.com/back.to.basics/ " target="_blank" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imageninsta) }}"/></a>
+                <a href="https://www.facebook.com/backtobasicsco/?fref=ts" target="_blank" style="display: inline-block; width: 15%;"><img style="display: inline-block; width: 100%;" src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('uploads/mailings/' ~ data.imagenface) }}"/></a>
+            </p>
+        </td>
+    </tr>
+</table>
+<!-- End Save for Web Slices -->
+</body>
+</html>

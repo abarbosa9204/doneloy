@@ -1,0 +1,271 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set escala_moneda = app.session.get('escala_moneda',1) %}
+    {% set lc = app.request.locale %}
+    {% set cu = app.request.locale | capitalize %}
+    {% set wishlist = app.session.get('wish') %}
+
+    <div class="banner banner3">
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_products') }})"></div>
+        {% include('@Home/Default/breadcrumb.html.twig') %}
+    </div>
+
+    <div class="container">
+        <div class="row">
+                <div class="col-xs-12">
+                    <p class="txt_dead_product">{{ qi.textoDB('texto_head_productos') }}</p>
+                </div>
+
+                <div class="col-xs-12 producto">
+
+                    {% include('@Carroiridian/Default/filtro.html.twig') %}
+
+                    <div class="gal">
+                        {% for item in imagenes %}
+                            <div class="item_p">
+
+                                <div class="img">
+                                    <small>FOTO DE REFERENCIA</small>
+                                    <a href="{{ path('add_wish',{id: producto.id}) }}">
+                                        {% if not wishlist[ producto.id ] is defined %}
+                                            {{ qi.textoDB('anadir_wish') }} <img src="{{ qi.imagen('ico_rosa') }}">
+                                        {% else %}
+                                            {{ qi.textoDB('remover_wish') }} <img src="{{ qi.imagen('ico_rosa') }}" class="tiene">
+                                        {% endif %}
+                                    </a>
+                                    <img class="i_p" src="{{ item | imagine_filter('producto') }}">
+                                    {% if app.user %}
+                                        <input id="input-id" value="{{ ci.productoCalificacion(producto.id,app.user.id) }}" style="visibility: hidden">
+                                        <input type="hidden" id="id_prod" value="{{ producto.id }}">
+                                    {% endif %}
+                                </div>
+
+                                <div class="share" id="shareButtonLabel"></div>
+                                <div class="share">
+                                    <a class="t2" target="_blank" href="{{ path('recomendar',{ id: producto.id, nombre: qi.slugify(producto.gen('nombre',lc))}) }}">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        <span>{{ qi.textoDB('enviar_amigo') }}</span>
+                                    </a>
+                                    <a class="t2" href="javascript: window.print();">
+                                        <i class="fa fa-print" aria-hidden="true"></i>
+                                        <span>Imprimir</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                        {% set abasto = producto.categoria.abasto %}
+                        <div class="description">
+
+                            {% if(abasto) %}
+                                <div class="abasto">
+                                    <h6>{{ producto.categoria.gen('nombre',cu) }}</h6>
+                                    <div>{{ producto.categoria.gen('descripcion',cu) | raw }}</div>
+                                    <div class="list_abasto">
+                                        <h4>{{ producto.gen('nombre',cu) | raw }}</h4>
+                                        {{ producto.gen('descripcion',cu) | raw }}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <h6>{{ producto.gen('nombre',cu) | raw }}</h6>
+                                <div>{{ producto.gen('descripcion',cu) | raw }}</div>
+                            {% endif %}
+
+
+                            {% set tallas = ci.tallasProducto(producto.id) %}
+                            {% set unica = ci.tallaUnicaProducto(producto.id) %}
+                            {% set colores = producto.colores %}
+                            {% set color = producto.color %}
+                            {% set carrito = app.session.get('carrito') %}
+                            {% set id = producto.id %}
+                            {% set color_disponible = true %}
+                            {% if color %}
+                                {% if not color.visible %}
+                                    {% set color_disponible = false %}
+                                {% endif %}
+                            {% endif %}
+                            {% set coloresTalla = ci.tallasColoresProducto(producto.id,always) %}
+                            {% for ct in coloresTalla %}
+                                <input type="hidden" id="tc_{{ ct.id }}" value="{{ ct.colores }}">
+                            {% endfor %}
+                            <input type="hidden" id="color" value="0">
+                            {% if ciudad == 0 or ciudad == '0' %}
+                                <a class="boton " href="#" id="b_cc">
+                                    <i class="fa fa-globe" aria-hidden="true"></i>
+                                    {{ 'Selecciona la ciudad de envio' }}
+                                </a>
+                                {% include '@Carroiridian/Default/ciudades_envio.html.twig' %}
+                            {% else %}
+                                {% if tallas | length > 0 and color_disponible %}
+                                    {% if not unica %}
+                                        <h2>{{ qi.textoDB('cantidad_producto') }}</h2>
+                                        <select id="select-talla">
+                                            {% for talla in tallas %}
+                                                {% set precio = talla.precio %}
+                                                {% if producto.categoria.id == 1 %}
+                                                    {% set ns = talla.nombre | split(' ') %}
+                                                    {% set cant = ns[0] %}
+                                                    {% set precio = talla.precio + cant * 6897 %}
+                                                {% endif %}
+                                                <option value="{{ talla.id }}" data-precio="$ {{ (talla.precio / escala_moneda) | number_format }}">{{ talla.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <input type="hidden" id="select-talla" value="1">
+                                    {% endif %}
+                                    {% if (colores | length )  > 0 and not abasto %}
+                                        <div class="colores">
+                                            <h2>{{ qi.textoDB('color_rosas') }}</h2>
+                                            <ul>
+                                                {% for color in colores %}
+                                                    <li class="color_padre" id="color_{{ color.id }}"><a href="#" class="color"  data-id="{{ color.id }}" title="{{ color.gen('nombre',lc) }}"><img src="{{colorPath}}/{{ color.imagen }}"></a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+
+
+                                    {% if qi.settingDB('rosa_veloz') and not abasto and producto.categoria.id == 1 %}
+                                        {% set checked = '' %}
+                                        {% if app.session.get('rosa',false) %}
+                                            {% set checked = 'checked' %}
+                                        {% endif %}
+                                        <img class="ico" src="{{ qi.imagen('ico_moto_veloz') }}"/>
+                                        <label><input type="checkbox" id="rosa_veloz" {{ checked }}/> {{ qi.textoDB('rosa_veloz') }}</label>
+                                    {% endif %}
+                                    {% if producto.categoria.id != 5 and not abasto %}
+                                        {# <a class="boton boton2 abrir_complementos" href="#complementos" data-id="{{ producto.id }}">{{ qi.textoDB('agregar_complementos') }}</a> #}
+                                    <h2>{{ qi.textoDB('agregar_complementos') }}</h2>
+                                    <div class="banner_complementos">
+                                        <div class="root">
+                                            <a class="arrow prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                            <div class="swiper-wrapper productos complementos">
+                                                {% for item in ci.productosComplementos(4) %}
+                                                <div class="item swiper-slide video_l">
+                                                    <img src="{{ item.imagen|imagine_filter('producto') }}">
+                                                    <h4>{{ item.nombre | raw }}</h4>
+                                                    <p>${{ (item.precio / escala_moneda) | number_format }}</p>
+                                                    <a class="add_complemento" id="comp_{{ item.id }}" data-id="{{ item.id }}"
+                                                        data-add="AGREGAR" data-remove="REMOVER">
+                                                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                                        <span>AGREGAR</span>
+                                                    </a>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <a class="arrow next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if not abasto %}
+                                        <p class="precio" id="precio">$ {{ ( producto.precio / escala_moneda) |number_format }}</p>
+                                    {% else %}
+                                        <div class="cont_perio">
+                                            {% set id = 0 %}
+                                            {% for hijo in ci.productosHijos(producto.id) %}
+                                                {% if loop.index0 == 0 %}
+                                                    {% set id = hijo.id %}
+                                                {% endif %}
+                                                <div>
+                                                    <input type="radio" name="perio" {% if loop.index0 == 0 %} checked {% endif %} value="{{ hijo.id }}">
+                                                    &nbsp;
+                                                    <p class="perio"> {{ hijo.nombre }}: <p class="precio">&nbsp;$ {{ (hijo.precio / escala_moneda)|number_format }}</p></p>
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+                                    {% endif %}
+                                    {% if id != 0  %}
+                                        {% if producto.categoria.id == 5 %}
+                                            <a class="boton " href="#complementos_prods"  data-id="{{ id }}" data-cant="1">
+                                                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                                {{ qi.textoDB('agregar_carrito_producto') }}
+                                            </a>
+                                        {% else %}
+                                            <a class="boton add_talla"  data-id="{{ id }}" data-cant="1">
+                                                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                                {{ qi.textoDB('agregar_carrito_producto') }}
+                                            </a>
+                                        {% endif %}
+                                        <a class="boton " href="#" id="b_cc">
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                            {{ 'Cambia la ciudad de envio' }}
+                                        </a>
+                                        {% include '@Carroiridian/Default/ciudades_envio.html.twig' %}
+                                    {% endif %}
+
+                                {% else %}
+                                    <p>{{ qi.textoDB('producto_agotado') }}</p>
+                                    <a class="boton " href="#" id="b_cc">
+                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        {{ 'Cambia la ciudad de envio' }}
+                                    </a>
+                                    {% include '@Carroiridian/Default/ciudades_envio.html.twig' %}
+                                {% endif %}
+                            {% endif %}
+                            {% set complementos = [] %}
+                            {% if tallas | length > 0 %}
+                                {% set talla = tallas | first %}
+                                {% if carrito[producto.id] is defined %}
+                                    {% if carrito[producto.id][talla.id] is defined %}
+                                        {% if carrito[producto.id][talla.id]["complementos"]  is defined %}
+                                            {% set complementos = carrito[producto.id][talla.id]["complementos"] %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            <select class="hidden" id="complementos_ids" multiple>
+                                {% for complemento in complementos %}
+                                    <option type="hidden" value="{{ complemento.producto.id }}" selected></option>
+                                {% endfor %}
+                            </select>
+                            <select class="hidden" id="complementos_cant" multiple>
+                                {% for complemento in complementos %}
+                                    <option type="hidden" value="{{ complemento.cantidad }}" selected></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        {{ include('CarroiridianBundle:Default:interesting_products.html.twig', { 'producto': producto } ) }}
+
+                    </div>
+
+                </div>
+        </div>
+    </div>
+
+    {{ include('@Carroiridian/Default/complementos.html.twig',{'complementos': complementos}) }}
+    {{ include('@Carroiridian/Default/iracomprar.html.twig') }}
+    {{ include('@Carroiridian/Default/confirmar_ciudad.html.twig') }}
+
+    <div class="remodal" data-remodal-id="ciudad_envio" style="width: auto">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <div class="productos complementos">
+            <div class="item">
+                <p>Selecciona la ciudad de envio</p>
+                {% if ciudad == 0 %}
+                    <select id="select-ciudad">
+                        <option value="0">Ciudades</option>
+                        {% for item in ci.ciudadesEnvio() %}
+                            <option value="{{ item.id }}">{{ item.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                <a class="add_complemento" href="{{ path('productos') }}">
+                    Continuar
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.1/build/css/themes/default.min.css"/>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.1/build/alertify.min.js"></script>
+{% endblock %}
+
+
+

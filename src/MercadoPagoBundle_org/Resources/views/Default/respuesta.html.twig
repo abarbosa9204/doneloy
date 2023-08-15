@@ -1,0 +1,76 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set lc = app.request.locale() %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_blog')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    {% if(estadoTx == "APROBADA") %}
+                        <h1>Gracias</h1>
+                    {% else %}
+                    {% endif %}
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <br>
+            <br>
+            <h1 style="text-align: center"></h1>
+            <h2 style="text-align: center"> Estos son los datos de tu transacción.</h2>
+            <br>
+            <div class="row resumen">
+                <div class="col-sm-12 col-md-4">
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="col-md-12">
+                        <div class="contenedor">
+                            <label>Estado de la transaccion</label>
+                            <p>{{ estadoTx }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="contenedor">
+                            <h4>ID de la orden en mercado pago</h4>
+                            <p>{{ transactionId }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="contenedor">
+                            <h4>Referencia de la preferencia en mercado pago</h4>
+                            <p>{{ reference_pol }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="contenedor">
+                            <h4>Referencia de la transaccion</h4>
+                            <p>{{ referenceCode }}</p>
+                        </div>
+                    </div>
+                    {# <div class="col-md-12">
+                        <div class="contenedor">
+                            <h4>Resumen</h4>
+                            <p>{{ desc }}</p>
+                        </div>
+                    </div> #}
+
+
+                    <div class="col-md-12">
+                        <div class="contenedor">
+                            <a href="{{ path('homepage') }}" class="button btn boton_cesta boton">Volver al home</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

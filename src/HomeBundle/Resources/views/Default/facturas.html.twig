@@ -1,0 +1,37 @@
+{% extends 'lay_iridian.html.twig' %}
+
+
+{% block content %}
+    {% set lc = app.request.locale() %}
+    <div class="container" style="margin-top: 300px;">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id factura</th>
+                        <th>Nombre</th>
+                        <th>Documento</th>
+                        <th>Ref. PAYU</th>
+                        <th>Socio</th>
+                        <th>Orden de pedido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in facturas %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.nombre }}</td>
+                            <td>{{ item.documento }}</td>
+                            <td>Test_DE_{{ item.compra_id }}</td>
+                            <td><a href="{{ path('pagar_payu_testws_socio',{id:item.id}) }}" target="_blank"><i class="fa fa-user" aria-hidden="true"></i></a> </td>
+                            <td><a href="{{ path('pagar_payu_testws',{id:item.id}) }}" target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a> </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+{% endblock %}

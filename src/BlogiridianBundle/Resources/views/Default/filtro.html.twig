@@ -1,0 +1,45 @@
+{% set categoria = app.request.get('categoria') %}
+{% set lc = app.request.locale() %}
+<div class="filter">
+    <form action="{{ path('the_blog') }}" class="search-form">
+        <div class="form-group has-feedback">
+            <label for="search" class="sr-only">Search</label>
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            <input type="text"  class="form-control" name="q"  placeholder="search" value="{{ app.request.get('q') }}">
+
+        </div>
+    </form>
+
+    {% if cat is defined %}
+        {% if cat %}
+            <a class="boton boton2 {% if app.request.get('_route') == 'boutique' %} no_view{% endif %}" data-toggle="collapse" href="#collapseCategoria">
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                {{ qi.textoDB('texto_filtro_categorias') }}
+            </a>
+
+            <ul class="collapse" id="collapseCategoria">
+                <h2>{{ qi.textoDB('filter_cat') }}</h2>
+                {% for item in qi.categoriasBlog() %}
+                    {% set clase_cat = '' %}
+                    {% if categoria %}
+                        {% if categoria == item['id'] %}
+                            {% set clase_cat = 'active' %}
+                        {% endif %}
+                    {% endif %}
+                    <li>
+                        <a class="{{ clase_cat }}" href="{{ path('blog_categoria',{'id': item['id'] ,'name': qi.slugify(item['nombre'])}) }}">{{ item['nombre'] }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+
+{# 
+    <div class="sub_menu">
+        <a href="#">{{ qi.textoDB('m_inicio') }}</a>
+        <a href="#">{{ qi.textoDB('m_boutique') }}</a>
+        <a href="#">{{ qi.textoDB('m_eventos') }}</a>
+
+        <a href="#">{{ qi.textoDB('m_linea_pret') }}</a>
+    </div> #}
+</div>

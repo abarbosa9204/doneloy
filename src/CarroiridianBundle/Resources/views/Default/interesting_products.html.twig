@@ -1,0 +1,17 @@
+{% set escala_moneda = app.session.get('escala_moneda',1) %}
+<div class="productos interes">
+    {% for item in ci.productosRelacionados(producto.id,3) %}
+        {% set ruta = path('product',{id:item.id, nombre: qi.slugify(item.nombre)}) %}
+        <div class="item" onclick="window.location = '{{ ruta }}';">
+            <img src="{{ item.imagen|imagine_filter('producto') }}">
+            <h4>{{ item.nombre | raw }}</h4>
+            <p>${{ (item.precio / escala_moneda) | number_format }}</p>
+            <a class="{{ ruta }}" target="_blank">
+                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                {{ qi.textoDB('agregar_carrito') }}
+            </a>
+        </div>
+    {% endfor %}
+
+    {{ include('@Carroiridian/Default/aviso.html.twig') }}
+</div>

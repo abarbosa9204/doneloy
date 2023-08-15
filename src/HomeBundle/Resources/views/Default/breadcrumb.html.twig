@@ -1,0 +1,16 @@
+{% set name = app.request.attributes.get('_route') %}
+
+<div class="migas">
+    <div class="container">
+        <ol class="breadcrumb">
+            {% for ruta in qi.rutas(name) | reverse %}
+                {% if(ruta.nombreInterno == name) %}
+                    <li class="breadcrumb-item"><a href="">{{ ruta.nombre }}</a></li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="{{ path(ruta.nombreInterno) }}">{{ ruta.nombre }}</a></li>
+                {% endif %}
+
+            {% endfor %}
+        </ol>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set escala_moneda = app.session.get('escala_moneda',1) %}
+    {% set ciudades = ci.getCiudades() %}
+    {% set lc = app.request.locale %}
+
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_taller_flores')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_taller_flores') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="txt_dead_product">
+                    {{ qi.textoBigDB('texto_taller_flores')|raw }}
+                </div>
+            </div>
+            <div class="col-xs-12 workshops">
+                    <div class="filter" id="">
+                        <a id="v_filtro" data-visible="0"><i class="fa fa-check " aria-hidden="true"></i></a>
+                        <div class="cont_filter">
+                            <a class="boton boton2" data-toggle="collapse" href="#collapseCitys">
+                                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                                Ciudades Disponibles
+                            </a>
+                            <ul class="collapse" id="collapseCitys">
+                                {% for ciudad in ciudades %}
+                                    <li class="city-filter" data-city-id="{{ciudad.id}}">
+                                        <a href="javascript:filter_taller({{ciudad.id}});">
+                                            {{ciudad.nombre}}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                    <li class="city-filter" data-city-id="{{ciudad.id}}">
+                                        <a href="javascript:filter_taller(0);">
+                                            Todas las ciudades
+                                        </a>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                <ul class="list-workshop">
+                {% for taller in talleres %}
+                {% set fecha = ci.getTallerProximaFecha(taller.id) %}
+                {% if fecha %}
+                    <li class="li-taller" data-city-id="{{taller.ciudadTaller.id}}">
+                        <a href="{{ path('taller-flores-interna', {'id': taller.id, 'slug': qi.slugify(taller.gen('nombre',lc))}) }}">
+                            <div class="images">
+                                <div class="city-workshop">{{taller.ciudadTaller}}</div>
+                                <img src="/uploads/productos/{{taller.imagen}}" alt="{{taller.alt}}">
+                            </div>
+                            <div class="info">
+                                <h2 class="name-workshop">{{taller.gen('nombre',lc)}}</h2>
+                                <p class="date-workshop">Fecha más cercana: {{fecha}}</p>
+                                <span class="price-workshop">${{ (taller.precio / escala_moneda ) | number_format }}</span>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <select class="hidden" id="complementos_ids" multiple></select>
+    <select class="hidden" id="complementos_cant" multiple></select>
+
+{% endblock %}
+
+

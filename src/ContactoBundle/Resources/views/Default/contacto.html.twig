@@ -1,0 +1,31 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+    {% set cu = app.request.locale | capitalize %}
+    <div class="banner contacto" id="contacto">
+        <div class="item" style="background-image: url({{ qi.imagen('banner_contacto') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    {{ form_start(form) }}
+                        <h4>{{ qi.textoDB('contact_title') }}</h4>
+                            {{ form_errors(form.nombre) }}
+                            {{ form_widget(form.nombre, { 'attr': {'placeholder':  qi.textoDB('contact_name') } }) }}
+
+                            {{ form_errors(form.telefono) }}
+                            {{ form_widget(form.telefono, { 'attr': {'placeholder': qi.textoDB('contact_phone')} }) }}
+
+                            {{ form_errors(form.email) }}
+                            {{ form_widget(form.email, { 'attr': {'placeholder': qi.textoDB('contact_mail')} }) }}
+
+                            {{ form_errors(form.mensaje) }}
+                            {{ form_widget(form.mensaje, { 'attr': {'placeholder': qi.textoDB('contact_message')} }) }}
+                            <input class="boton" type="submit" value="{{ qi.textoDB('texto_enviar') }}"/>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,197 @@
+{% extends 'lay_iridian.html.twig' %}
+{% block content %}
+{% set lc = app.request.locale() %}		
+{% set steps = plan.pasos %}		
+{% set id = plan.id %}
+{% set escala_moneda = app.session.get('escala_moneda',1) %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url('{{ qi.imagen("banner_taller_flores")|imagine_filter('banner') }}')">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{plan.gen('nombre',lc)}}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="txt_dead_product">
+                    {{plan.gen('descripcion',lc)|raw}}
+                </div>
+            </div>
+            <div class="col-xs-12">
+                    {{ form_start(form, {'method': 'post', 'action': '' }) }}
+                    {% if lc == 'es' %} {% set pasoTxt = 'Paso' %} {% else %}{% set pasoTxt = 'Step' %}{% endif %}
+                    
+                    <div class="steps-form singlePlan">
+                        <div class="step-1">
+                            <h2>{{pasoTxt}} 1: <a href="#" data-toggle="tooltip" data-placement="top right" class="tooltip quest" title="{{qi.textoDB('plan_tamano_help')}}">?</a></h2>
+                            <div class="containerItem">
+                                <small>{{qi.textoDB('plan_tamano')}}</small>
+                                <div class="sizes">
+                                {% set tams = ci.tamanos(id) %}
+                                {% for tam in tams %}
+                                    <span class="sizeInput">
+                                        {% set p1 = tam.precio1 %}
+                                        {% set p1 = (p1 / escala_moneda) %}
+                                        {% set p2 = tam.precio2 %}
+                                        {% set p2 = (p2 / escala_moneda) %}
+                                        {% set p3 = tam.precio3 %}
+                                        {% set p3 = (p3 / escala_moneda) %}
+                                        {% set p4 = tam.precio4 %}
+                                        {% set p4 = (p4 / escala_moneda) %}
+                                        <input
+                                            data-prod="{{tam.plan.id}}"
+                                            data-p1="{{ p1 }}"
+                                            data-p2="{{ p2 }}"
+                                            data-p3="{{ p3 }}"
+                                            data-p4="{{ p4 }}"
+                                            data-ent1="{{tam.entregasDescuento1}}"
+                                            data-desc1="{{tam.descuento1}}"
+                                            data-ent2="{{tam.entregasDescuento2}}"
+                                            data-desc2="{{tam.descuento2}}"
+                                            type="radio" name="size-plan"
+                                            value="{{tam.tamano.id}}"
+                                            data-name="{{tam.tamano}}">
+                                        <img src="{{path}}/{{tam.imagen}}" alt="Imagen {{tam.tamano.gen('nombre',lc)}}">
+                                        <p>{{tam.tamano.gen('nombre',lc)}}</p>
+                                    </span>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="step-2">
+                                <h2>{{pasoTxt}} 2: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_duracion_help')}}">?</a></h2>
+                                <div class="containerItem center">
+                                    <small>{{qi.textoDB('plan_duracion')}}</small>
+                                    <div class="custom-select">
+                                            {{ form_errors(form.delivery) }}
+                                            {{ form_widget(form.delivery, { attr: { 'data-change': 'deliveryChange' }}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step-3">
+                                <h2>{{pasoTxt}} 3: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_frecuencia_help')}}">?</a></h2>
+                                <div class="containerItem center">
+                                    <small>{{qi.textoDB('plan_frecuencia')}}</small>
+                                    <div class="custom-select">
+                                            {{ form_errors(form.duration) }}
+                                            {{ form_widget(form.duration, { attr: { 'data-change': 'durationChange' }}) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="step-4">
+                                <h2>{{pasoTxt}} 4: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_fecha_help')}}">?</a></h2>
+                                <div class="containerItem center">
+                                        <small>{{qi.textoDB('plan_fecha')}}</small>
+                                        {{ form_errors(form.fechaDeEnvio)}}
+                                        {{ form_widget(form.fechaDeEnvio, { attr: {'readonly':"readonly",'placeholder':qi.textoDB('texto_registro_fechaenvio'),'class':'datePickerAbasto','data-provide':'datepicker','data-date-format':'yyyy-mm-dd','data-date-autoclose':true,'data-date-start-date':start,'date-date-today-btn':true, 'data-date-dates-disabled': ci.nohabil(limitDate,true)} } ) }}
+                                </div>
+                            </div>
+                            {% if config.incluyeJarron and not config.florSeleccionable %}
+                                <div class="step-5">
+                                    <h2>{{pasoTxt}} 5: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_florero_pregunta_help')}}">?</a></h2>
+                                    <div class="containerItem center">
+                                        <small>{{qi.textoDB('plan_florero_pregunta')}}</small>
+                                        <label for="step5" class="switchCnt"><span class="switch basic customSwitch" data-switch="step5">
+                                            <p data-switch="step5">
+                                                <small class="option yes">SI</small>
+                                                <small class="option no">NO</small>
+                                            </p>
+                                        </span><input type="hidden" value="0" name="step5"></label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if config.florSeleccionable %}
+                            <div class="step-5">
+                                    <h2>{{pasoTxt}} 5: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_flor_help')}}">?</a></h2>
+                                    <div class="containerItem">
+                                        <small>{{qi.textoDB('plan_flor')}}</small>
+                                        {% set flores = ci.flores() %}
+                                        {% for flor in flores %}
+                                        <span class="flor">
+                                            <input type="checkbox" name="flor-plan[]" value="{{flor.id}}" data-name="{{flor.nombreEs}}">
+                                            <img src="{{path}}/{{flor.imagen}}" alt="Imagen {{flor.gen('nombre',lc)}}">
+                                            <p>{{flor.gen('nombre',lc)}}</p>
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                            </div>
+                            {% if config.incluyeJarron %}
+                            <div class="step-6">
+                                    <h2>{{pasoTxt}} 6: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_florero_pregunta_help')}}">?</a></h2>
+                                    <div class="containerItem center switch">
+                                        <small>{{qi.textoDB('plan_florero_pregunta')}}</small>
+                                        <label for="step5" class="switchCnt"><span class="switch basic customSwitch" data-switch="step5">
+                                            <p data-switch="step5">
+                                                <small class="option yes">SI</small>
+                                                <small class="option no">NO</small>
+                                            </p>
+                                        </span><input type="hidden" value="0" name="step5"></label>
+                                    </div>
+                            </div>
+                            <div class="step-7">
+                                    <h2>{{pasoTxt}} 7: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_florero_help')}}">?</a></h2>
+                                    <div class="containerItem">
+                                        <small>{{qi.textoDB('plan_florero')}}</small>
+                                        {% set floreros = ci.floreros() %}
+                                        {% for florero in floreros %}
+                                        <span class="florero">
+                                            {% set prodPrecio = (florero.producto.precio / escala_moneda) %}
+                                            <input data-price="{{ prodPrecio }}" type="radio" name="florero-plan" data-tam="{{florero.tamano.id}}" value="{{florero.id}}" data-name="{{florero.nombreEs}}">
+                                            <img src="{{path}}/{{florero.imagen}}" alt="Imagen {{florero.gen('nombre',lc)}}">
+                                            <p>{{florero.gen('nombre',lc)}}</p>
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                        {% if config.incluyeJarron and not config.florSeleccionable %}
+                            <div class="step-6">
+                                    <h2>{{pasoTxt}} 6: <a href="#" class="tooltip quest" title="{{qi.textoDB('plan_florero_help')}}">?</a></h2>
+                                    <div class="containerItem">
+                                        <small>{{qi.textoDB('plan_florero')}}</small>
+                                        {% set floreros = ci.floreros() %}
+                                        {% for florero in floreros %}
+                                        <span class="florero">
+                                            {% set prodPrecio = (florero.producto.precio / escala_moneda) %}
+                                            <input data-price="{{ prodPrecio }}" type="radio" name="florero-plan" data-tam="{{florero.tamano.id}}" value="{{florero.id}}" data-name="{{florero.nombreEs}}">
+                                            <img src="{{path}}/{{florero.imagen}}" alt="Imagen {{florero.gen('nombre',lc)}}">
+                                            <p>{{florero.gen('nombre',lc)}}</p>
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                            </div>
+                        {% endif %}
+       
+                    </div>
+                    <span class="planPrice" id="totalPrice">$0 COP</span>
+                    <span class="planPrice" style="display: none;" id="discount1">{{ qi.getTextoBigDB('descuento_plan_1') | raw }}</span>
+                    <span class="planPrice" style="display: none;" id="discount2">{{ qi.getTextoBigDB('descuento_plan_2') | raw }}</span>
+                    <span class="planPrice">Florero: <span id="pPrice">$550.000 COP</span></span>
+                    <label for="politics" class="containerCheck politics"><input type="checkbox" id="politics" name="politics" required><span class="checkmark"></span><h2>Acepto <a href="{{ path('terminos') }}" target="_blank"> términos y condiciones </a></h2></label>
+                    <input type="hidden" name="plan_id" id="plan_id" value="{{ id }}"/>
+                    <input type="hidden" name="product_id" id="product_id" value=""/>
+                    <input type="hidden" name="plan_total" id="plan_total" value="0"/>
+                    <a class="boton add_plan"  data-id="{{ id }}" data-cant="1">
+                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                        {{ qi.textoDB('agregar_plan') }}
+                    </a>
+                    {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+

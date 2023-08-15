@@ -1,0 +1,36 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_somos_historia')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_link_cultura_rosa') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+
+    <div class="container cultura">
+
+        {{ qi.textoBigDB('texto_somos_cultura_interna')|raw }}
+
+        {% for item in qi.galeria('galeria_somos_cultura') %}
+        <div class="item itemHover">
+            <div class="img">
+                <img src="{{ item.imagen|imagine_filter('culture_dammi') }}"/>
+                <div class="hover">
+                    <p>{{ item.resumen }}</p>
+                </div>
+            </div>
+            <h3>{{ item.titulo }}</h3>
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}

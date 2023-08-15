@@ -1,0 +1,3 @@
+SELECT c.precio, c.created_at as fecha FROM factura f left join compra c on c.id = f.compra_id WHERE c.eatadocarrito_id = 2 and prueba = 0;
+SELECT SUM(c.precio), concat(YEAR(c.created_at),MONTH(c.created_at)) as fecha FROM factura f left join compra c on c.id = f.compra_id WHERE c.eatadocarrito_id = 2 and prueba = 0 group by concat(YEAR(c.created_at),MONTH(c.created_at))
+SELECT SUM(c.precio), concat(YEAR(c.created_at),MONTH(c.created_at), DAY(c.created_at)) as fecha FROM factura f left join compra c on c.id = f.compra_id WHERE c.eatadocarrito_id = 2 and prueba = 0 group by concat(YEAR(c.created_at),MONTH(c.created_at), DAY(c.created_at))

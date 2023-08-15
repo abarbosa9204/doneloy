@@ -1,0 +1,27 @@
+{% extends 'lay_iridian.html.twig' %}
+
+
+{% block content %}
+    {% set lc = app.request.locale() %}
+    <div class="banner banner3">
+        <div class="opacicidad"></div>
+        <div  class="item" style="background-image: url({{ qi.imagen('banner_terminos')|imagine_filter('banner') }})">
+            <div class="no_header">
+                <div class="center_H">
+                    <h1>{{ qi.textoDB('titulo_terminos') }}</h1>
+                </div>
+            </div>
+            {% include('@Home/Default/breadcrumb.html.twig') %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="terminos">
+                    <h2>{{ qi.textoDB('titulo_terminos') }}</h2>
+                    {{ qi.textoBigDB('terminos')|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'lay_iridian.html.twig' %}
+
+{% block content %}
+
+    <div class="banner">
+        <div class="swiper-wrapper">
+            {% for item in qi.galeria('banner_home') %}
+                <div class="item swiper-slide" style="background-image: url({{ item.imagen }})">
+                    <div class="cont gracias">
+                        
+                        <h2>{{ qi.textoDB('mc_thanks') }}</h2><br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

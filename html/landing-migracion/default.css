@@ -1,0 +1,514 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+ * Stylesheet: styles
+ * Clean Project v1.2
+ * Autor / Author: Oreka - info@orekaconsultores.com
+ * You'll find some initial styles for UI elements. You should import your Google Fonts files here.
+
+ *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,700');
+/*This selector fixes default blue colors on <a> tags */
+a
+{
+	color:inherit;
+}
+/* Sometimes, you need to include some general attributes to body element. Please, put your main font-family here */
+body
+{
+    color:#3C3C3B;
+	font-family: 'Raleway', sans-serif;
+    font-weight: normal;   
+}
+/* .font2 class  was created to include your second font-family */
+.font2
+{
+	font-family: 'Aleo', serif;
+
+}
+/* Classes for text weights */
+.light
+{
+    font-weight: 300;
+}
+.medium
+{
+    font-weight: 500;
+}
+.semibold
+{
+    font-weight: 600;
+}
+.bold
+{
+    font-weight: 700;
+}
+.black{
+    font-weight: 900;
+}
+/* .uppercsae class should be used when your UI requires uppercase texts */
+.uppercase
+{
+    text-transform: uppercase;
+}
+/* Every 100% element should have .outter class.*/
+.outter
+{
+	width:100%;
+}
+
+/* Every save zone container should have .container class */
+.container
+{
+    box-sizing: border-box;
+	margin:0 auto;
+    padding:0 15px;
+	position:relative;
+	max-width:1200px;
+    width:100%;
+}
+/* Every float content container must be used with .clean class for fixing auto height issues */
+.clear::after
+{
+	content:"";
+	clear:both;
+	display:block;
+}
+/* If your environment doesn't support ::pseudo-elements, you can add a new element to your float parent tag */
+.manualclear
+{
+	clear:both;
+	display:block;
+}
+/* If you want to turn an <a> tag on a new block element, you can use .replaced_text. This class makes a left-indent to inner texts */
+.replaced_text
+{
+	display:block;
+	text-indent:-9999px;
+}
+/* Use .basic_background class when you need to use background images covering an entire element. Every basic_background elements must contain a hidden <img> element for SEO benefits */
+.basic_background{
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-size:cover;
+	}
+
+/*This class helps to create display:none; elements easiest than before */
+.displaynone{
+	display:none;
+}
+
+/* basic scrollbar styling */
+/* vertical scrollbar */
+.mCSB_container{
+width:auto;
+overflow:hidden;
+}
+.mCSB_container.mCS_no_scrollbar{
+margin-right:0;
+}
+.mCustomScrollBox .mCSB_scrollTools{
+    height: 100%;
+    right: 0;
+    top: 0;
+    width: 6px;
+}
+.mCSB_scrollTools .mCSB_draggerContainer{
+height:100%;
+}
+.mCSB_scrollTools .mCSB_buttonUp+.mCSB_draggerContainer{
+}
+.mCSB_scrollTools .mCSB_draggerRail{
+	border-radius:0;
+	width:1px;
+	height:100%;
+	margin:0 auto;
+}
+.mCSB_scrollTools .mCSB_dragger{
+cursor:pointer;
+width:100%;
+height:30px;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+width:4px;
+height:100%;
+margin:0 auto;
+border-radius:5px;
+text-align:center;
+}
+.mCSB_scrollTools .mCSB_buttonUp,
+.mCSB_scrollTools .mCSB_buttonDown{
+height:20px;
+overflow:hidden;
+margin:0 auto;
+cursor:pointer;
+}
+.mCSB_scrollTools .mCSB_buttonDown{
+bottom:0;
+margin-top:-40px;
+}
+/* horizontal scrollbar */
+.mCSB_horizontal .mCSB_container{
+height:auto;
+margin-right:0;
+margin-bottom:30px;
+overflow:hidden;
+}
+.mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
+margin-bottom:0;
+}
+.mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools{
+width:100%;
+height:16px;
+top:auto;
+right:auto;
+bottom:0;
+left:0;
+overflow:hidden;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_draggerContainer{
+height:100%;
+width:auto;
+overflow:hidden;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonLeft+.mCSB_draggerContainer{
+padding-bottom:0;
+padding-right:20px;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_draggerRail{
+width:100%;
+height:2px;
+margin:7px 0;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger{
+width:30px;
+height:100%;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+width:100%;
+height:4px;
+margin:6px auto;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonLeft,
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonRight{
+width:20px;
+height:100%;
+overflow:hidden;
+margin:0 auto;
+cursor:pointer;
+float:left;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonRight{
+right:0;
+bottom:auto;
+margin-left:-40px;
+margin-top:-16px;
+float:right;
+}
+/* default scrollbar colors and backgrounds */
+.mCustomScrollBox .mCSB_scrollTools{
+}
+.mCustomScrollBox:hover .mCSB_scrollTools{
+}
+.mCSB_scrollTools .mCSB_draggerRail{
+background:#CCC;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+background:#999;
+}
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+background:#999;
+}
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+background:#999;
+}
+.mCSB_scrollTools .mCSB_buttonUp,
+.mCSB_scrollTools .mCSB_buttonDown,
+.mCSB_scrollTools .mCSB_buttonLeft,
+.mCSB_scrollTools .mCSB_buttonRight{
+/*background-image:url(mCSB_buttons.png);*/
+background-repeat:no-repeat;
+}
+.mCSB_scrollTools .mCSB_buttonUp{
+background-position:0 0;
+/*
+sprites locations are 0 0/-16px 0/-32px 0/-48px 0 (light) and -80px 0/-96px 0/-112px 0/-128px 0 (dark)
+*/
+}
+.mCSB_scrollTools .mCSB_buttonDown{
+background-position:0 -20px;
+/*
+sprites locations are 0 -20px/-16px -20px/-32px -20px/-48px -20px (light) and -80px -20px/-96px -20px/-112px -20px/-128px -20px (dark)
+*/
+}
+.mCSB_scrollTools .mCSB_buttonLeft{
+background-position:0 -40px;
+/*
+sprites locations are 0 -40px/-20px -40px/-40px -40px/-60px -40px (light) and -80px -40px/-100px -40px/-120px -40px/-140px -40px (dark)
+*/
+}
+.mCSB_scrollTools .mCSB_buttonRight{
+background-position:0 -56px;
+/*
+sprites locations are 0 -56px/-20px -56px/-40px -56px/-60px -56px (light) and -80px -56px/-100px -56px/-120px -56px/-140px -56px (dark)
+*/
+}
+.mCSB_scrollTools .mCSB_buttonUp:hover,
+.mCSB_scrollTools .mCSB_buttonDown:hover,
+.mCSB_scrollTools .mCSB_buttonLeft:hover,
+.mCSB_scrollTools .mCSB_buttonRight:hover{
+}
+.mCSB_scrollTools .mCSB_buttonUp:active,
+.mCSB_scrollTools .mCSB_buttonDown:active,
+.mCSB_scrollTools .mCSB_buttonLeft:active,
+.mCSB_scrollTools .mCSB_buttonRight:active{
+} 
+
+
+/*Basic UI selectmenu Styles*/
+.ui-menu
+{
+	font-size:1.5em;
+	color:#DEB767;
+	letter-spacing:1px;
+	
+
+}
+.ui-menu .ui-menu-item
+{
+	background:#111;
+	color:#FFF;
+}
+.ui-menu .ui-menu-item div
+{
+	padding-left:20px;
+}
+.ui-menu .ui-menu-item .ui-state-active
+{
+	background:#DEB767;
+	color:#111;
+}
+.ui-selectmenu-button
+{
+	border:1px solid #DEB767;
+	color:#DEB767;
+	font-weight:400;
+	font-size:1.4em;
+	letter-spacing:1px;
+}
+.ui-selectmenu-button .ui-selectmenu-icon
+{
+	box-sizing:border-box;
+	color:#FFF;
+	height:15px;
+	position:relative;
+	top:3px;
+	width:15px;
+}
+.ui-selectmenu-button .ui-selectmenu-icon::after
+{
+	
+}
+.ui-selectmenu-button-closed .ui-selectmenu-icon
+{
+	
+}
+.ui-selectmenu-button-open .ui-selectmenu-icon
+{
+	transform:scale(1,-1);
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active
+{
+    background:#FFF;
+    border:2px solid #CCC;
+    border-radius:0;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus, .ui-button:hover, .ui-button:focus
+{
+    background:#FFF;
+    border:2px solid #CCC;
+    border-radius:0;
+}
+/* END of Basic UI selectmenu Styles*/
+
+/*Column system based on %*/
+.bigcolumn
+{
+    box-sizing: border-box;
+    float:left;
+}
+.w_5
+{
+    width:5%;
+}
+.w_10
+{
+    width:10%;
+}
+.w_15
+{
+    width:15%;
+}
+.w_20
+{
+    width:20%;
+}
+.w_25
+{
+    width:25%;
+}
+.w_30
+{
+    width:30%;
+}
+.w_33
+{
+    width:33.333%;
+}
+.w_35
+{
+    width:35%;
+}
+.w_40
+{
+    width:40%;
+}
+.w_45
+{
+    width:45%;
+}
+.w_50
+{
+    width:50%;
+}
+.w_55
+{
+    width:55%;
+}
+.w_60
+{
+    width:60%;
+}
+.w_65
+{
+    width:65%;
+}
+.w_70
+{
+    width:70%;
+}
+.w_75
+{
+    width:75%;
+}
+.w_80
+{
+    width:80%;
+}
+.w_85
+{
+    width:85%;
+}
+.w_90
+{
+    width:90%;
+}
+.w_95
+{
+    width:95%;
+}
+.bx-wrapper .bx-viewport
+{
+    border:0;
+    -webkit-box-shadow: 0 0 0 #ccc;
+    box-shadow: 0 0 0 #ccc;
+    left:0;
+}
+@media screen and (max-width:768px)
+{
+    .moutter
+    {
+        width:100% !important;
+    }
+    .m_5
+    {
+        width:5% !important;
+    }
+    .m_10
+    {
+        width:10% !important;
+    }
+    .m_15
+    {
+        width:15% !important;
+    }
+    .m_20
+    {
+        width:20% !important;
+    }
+    .m_25
+    {
+        width:25% !important;
+    }
+    .m_30
+    {
+        width:30% !important;
+    }
+    .m_33
+    {
+        width:33.333% !important;
+    }
+    .m_35
+    {
+        width:35% !important;
+    }
+    .m_40
+    {
+        width:40% !important;
+    }
+    .m_45
+    {
+        width:45% !important;
+    }
+    .m_50
+    {
+        width:50% !important;
+    }
+    .m_55
+    {
+        width:55% !important;
+    }
+    .m_60
+    {
+        width:60% !important;
+    }
+    .m_65
+    {
+        width:65% !important;
+    }
+    .m_70
+    {
+        width:70% !important;
+    }
+    .m_75
+    {
+        width:75% !important;
+    }
+    .m_80
+    {
+        width:80% !important;
+    }
+    .m_85
+    {
+        width:85% !important;
+    }
+    .m_90
+    {
+        width:90% !important;
+    }
+    .m_95
+    {
+        width:95% !important;
+    }
+}

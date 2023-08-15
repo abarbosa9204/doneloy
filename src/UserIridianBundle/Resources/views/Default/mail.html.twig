@@ -1,0 +1,25 @@
+<p style="color: #4A7689;font-family: Helvetica">{{ qi.textoDB('registro_gracias') }}</p>
+<br>
+<h2 style="color: #4A7689;font-family: Helvetica">{{ qi.textoDB('registro_datos') }}</h2>
+<table style="width: 100%;max-width: 600px; border: 1px;text-align: center;font-family: Helvetica;border-collapse: collapse;">
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td>Nombre</td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">{{ user.nombre }}</td>
+    </tr>
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td style="border-top: 1px solid #ffffff;">Apellido</td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">{{ user.apellidos }}</td>
+    </tr>
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td style="border-top: 1px solid #ffffff;">Teléfono</td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">{{ user.telefono }}</td>
+    </tr>
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td style="border-top: 1px solid #ffffff;">Email</td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">{{ user.email }}</td>
+    </tr>
+    <tr style="border: 1px solid #647687;color: #ffffff; background-color: #647687;">
+        <td style="border-top: 1px solid #ffffff;">Usuario</td>
+        <td style="background-color: #ffffff;border: 1px solid #647687;padding: 5px 0;color: #647687;">{{ user.username }}</td>
+    </tr>
+</table>
